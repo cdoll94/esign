@@ -1,3 +1,4 @@
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { trpc } from '@documenso/trpc/react';
 import { ZCreateWebhookRequestSchema } from '@documenso/trpc/server/webhook-router/schema';
 import { Button } from '@documenso/ui/primitives/button';
@@ -31,9 +32,7 @@ import type * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
-
 import { useCurrentTeam } from '~/providers/team';
-
 import { WebhookMultiSelectCombobox } from '../general/webhook-multiselect-combobox';
 
 const ZCreateWebhookFormSchema = ZCreateWebhookRequestSchema;
@@ -127,7 +126,7 @@ export const WebhookCreateDialog = ({ trigger, ...props }: WebhookCreateDialogPr
                       </FormControl>
 
                       <FormDescription>
-                        <Trans>The URL for Documenso to send webhook events to.</Trans>
+                        <Trans>The URL for {PLATFORM_NAME()} to send webhook events to.</Trans>
                       </FormDescription>
 
                       <FormMessage />
@@ -197,7 +196,7 @@ export const WebhookCreateDialog = ({ trigger, ...props }: WebhookCreateDialogPr
                     <FormDescription>
                       <Trans>
                         A secret that will be sent to your URL so you can verify that the request has been sent by
-                        Documenso.
+                        {PLATFORM_NAME()}.
                       </Trans>
                     </FormDescription>
                     <FormMessage />

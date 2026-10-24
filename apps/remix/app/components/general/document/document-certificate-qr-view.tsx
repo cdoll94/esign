@@ -2,6 +2,7 @@ import {
   EnvelopeRenderProvider,
   useCurrentEnvelopeRender,
 } from '@documenso/lib/client-only/providers/envelope-render-provider';
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { PDF_VIEWER_ERROR_MESSAGES } from '@documenso/lib/constants/pdf-viewer-i18n';
 import { getDocumentDataUrlForPdfViewer } from '@documenso/lib/utils/envelope-download';
 import { formatDocumentsPath } from '@documenso/lib/utils/teams';
@@ -20,11 +21,9 @@ import { type DocumentData, DocumentStatus, type EnvelopeItem, EnvelopeType } fr
 import { DownloadIcon } from 'lucide-react';
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
-
 import { EnvelopeDownloadDialog } from '~/components/dialogs/envelope-download-dialog';
 import { EnvelopePdfViewer } from '~/components/general/pdf-viewer/envelope-pdf-viewer';
 import PDFViewerLazy from '~/components/general/pdf-viewer/pdf-viewer-lazy';
-
 import { EnvelopeRendererFileSelector } from '../envelope-editor/envelope-file-selector';
 import { EnvelopeGenericPageRenderer } from '../envelope-editor/envelope-generic-page-renderer';
 
@@ -76,8 +75,8 @@ export const DocumentCertificateQRView = ({
 
               <DialogDescription>
                 <Trans>
-                  This document is available in your Documenso account. You can view more details, recipients, and audit
-                  logs there.
+                  This document is available in your {PLATFORM_NAME()} account. You can view more details, recipients,
+                  and audit logs there.
                 </Trans>
               </DialogDescription>
             </DialogHeader>

@@ -1,5 +1,6 @@
 import { getOptionalSession } from '@documenso/auth/server/lib/utils/get-session';
 import { useOptionalSession } from '@documenso/lib/client-only/providers/session';
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { prisma } from '@documenso/prisma';
 import { trpc } from '@documenso/trpc/react';
@@ -10,7 +11,6 @@ import { OrganisationMemberInviteStatus } from '@prisma/client';
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { match } from 'ts-pattern';
-
 import type { Route } from './+types/organisation.invite.$token';
 
 export async function loader({ params, request }: Route.LoaderArgs) {
@@ -285,7 +285,7 @@ const PendingInvitation = ({
 
         <p className="mt-2 mb-4 text-muted-foreground text-sm">
           <Trans>
-            You have been invited to join <strong>{organisationName}</strong> on Documenso.
+            You have been invited to join <strong>{organisationName}</strong> on {PLATFORM_NAME()}.
           </Trans>
         </p>
 

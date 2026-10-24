@@ -1,5 +1,6 @@
 import { authClient } from '@documenso/auth/client';
 import { getOptionalSession } from '@documenso/auth/server/lib/utils/get-session';
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { prisma } from '@documenso/prisma';
 import { Button } from '@documenso/ui/primitives/button';
@@ -10,10 +11,8 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { MailsIcon } from 'lucide-react';
 import { useState } from 'react';
 import { Link, redirect, useSearchParams } from 'react-router';
-
 import { GenericErrorLayout } from '~/components/general/generic-error-layout';
 import { appMetaTags } from '~/utils/meta';
-
 import type { Route } from './+types/o.$orgUrl.signin';
 
 export function meta() {
@@ -207,7 +206,7 @@ export default function OrganisationSignIn({ loaderData }: Route.ComponentProps)
 
         <div className="mt-1 flex items-center justify-center text-muted-foreground text-xs">
           <Link to="/signin">
-            <Trans>Return to Documenso sign in page here</Trans>
+            <Trans>Return to {PLATFORM_NAME()} sign in page here</Trans>
           </Link>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { NEXT_PUBLIC_WEBAPP_URL, PLATFORM_LEGAL_NAME, PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { Trans } from '@lingui/react/macro';
 import { Fragment } from 'react';
 
@@ -31,13 +32,7 @@ export const TemplateFooter = ({ isDocument = true, reportUrl }: TemplateFooterP
 
       {isDocument && !branding.brandingHidePoweredBy && (
         <Text className="my-4 text-base text-muted-foreground">
-          <Trans>
-            This document was sent using{' '}
-            <Link className="text-primary" href="https://documen.so/mail-footer">
-              Documenso
-            </Link>
-            .
-          </Trans>
+          <Trans>This document was sent securely using {PLATFORM_NAME()}.</Trans>
         </Text>
       )}
 
@@ -64,9 +59,12 @@ export const TemplateFooter = ({ isDocument = true, reportUrl }: TemplateFooterP
 
       {!branding.brandingEnabled && (
         <Text className="my-8 text-muted-foreground text-sm">
-          Documenso, Inc.
+          {PLATFORM_LEGAL_NAME()}
           <br />
-          2261 Market Street, #5211, San Francisco, CA 94114, USA
+          <Trans>Electronic records and signature disclosure:</Trans>{' '}
+          <Link href={`${NEXT_PUBLIC_WEBAPP_URL()}/articles/signature-disclosure`}>
+            {`${NEXT_PUBLIC_WEBAPP_URL()}/articles/signature-disclosure`}
+          </Link>
         </Text>
       )}
     </Section>

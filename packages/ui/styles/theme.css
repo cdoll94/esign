@@ -29,8 +29,8 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
 
-    --primary: 95.08 71.08% 67.45%;
-    --primary-foreground: 95.08 71.08% 10%;
+    --primary: 221 39% 11%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -83,17 +83,17 @@
     --new-white-900: 0, 0%, 100%;
 
     /* Primary - Green */
-    --new-primary-50: 98, 73%, 97%;
-    --new-primary-100: 95, 73%, 94%;
-    --new-primary-200: 94, 70%, 87%;
-    --new-primary-300: 95, 71%, 81%;
-    --new-primary-400: 95, 71%, 74%;
-    --new-primary-500: 95, 71%, 67%;
-    --new-primary-600: 95, 71%, 54%;
-    --new-primary-700: 95, 71%, 41%;
-    --new-primary-800: 95, 71%, 27%;
-    --new-primary-900: 95, 72%, 14%;
-    --new-primary-950: 95, 72%, 7%;
+    --new-primary-50: 210, 40%, 98%;
+    --new-primary-100: 210, 40%, 96%;
+    --new-primary-200: 214, 32%, 91%;
+    --new-primary-300: 213, 27%, 84%;
+    --new-primary-400: 215, 20%, 65%;
+    --new-primary-500: 215, 16%, 47%;
+    --new-primary-600: 215, 19%, 35%;
+    --new-primary-700: 215, 25%, 27%;
+    --new-primary-800: 217, 33%, 17%;
+    --new-primary-900: 222, 47%, 11%;
+    --new-primary-950: 229, 84%, 5%;
 
     /* Secondary - Info */
     --new-info-50: 210, 54%, 95%;
@@ -164,11 +164,11 @@
 
     --field-border: 214.3 31.8% 91.4%;
 
-    --primary: 95.08 71.08% 67.45%;
-    --primary-foreground: 95.08 71.08% 10%;
+    --primary: 210 40% 96%;
+    --primary-foreground: 222 47% 11%;
 
     --secondary: 0 0% 23.4%;
-    --secondary-foreground: 95.08 71.08% 67.45%;
+    --secondary-foreground: 210 40% 96%;
 
     --accent: 0 0% 27.9%;
     --accent-foreground: 95.08 71.08% 67.45%;

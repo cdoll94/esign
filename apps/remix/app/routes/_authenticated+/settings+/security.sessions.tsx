@@ -1,6 +1,7 @@
 import { authClient } from '@documenso/auth/client';
 import type { ActiveSession } from '@documenso/auth/server/lib/utils/get-session';
 import { useSession } from '@documenso/lib/client-only/providers/session';
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { Badge } from '@documenso/ui/primitives/badge';
 import { Button } from '@documenso/ui/primitives/button';
 import type { DataTableColumnDef } from '@documenso/ui/primitives/data-table';
@@ -14,7 +15,6 @@ import { useQuery } from '@tanstack/react-query';
 import { DateTime } from 'luxon';
 import { useMemo, useState } from 'react';
 import { UAParser } from 'ua-parser-js';
-
 import { SessionLogoutAllDialog } from '~/components/dialogs/session-logout-all-dialog';
 import { SettingsHeader } from '~/components/general/settings-header';
 import { appMetaTags } from '~/utils/meta';
@@ -113,7 +113,7 @@ export default function SettingsSecuritySessions() {
           </h3>
 
           <p className="mt-1 text-muted-foreground text-sm">
-            <Trans>Sessions created by signing in to Documenso embedded on another website.</Trans>
+            <Trans>Sessions created by signing in to {PLATFORM_NAME()} embedded on another website.</Trans>
           </p>
 
           <div className="mt-4">

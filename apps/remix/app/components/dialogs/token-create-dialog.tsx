@@ -1,3 +1,4 @@
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { trpc } from '@documenso/trpc/react';
 import { ZCreateApiTokenRequestSchema } from '@documenso/trpc/server/api-token-router/create-api-token.types';
@@ -33,7 +34,6 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { match } from 'ts-pattern';
 import type { z } from 'zod';
-
 import { useCurrentTeam } from '~/providers/team';
 
 const NEVER_EXPIRE = 'NEVER' as const;
@@ -171,7 +171,7 @@ export const TokenCreateDialog = ({ trigger, ...props }: TokenCreateDialogProps)
               </DialogTitle>
 
               <DialogDescription>
-                <Trans>Use API tokens to authenticate with the Documenso API.</Trans>
+                <Trans>Use API tokens to authenticate with the {PLATFORM_NAME()} API.</Trans>
               </DialogDescription>
             </DialogHeader>
 

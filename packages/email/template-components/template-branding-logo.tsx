@@ -1,3 +1,4 @@
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { Img, Link } from '../components';
 import { useBranding } from '../providers/branding';
 import { getEmailAssetUrl } from '../utils/asset-url';
@@ -23,7 +24,7 @@ export const TemplateBrandingLogo = ({ assetBaseUrl, className = 'mb-4 h-6' }: T
   if (!hasCustomBrandingLogo) {
     const documensoLogoUrl = getEmailAssetUrl(assetBaseUrl, 'static/logo.png');
 
-    return <Img src={documensoLogoUrl} alt="Documenso Logo" className={className} />;
+    return <Img src={documensoLogoUrl} alt={`${PLATFORM_NAME()} Logo`} className={className} />;
   }
 
   const brandingLogo = <Img src={branding.brandingLogo} alt="Branding Logo" className={className} />;

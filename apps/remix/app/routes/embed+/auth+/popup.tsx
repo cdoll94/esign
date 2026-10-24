@@ -1,4 +1,5 @@
 import { authClient } from '@documenso/auth/client';
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { isSigninEnabledForProvider } from '@documenso/lib/constants/auth';
 import type { EmbedPopupAuthCscOptions, EmbedPopupAuthProvider } from '@documenso/lib/constants/embed-auth';
 import {
@@ -18,10 +19,8 @@ import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 import { data, isRouteErrorResponse } from 'react-router';
 import { match } from 'ts-pattern';
-
 import { SignInForm } from '~/components/forms/signin';
 import { BrandingLogo } from '~/components/general/branding-logo';
-
 import type { Route } from './+types/popup';
 
 const READY_PING_INTERVAL_MS = 250;
@@ -290,9 +289,9 @@ export default function EmbedAuthPopupPage({ loaderData }: Route.ComponentProps)
         .with({ status: 'error' }, ({ code, message }) => (
           <ErrorLine>
             {match(code)
-              .with('opener-missing', () => <Trans>This window must be opened from a Documenso embed.</Trans>)
+              .with('opener-missing', () => <Trans>This window must be opened from a {PLATFORM_NAME()} embed.</Trans>)
               .with('opener-timeout', () => (
-                <Trans>Could not connect to the Documenso embed. Close this window and try again.</Trans>
+                <Trans>Could not connect to the {PLATFORM_NAME()} embed. Close this window and try again.</Trans>
               ))
               .with('csc-options-invalid', () => (
                 <Trans>This signing request is missing its details. Close this window and try again.</Trans>
@@ -363,7 +362,7 @@ const EmbedAuthPopupLayout = ({ children, isCsc = false }: { children: ReactNode
           {isCsc ? (
             <Trans>Sign in with your signing provider to continue</Trans>
           ) : (
-            <Trans>Sign in to Documenso to continue</Trans>
+            <Trans>Sign in to {PLATFORM_NAME()} to continue</Trans>
           )}
         </h1>
       </div>

@@ -1,3 +1,4 @@
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { Column, Img, Row, Section } from '../components';
 import { getEmailAssetUrl } from '../utils/asset-url';
 
@@ -13,7 +14,11 @@ export const TemplateDocumentImage = ({ assetBaseUrl, className }: TemplateDocum
         <Column />
 
         <Column>
-          <Img className="mx-auto h-42" src={getEmailAssetUrl(assetBaseUrl, 'static/document.png')} alt="Documenso" />
+          <Img
+            className="mx-auto h-42"
+            src={getEmailAssetUrl(assetBaseUrl, 'static/document.png')}
+            alt={`${PLATFORM_NAME()}`}
+          />
         </Column>
 
         <Column />

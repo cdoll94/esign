@@ -23,6 +23,7 @@ import {
   useMatches,
 } from 'react-router';
 import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from 'remix-themes';
+import { PlatformFooter } from '~/components/general/platform-footer';
 import { nonceMiddleware } from '~/middleware/nonce';
 import type { Route } from './+types/root';
 import stylesheet from './app.css?url';
@@ -125,6 +126,7 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
   // route tree, attached directly to document.body).
   const matches = useMatches();
   const isRecipientRoute = matches.some((m) => m.id?.startsWith('routes/_recipient+'));
+  const isEmbedRoute = matches.some((m) => m.id?.startsWith('routes/embed+'));
 
   return (
     // `suppressHydrationWarning` because `remix-themes` intentionally mutates
@@ -175,6 +177,8 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
             <TooltipProvider>
               <TrpcProvider>
                 {children}
+
+                {!isEmbedRoute && <PlatformFooter />}
 
                 <Toaster />
               </TrpcProvider>

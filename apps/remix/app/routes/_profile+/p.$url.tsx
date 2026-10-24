@@ -1,4 +1,5 @@
 import { useOptionalSession } from '@documenso/lib/client-only/providers/session';
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { getPublicProfileByUrl } from '@documenso/lib/server-only/profile/get-public-profile-by-url';
 import { formatAvatarUrl } from '@documenso/lib/utils/avatars';
 import { canExecuteOrganisationAction } from '@documenso/lib/utils/organisations';
@@ -13,7 +14,6 @@ import { Trans } from '@lingui/react/macro';
 import { FileIcon } from 'lucide-react';
 import { DateTime } from 'luxon';
 import { Link, redirect } from 'react-router';
-
 import type { Route } from './+types/p.$url';
 
 const BADGE_DATA = {
@@ -128,7 +128,7 @@ export default function PublicProfilePage({ loaderData }: Route.ComponentProps) 
             {!user?.id && (
               <span className="mt-2 inline-block">
                 <Trans>
-                  While waiting for them to do so you can create your own Documenso account and get started with
+                  While waiting for them to do so you can create your own {PLATFORM_NAME()} account and get started with
                   document signing right away.
                 </Trans>
               </span>

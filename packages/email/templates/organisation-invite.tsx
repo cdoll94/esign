@@ -1,7 +1,7 @@
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react';
 import { Trans } from '@lingui/react/macro';
-
 import { Body, Button, Container, Head, Hr, Html, Preview, Section, Text } from '../components';
 import { TemplateBrandingLogo } from '../template-components/template-branding-logo';
 import { TemplateFooter } from '../template-components/template-footer';
@@ -24,7 +24,7 @@ export const OrganisationInviteEmailTemplate = ({
 }: OrganisationInviteEmailProps) => {
   const { _ } = useLingui();
 
-  const previewText = msg`Accept invitation to join an organisation on Documenso`;
+  const previewText = msg`Accept invitation to join an organisation on ${PLATFORM_NAME()}`;
 
   return (
     <Html>
@@ -42,7 +42,9 @@ export const OrganisationInviteEmailTemplate = ({
 
             <Section className="p-2 text-muted-foreground">
               <Text className="text-center font-medium text-foreground text-lg">
-                <Trans>Join {organisationName} on Documenso</Trans>
+                <Trans>
+                  Join {organisationName} on {PLATFORM_NAME()}
+                </Trans>
               </Text>
 
               <Text className="my-1 text-center text-base">

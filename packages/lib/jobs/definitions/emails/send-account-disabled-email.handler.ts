@@ -5,7 +5,7 @@ import { msg } from '@lingui/core/macro';
 import { createElement } from 'react';
 
 import { getI18nInstance } from '../../../client-only/providers/i18n-server';
-import { NEXT_PUBLIC_WEBAPP_URL, SUPPORT_EMAIL } from '../../../constants/app';
+import { NEXT_PUBLIC_WEBAPP_URL, PLATFORM_NAME, SUPPORT_EMAIL } from '../../../constants/app';
 import { DOCUMENSO_INTERNAL_EMAIL } from '../../../constants/email';
 import { renderEmailWithI18N } from '../../../utils/render-email-with-i18n';
 import type { JobRunIO } from '../../client/_internal/job';
@@ -51,7 +51,7 @@ export const run = async ({ payload, io }: { payload: TSendAccountDisabledEmailJ
         name: user.name || '',
       },
       from: DOCUMENSO_INTERNAL_EMAIL,
-      subject: i18n._(msg`Your Documenso account has been disabled`),
+      subject: i18n._(msg`Your ${PLATFORM_NAME()} account has been disabled`),
       html,
       text,
     });

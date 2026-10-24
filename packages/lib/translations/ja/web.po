@@ -359,6 +359,11 @@ msgstr ""
 msgid "{0} Teams"
 msgstr "{0} のチーム"
 
+#. placeholder {0}: PLATFORM_NAME()
+#: apps/remix/app/components/dialogs/account-delete-dialog.tsx
+msgid "{0} will delete <0>all of your documents</0>, along with all of your completed documents, signatures, and all other resources belonging to your Account."
+msgstr ""
+
 #. placeholder {0}: currentStepData.order
 #. placeholder {1}: envelopeEditorSteps.length
 #: apps/remix/app/components/general/envelope-editor/envelope-editor.tsx
@@ -416,6 +421,7 @@ msgid "{draftDays, plural, one {# day} other {# days}}"
 msgstr ""
 
 #: packages/email/template-components/template-access-auth-2fa.tsx
+#: packages/email/template-components/template-signing-gate-code.tsx
 msgid "{expiresInMinutes, plural, one {This code will expire in # minute.} other {This code will expire in # minutes.}}"
 msgstr "{expiresInMinutes, plural, other {このコードは # 分後に有効期限が切れます。}}"
 
@@ -487,6 +493,10 @@ msgstr "{maximumEnvelopeItemCount, plural, other {1 つの封筒にアップロ�
 #: apps/remix/app/components/dialogs/email-transport-delete-dialog.tsx
 msgid "{organisationClaimCount, plural, one {# Organisation claim} other {# Organisation claims}}"
 msgstr "{organisationClaimCount, plural, other {# 件の組織クレーム}}"
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "{platformName} is the electronic signature service operated by {legalName}, a Nevada limited liability company. Before you open a document sent to you through {platformName}, we ask you to agree to receive and sign it electronically. This page explains what that means and your rights, as required by the U.S. Electronic Signatures in Global and National Commerce Act (ESIGN Act) and the Uniform Electronic Transactions Act (UETA)."
+msgstr ""
 
 #: apps/remix/app/components/general/direct-template/direct-template-page.tsx
 msgid "{recipientActionVerb} document"
@@ -608,6 +618,10 @@ msgstr "{user} が文書にCCしました。"
 msgid "{user} completed their task"
 msgstr "{user} が自分のタスクを完了しました。"
 
+#: packages/lib/utils/document-audit-logs.ts
+msgid "{user} consented to use electronic records and signatures"
+msgstr ""
+
 #. placeholder {0}: data.envelopeItemTitle
 #: packages/lib/utils/document-audit-logs.ts
 msgid "{user} created an envelope item with title {0}"
@@ -627,8 +641,8 @@ msgid "{user} deleted the document"
 msgstr "{user} が文書を削除しました。"
 
 #: packages/lib/utils/document-audit-logs.ts
-msgid "{user} failed to validate a 2FA token for the document"
-msgstr "{user} が文書の2要素認証トークンの検証に失敗しました。"
+msgid "{user} entered an incorrect email verification code"
+msgstr ""
 
 #: packages/lib/utils/document-audit-logs.ts
 msgid "{user} moved the document to team"
@@ -664,12 +678,12 @@ msgid "{user} replaced the PDF for envelope item {0}"
 msgstr "{user} が封筒アイテム {0} のPDFを差し替えました"
 
 #: packages/lib/utils/document-audit-logs.ts
-msgid "{user} requested a 2FA token for the document"
-msgstr "{user} が文書用の2要素認証トークンをリクエストしました"
-
-#: packages/lib/utils/document-audit-logs.ts
 msgid "{user} requested a remote signature"
 msgstr "{user} はリモート署名を要求しました"
+
+#: packages/lib/utils/document-audit-logs.ts
+msgid "{user} requested an email verification code"
+msgstr ""
 
 #. placeholder {0}: data.recipientEmail
 #: packages/lib/utils/document-audit-logs.ts
@@ -734,8 +748,8 @@ msgid "{user} updated the document visibility"
 msgstr "{user} が文書の公開範囲を更新しました"
 
 #: packages/lib/utils/document-audit-logs.ts
-msgid "{user} validated a 2FA token for the document"
-msgstr "{user} が文書用の2要素認証トークンを検証しました"
+msgid "{user} verified their email with a one-time code"
+msgstr ""
 
 #: packages/lib/utils/document-audit-logs.ts
 #: packages/lib/utils/document-audit-logs.ts
@@ -794,9 +808,10 @@ msgstr ""
 msgid "<0>{organisationName}</0> has requested to create an account on your behalf."
 msgstr "<0>{organisationName}</0> があなたに代わってアカウントを作成するようリクエストしています。"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/organisation-account-link-confirmation.tsx
-msgid "<0>{organisationName}</0> has requested to link your current Documenso account to their organisation."
-msgstr "<0>{organisationName}</0> が、あなたの現在の Documenso アカウントを自分たちの組織にリンクするようリクエストしています。"
+msgid "<0>{organisationName}</0> has requested to link your current {0}account to their organisation."
+msgstr ""
 
 #: apps/remix/app/components/dialogs/admin-recipient-delete-dialog.tsx
 msgid "<0>{recipientLabel}</0> and their fields will be removed from this document. They and the document owner will be emailed."
@@ -838,9 +853,10 @@ msgstr "<0>{senderName} {senderEmail}</0> さんが、\"{0}\" を代表してこ
 msgid "<0>{senderName} {senderEmail}</0> on behalf of \"{0}\" has invited you to view this document"
 msgstr "<0>{senderName} {senderEmail}</0> さんが、\"{0}\" を代表してこの文書の閲覧を招待しています。"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/confirm-team-email.tsx
-msgid "<0>{teamName}</0> has requested to use your email address for their team on Documenso."
-msgstr "<0>{teamName}</0> が、Documenso のチーム用メールアドレスとしてあなたのメールアドレスの使用をリクエストしました。"
+msgid "<0>{teamName}</0> has requested to use your email address for their team on {0}."
+msgstr ""
 
 #: apps/remix/app/routes/_unauthenticated+/team.verify.email.$token.tsx
 msgid "<0>{teamName}</0> would like to use <1>{email}</1> as their team email."
@@ -1070,8 +1086,8 @@ msgid "A confirmation email has been sent, and it should arrive in your inbox sh
 msgstr "確認メールを送信しました。まもなく受信トレイに届きます。"
 
 #: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "A device capable of accessing, opening, and reading documents"
-msgstr "文書にアクセスし、開いて閲覧できるデバイス"
+msgid "A device that can open PDF files, and a way to save or print them if you want a copy"
+msgstr ""
 
 #: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts
 msgid "A document was created by your direct template that requires you to {recipientActionVerb} it."
@@ -1096,13 +1112,10 @@ msgctxt "Audit log format"
 msgid "A field was updated"
 msgstr "フィールドが更新されました"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "A means to print or download documents for your records"
-msgstr "記録用に文書を印刷またはダウンロードする手段"
-
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/organisation-join.tsx
-msgid "A member has joined your organisation on Documenso"
-msgstr "メンバーが Documenso の組織に参加しました"
+msgid "A member has joined your organisation on {0}"
+msgstr ""
 
 #: packages/lib/jobs/definitions/emails/send-organisation-member-left-email.handler.ts
 msgid "A member has left your organisation"
@@ -1112,9 +1125,10 @@ msgstr "メンバーが組織を離れました"
 msgid "A member has left your organisation {organisationName}"
 msgstr "メンバーが組織 {organisationName} を離れました"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/organisation-leave.tsx
-msgid "A member has left your organisation on Documenso"
-msgstr "メンバーが Documenso の組織を離れました"
+msgid "A member has left your organisation on {0}"
+msgstr ""
 
 #: apps/remix/app/components/dialogs/token-create-dialog.tsx
 msgid "A name to help you identify this token later."
@@ -1162,23 +1176,22 @@ msgstr "受信者が更新されました"
 msgid "A request has been made to create an account for you"
 msgstr "あなたのためにアカウントを作成するリクエストが行われました"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/organisation-account-link-confirmation.tsx
-msgid "A request has been made to link your Documenso account"
-msgstr "Documenso アカウントをリンクするリクエストが行われました"
+msgid "A request has been made to link your {0} account"
+msgstr ""
 
 #. placeholder {0}: team.name
+#. placeholder {1}: PLATFORM_NAME()
 #: packages/lib/server-only/team/create-team-email-verification.ts
-msgid "A request to use your email has been initiated by {0} on Documenso"
-msgstr "Documenso で {0} によって、あなたのメールアドレスを使用するリクエストが開始されました"
+msgid "A request to use your email has been initiated by {0} on {1}"
+msgstr ""
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/components/dialogs/webhook-create-dialog.tsx
 #: apps/remix/app/components/dialogs/webhook-edit-dialog.tsx
-msgid "A secret that will be sent to your URL so you can verify that the request has been sent by Documenso."
-msgstr "Documenso から送信されたリクエストであることを検証できるよう、お客様の URL に送信されるシークレットです。"
-
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "A stable internet connection"
-msgstr "安定したインターネット接続"
+msgid "A secret that will be sent to your URL so you can verify that the request has been sent by{0}."
+msgstr ""
 
 #: packages/email/templates/team-delete.tsx
 #: packages/email/templates/team-delete.tsx
@@ -1225,17 +1238,15 @@ msgstr "承諾"
 msgid "Accept & Link Account"
 msgstr "アカウントを承認してリンク"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/organisation-invite.tsx
-msgid "Accept invitation to join an organisation on Documenso"
-msgstr "Documenso の組織参加招待を承諾"
+msgid "Accept invitation to join an organisation on {0}"
+msgstr ""
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/confirm-team-email.tsx
-msgid "Accept team email request for {teamName} on Documenso"
-msgstr "Documenso 上の {teamName} のチームメールリクエストを承認"
-
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Acceptance and Consent"
-msgstr "同意と承諾"
+msgid "Accept team email request for {teamName} on {0}"
+msgstr ""
 
 #: apps/remix/app/components/dialogs/team-inherit-member-disable-dialog.tsx
 msgid "Access disabled"
@@ -1309,10 +1320,6 @@ msgstr "アカウントのリンクを解除しました"
 #: apps/remix/app/components/general/settings-upsell/sso-portal-upsell.tsx
 msgid "Accounts are automatically added to your organisation on sign-in"
 msgstr ""
-
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Acknowledgment"
-msgstr "確認"
 
 #: apps/remix/app/components/general/document/document-page-view-dropdown.tsx
 #: apps/remix/app/components/tables/admin-document-logs-table.tsx
@@ -1671,13 +1678,13 @@ msgstr "詳細設定"
 msgid "Advanced Settings"
 msgstr "詳細設定"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "After signing a document electronically, you will be provided the opportunity to view, download, and print the document for your records. It is highly recommended that you retain a copy of all electronically signed documents for your personal records. We will also retain a copy of the signed document for our records however we may not be able to provide you with a copy of the signed document after a certain period of time."
-msgstr "文書に電子的に署名すると、記録用にその文書を表示・ダウンロード・印刷する機会が提供されます。すべての電子署名済み文書のコピーを個人の記録として保管することを強くお勧めします。当社も記録として署名済み文書のコピーを保管しますが、一定期間を過ぎるとコピーを提供できない場合があります。"
-
 #: packages/lib/constants/template.ts
 msgid "After submission, a document will be automatically generated and added to your documents page. You will also receive a notification via email."
 msgstr "送信後、自動的にドキュメントが生成され、「ドキュメント」ページに追加されます。メールでも通知が届きます。"
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "Agreement to use electronic records and signatures"
+msgstr ""
 
 #: apps/remix/app/components/dialogs/document-preferences-reset-dialog.tsx
 #: apps/remix/app/components/general/admin-global-settings-section.tsx
@@ -1714,10 +1721,6 @@ msgstr "すべてのドキュメントが完了しました！"
 #: apps/remix/app/components/tables/documents-table-empty-state.tsx
 msgid "All documents have been processed. Any new documents that are sent or received will show here."
 msgstr "すべての文書は処理済みです。今後送信または受信した文書はここに表示されます。"
-
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "All documents related to the electronic signing process will be provided to you electronically through our platform or via email. It is your responsibility to ensure that your email address is current and that you can receive and open our emails."
-msgstr "電子署名プロセスに関連するすべての文書は、当社のプラットフォームまたはメールを通じて電子的に提供されます。メールアドレスを最新の状態に保ち、当社からのメールを受信して開封できるようにする責任はお客様にあります。"
 
 #: apps/remix/app/components/tables/organisation-email-domains-table.tsx
 msgid "All email domains have been synced successfully"
@@ -1833,17 +1836,14 @@ msgstr ""
 msgid "An admin has deleted your document \"{documentName}\"."
 msgstr "管理者によって、あなたのドキュメント「{documentName}」が削除されました。"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/template-components/template-admin-user-created.tsx
-msgid "An administrator has created a Documenso account for you."
-msgstr "管理者があなたのために Documenso アカウントを作成しました。"
+msgid "An administrator has created a {0} account for you."
+msgstr ""
 
 #: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "An electronic signature provided by you on our platform, achieved through clicking through to a document and entering your name, or any other electronic signing method we provide, is legally binding. It carries the same weight and enforceability as a manual signature written with ink on paper."
-msgstr "当社のプラットフォーム上でお客様が行う電子署名（文書をクリックして氏名を入力する、その他当社が提供する方法を用いるなど）は、法的拘束力を持ちます。紙にインクで署名した手書き署名と同等の効力と強制力を持ちます。"
-
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "An email account"
-msgstr "メールアカウント"
+msgid "An email account you can access, to receive verification codes and your completed copy"
+msgstr ""
 
 #: apps/remix/app/components/dialogs/organisation-member-invite-dialog.tsx
 msgid "An email containing an invitation will be sent to each member."
@@ -2057,6 +2057,10 @@ msgstr "文書のアップロード中にエラーが発生しました。"
 #: apps/remix/app/components/forms/support-ticket-form.tsx
 msgid "An error occurred. Please try again later."
 msgstr "エラーが発生しました。後でもう一度お試しください。"
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "An internet connection and a current web browser (Chrome, Safari, Edge or Firefox)"
+msgstr ""
 
 #: packages/lib/jobs/definitions/emails/send-organisation-limit-alert-email.handler.ts
 msgid "An organisation has exceeded their fair use limits"
@@ -2482,10 +2486,6 @@ msgstr "メール確認待ち"
 msgid "Back"
 msgstr "戻る"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Back home"
-msgstr "ホームへ戻る"
-
 #: apps/remix/app/components/forms/branding-preferences-form.tsx
 msgid "Background"
 msgstr "背景"
@@ -2705,8 +2705,8 @@ msgid "By enabling 2FA, you will be required to enter a code from your authentic
 msgstr "2FA を有効にすると、メールとパスワードでサインインするたびに、認証アプリのコード入力が必要になります。"
 
 #: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "By proceeding to use the electronic signature service provided by Documenso, you affirm that you have read and understood this disclosure. You agree to all terms and conditions related to the use of electronic signatures and electronic transactions as outlined herein."
-msgstr "Documenso が提供する電子署名サービスを利用することで、本開示文書を読み理解したことを表明したものとみなされます。また、ここに記載された電子署名および電子取引に関するすべての条件に同意したものとみなされます。"
+msgid "By entering the code we email you and opening the document, you show that you can access electronic records in the form we use. If these requirements change in a way that could stop you accessing or keeping your records, we will tell you and ask for your agreement again."
+msgstr ""
 
 #: apps/remix/app/components/general/document-signing/document-signing-disclosure.tsx
 msgid "By proceeding with your electronic signature, you acknowledge and consent that it will be used to sign the given document and holds the same legal validity as a handwritten signature. By completing the electronic signing process, you affirm your understanding and acceptance of these conditions."
@@ -2716,10 +2716,6 @@ msgstr "電子署名を続行することで、その署名が対象文書への
 #: apps/remix/app/components/forms/signup.tsx
 msgid "By proceeding, you agree to our {0}."
 msgstr ""
-
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "By using the electronic signature feature, you are consenting to conduct transactions and receive disclosures electronically. You acknowledge that your electronic signature on documents is binding and that you accept the terms outlined in the documents you are signing."
-msgstr "電子署名機能を利用することで、お客様は取引や開示の電子的な実行および受領に同意したものとみなされます。さらに、電子署名が文書に対して法的拘束力を持ち、署名対象文書の条件を受け入れたことを認めるものとします。"
 
 #: packages/ui/components/recipient/recipient-role-select.tsx
 msgid "Can prepare"
@@ -3340,14 +3336,6 @@ msgstr "確認メールを送信しました"
 msgid "Connecting to the embed..."
 msgstr ""
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Consent to Electronic Transactions"
-msgstr "電子取引への同意"
-
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Contact Information"
-msgstr "連絡先情報"
-
 #: apps/remix/app/components/general/settings-upsell/email-domains-upsell.tsx
 #: apps/remix/app/components/general/settings-upsell/sso-portal-upsell.tsx
 msgid "Contact Sales"
@@ -3563,8 +3551,9 @@ msgstr "値をコピー"
 msgid "Copy your token now. For security reasons you will not be able to see it again."
 msgstr ""
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/routes/embed+/auth+/popup.tsx
-msgid "Could not connect to the Documenso embed. Close this window and try again."
+msgid "Could not connect to the {0} embed. Close this window and try again."
 msgstr ""
 
 #: apps/remix/app/components/general/organisation-usage-reset-button.tsx
@@ -4521,10 +4510,6 @@ msgstr ""
 msgid "Documenso License"
 msgstr "Documenso ライセンス"
 
-#: apps/remix/app/components/dialogs/account-delete-dialog.tsx
-msgid "Documenso will delete <0>all of your documents</0>, along with all of your completed documents, signatures, and all other resources belonging to your Account."
-msgstr "Documenso は<0>すべての文書</0>と、完了済み文書・署名・アカウントに紐づくその他すべてのリソースを削除します。"
-
 #: apps/remix/app/components/general/template/template-page-view-documents-table.tsx
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/documents.$id.logs.tsx
 msgid "Document"
@@ -5327,12 +5312,16 @@ msgid "eg. Mac"
 msgstr "例: Mac"
 
 #: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Electronic Delivery of Documents"
-msgstr "文書の電子的な配信"
+msgid "Electronic Records and Signature Disclosure"
+msgstr ""
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Electronic Signature Disclosure"
-msgstr "電子署名に関する開示"
+#: packages/email/template-components/template-footer.tsx
+msgid "Electronic records and signature disclosure:"
+msgstr ""
+
+#: apps/remix/app/components/general/platform-footer.tsx
+msgid "Electronic records disclosure"
+msgstr ""
 
 #: apps/remix/app/components/dialogs/admin-user-create-dialog.tsx
 #: apps/remix/app/components/dialogs/ai-field-detection-dialog.tsx
@@ -5424,6 +5413,16 @@ msgstr "メールアドレスが確認されました！"
 msgid "Email Created"
 msgstr "メールが作成されました"
 
+#. placeholder {0}: data.recipientEmail
+#: packages/lib/utils/document-audit-logs.ts
+msgid "Email delivered to {0}"
+msgstr ""
+
+#. placeholder {0}: data.recipientEmail
+#: packages/lib/utils/document-audit-logs.ts
+msgid "Email delivery to {0} delayed"
+msgstr ""
+
 #: apps/remix/app/components/general/envelope-editor/envelope-editor-settings-dialog.tsx
 msgid "Email distribution needs to be enabled in the general settings tab to configure recipient email related settings."
 msgstr "受信者のメールに関する設定を行うには、一般設定タブでメール配信を有効にする必要があります。"
@@ -5460,6 +5459,15 @@ msgstr "メールドメインを同期しました"
 #: apps/remix/app/components/dialogs/sign-field-email-dialog.tsx
 msgid "Email is required"
 msgstr "メールは必須です"
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "Email me a code"
+msgstr ""
+
+#. placeholder {0}: data.recipientEmail
+#: packages/lib/utils/document-audit-logs.ts
+msgid "Email opened by {0}"
+msgstr ""
 
 #: packages/ui/primitives/template-flow/add-template-settings.tsx
 msgid "Email Options"
@@ -5544,6 +5552,16 @@ msgstr "ドキュメントが完了したときに所有者へメール通知す
 #: packages/ui/components/document/document-email-checkboxes.tsx
 msgid "Email the signer if the document is still pending"
 msgstr "ドキュメントがまだ保留中の場合に署名者へメール通知する"
+
+#. placeholder {0}: data.recipientEmail
+#: packages/lib/utils/document-audit-logs.ts
+msgid "Email to {0} bounced"
+msgstr ""
+
+#. placeholder {0}: data.recipientEmail
+#: packages/lib/utils/document-audit-logs.ts
+msgid "Email to {0} was marked as spam"
+msgstr ""
 
 #: apps/remix/app/components/forms/subscription-claim-form.tsx
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
@@ -6368,10 +6386,6 @@ msgstr "フォルダは正常に更新されました"
 msgid "Font Size"
 msgstr "フォントサイズ"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "For any questions regarding this disclosure, electronic signatures, or any related process, please contact us at: <0>{SUPPORT_EMAIL}</0>"
-msgstr "本開示、電子署名、その他関連プロセスに関するご質問がある場合は、<0>{SUPPORT_EMAIL}</0> までお問い合わせください。"
-
 #: apps/remix/app/components/dialogs/template-bulk-send-dialog.tsx
 msgid "For each recipient, provide their email (required) and name (optional) in separate columns. Download the template CSV below for the correct format."
 msgstr "各受信者ごとに、メールアドレス（必須）と名前（任意）を別々の列に入力してください。正しい形式については、下からテンプレート CSV をダウンロードしてください。"
@@ -6484,6 +6498,10 @@ msgstr "リンクを生成"
 #: packages/lib/constants/i18n.ts
 msgid "German"
 msgstr "ドイツ語"
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "Getting a paper copy"
+msgstr ""
 
 #: apps/remix/app/components/general/settings-upsell/sso-portal-upsell.tsx
 msgid "Give your members a dedicated single sign-on portal. The SSO portal is available on the Enterprise plan."
@@ -6705,9 +6723,17 @@ msgstr "こんにちは、Timur です"
 msgid "Hi {recipientName},"
 msgstr "{recipientName} 様"
 
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "Hi {recipientName}, before you open \"{documentTitle}\""
+msgstr ""
+
 #: packages/email/templates/bulk-send-complete.tsx
 msgid "Hi {userName},"
 msgstr "{userName} さん、こんにちは。"
+
+#: packages/email/template-components/template-signing-gate-code.tsx
+msgid "Hi {userName}, enter this code on the signing page to open \"{documentTitle}\". It confirms the document is being opened by the person this email was sent to."
+msgstr ""
 
 #: packages/email/template-components/template-access-auth-2fa.tsx
 msgid "Hi {userName}, you need to enter a verification code to complete the document \"{documentTitle}\"."
@@ -6768,6 +6794,10 @@ msgstr "本人確認が必要です"
 msgid "I agree to link my account with this organization"
 msgstr "この組織と自分のアカウントをリンクすることに同意します"
 
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "I agree to use electronic records and signatures for this document."
+msgstr ""
+
 #: packages/lib/constants/recipient-roles.ts
 msgid "I am a signer of this document"
 msgstr "私はこのドキュメントの署名者です"
@@ -6823,6 +6853,10 @@ msgstr "サブスクリプションに問題がある場合は、<0>{SUPPORT_EMA
 
 #: packages/email/templates/reset-password.tsx
 msgid "If this was you, no action is needed. If it wasn't, reset your password immediately and <0>contact us</0>."
+msgstr ""
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "If you agree, the document, and the notices and copies that relate to it, will be given to you electronically on the signing page and by email instead of on paper. Your agreement covers the document you were invited to and the emails about it (invitations, reminders, verification codes and the completed copy). It does not cover any other document unless you agree again."
 msgstr ""
 
 #: apps/remix/app/routes/embed+/v2+/authoring+/_layout.tsx
@@ -7135,10 +7169,6 @@ msgstr "この組織に対する取り消し不可能な操作"
 msgid "Issuer URL"
 msgstr "Issuer URL"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "It is crucial to keep your contact information, especially your email address, up to date with us. Please notify us immediately of any changes to ensure that you continue to receive all necessary communications."
-msgstr "特にメールアドレスなどの連絡先情報を最新の状態に保つことが重要です。必要な通知を確実に受け取れるよう、変更があれば速やかにご連絡ください。"
-
 #. placeholder {0}: publicProfile.name
 #: apps/remix/app/routes/_profile+/p.$url.tsx
 msgid "It looks like {0} hasn't added any documents to their profile yet."
@@ -7176,9 +7206,10 @@ msgstr "イタリア語"
 msgid "Japanese"
 msgstr "日本語"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/organisation-invite.tsx
-msgid "Join {organisationName} on Documenso"
-msgstr "{organisationName} に Documenso で参加"
+msgid "Join {organisationName} on {0}"
+msgstr ""
 
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
 msgid "Join our community on <0>Discord</0> for community support and discussion."
@@ -7197,6 +7228,10 @@ msgstr "{0} に参加"
 
 #: apps/remix/app/components/general/unified-settings-sidebar-mobile.tsx
 msgid "Jump to"
+msgstr ""
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "Keeping your email address up to date"
 msgstr ""
 
 #: apps/remix/app/routes/_authenticated+/admin+/teams.$id.tsx
@@ -7344,10 +7379,6 @@ msgstr "組織から退出"
 msgid "Left"
 msgstr "左"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Legality of Electronic Signatures"
-msgstr "電子署名の適法性"
-
 #: apps/remix/app/components/forms/editor/editor-field-generic-field-forms.tsx
 msgid "Letter spacing"
 msgstr "文字間隔"
@@ -7409,6 +7440,11 @@ msgstr "リンクは 1 時間で有効期限が切れます。"
 msgid "Link expires in 30 minutes."
 msgstr "リンクの有効期限は30分です。"
 
+#. placeholder {0}: data.recipientEmail
+#: packages/lib/utils/document-audit-logs.ts
+msgid "Link in email clicked by {0}"
+msgstr ""
+
 #: apps/remix/app/components/forms/password-setup-request-button.tsx
 msgid "Link sent"
 msgstr ""
@@ -7418,9 +7454,10 @@ msgctxt "Action button to link template to public profile"
 msgid "Link template"
 msgstr "テンプレートをリンク"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/organisation-account-link-confirmation.tsx
-msgid "Link your Documenso account"
-msgstr "Documenso アカウントをリンクする"
+msgid "Link your {0} account"
+msgstr ""
 
 #: apps/remix/app/routes/_authenticated+/settings+/security._index.tsx
 #: apps/remix/app/routes/_authenticated+/settings+/security.linked-accounts.tsx
@@ -7980,6 +8017,10 @@ msgstr "なし"
 msgid "Never expires"
 msgstr "有効期限なし"
 
+#: packages/email/template-components/template-signing-gate-code.tsx
+msgid "Never share this code. If you didn't try to open this document, you can ignore this email and nobody can open it without the code."
+msgstr ""
+
 #: apps/remix/app/components/general/analytics/analytics-overview-cards.tsx
 msgid "New"
 msgstr ""
@@ -8493,6 +8534,10 @@ msgstr ""
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl._index.tsx
 msgid "Open menu"
 msgstr "メニューを開く"
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "Open the document"
+msgstr ""
 
 #: apps/remix/app/components/general/stack-avatars-with-tooltip.tsx
 msgid "Opened"
@@ -9446,6 +9491,14 @@ msgstr ""
 msgid "Qualified electronic signatures are not supported in this embed."
 msgstr ""
 
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "Questions"
+msgstr ""
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "Questions about this disclosure or a document? Reply to the email you received, or write to <0>{SUPPORT_EMAIL}</0>."
+msgstr ""
+
 #: apps/remix/app/components/general/envelope-editor/envelope-editor.tsx
 msgid "Quick Actions"
 msgstr "クイックアクション"
@@ -9490,9 +9543,10 @@ msgstr "読み取り専用"
 msgid "Read Only"
 msgstr "読み取り専用"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
-msgid "Read our documentation to get started with Documenso."
-msgstr "Documenso のドキュメントを読んで使い始めましょう。"
+msgid "Read our documentation to get started with {0}."
+msgstr ""
 
 #: apps/remix/app/components/tables/admin-document-recipient-item-table.tsx
 msgid "Read Status"
@@ -9501,6 +9555,10 @@ msgstr "既読状況"
 #: apps/remix/app/components/general/document-signing/document-signing-disclosure.tsx
 msgid "Read the full <0>signature disclosure</0>."
 msgstr "<0>署名に関する開示</0>をすべて読む。"
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "Read the full electronic records and signature disclosure"
+msgstr ""
 
 #: apps/remix/app/components/dialogs/ai-field-detection-dialog.tsx
 #: apps/remix/app/components/dialogs/ai-recipient-detection-dialog.tsx
@@ -9609,18 +9667,22 @@ msgstr "受信者が文書のCCに追加されました"
 msgid "Recipient completed their task"
 msgstr "受信者が自分のタスクを完了しました"
 
+#: packages/lib/utils/document-audit-logs.ts
+msgid "Recipient consented to use electronic records and signatures"
+msgstr ""
+
 #: apps/remix/app/components/forms/subscription-claim-form.tsx
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
 msgid "Recipient Count"
 msgstr "受信者数"
 
+#: packages/lib/utils/document-audit-logs.ts
+msgid "Recipient entered an incorrect email verification code"
+msgstr ""
+
 #: packages/ui/components/document/document-email-checkboxes.tsx
 msgid "Recipient expired email"
 msgstr "受信者の期限切れメール"
-
-#: packages/lib/utils/document-audit-logs.ts
-msgid "Recipient failed to validate a 2FA token for the document"
-msgstr "受信者は文書用の2要素認証トークンを検証できませんでした"
 
 #: apps/remix/app/components/general/envelope-editor/envelope-editor-fields-page.tsx
 #: packages/ui/primitives/document-flow/field-item.tsx
@@ -9645,12 +9707,12 @@ msgid "Recipient removed email"
 msgstr "受信者削除メール"
 
 #: packages/lib/utils/document-audit-logs.ts
-msgid "Recipient requested a 2FA token for the document"
-msgstr "受信者が文書用の2要素認証トークンをリクエストしました"
-
-#: packages/lib/utils/document-audit-logs.ts
 msgid "Recipient requested a remote signature"
 msgstr "受信者はリモート署名を要求しました"
+
+#: packages/lib/utils/document-audit-logs.ts
+msgid "Recipient requested an email verification code"
+msgstr ""
 
 #: apps/remix/app/components/general/admin-global-settings-section.tsx
 msgid "Recipient signed"
@@ -9682,8 +9744,8 @@ msgid "Recipient updated"
 msgstr "受信者を更新しました"
 
 #: packages/lib/utils/document-audit-logs.ts
-msgid "Recipient validated a 2FA token for the document"
-msgstr "受信者が文書用の2要素認証トークンを検証しました"
+msgid "Recipient verified their email with a one-time code"
+msgstr ""
 
 #: packages/lib/utils/document-audit-logs.ts
 msgid "Recipient viewed the document"
@@ -10184,10 +10246,6 @@ msgstr ""
 msgid "Restricted Access"
 msgstr "アクセス制限"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Retention of Documents"
-msgstr "文書の保管"
-
 #: apps/remix/app/components/tables/admin-document-jobs-table.tsx
 msgid "Retried"
 msgstr "再試行済み"
@@ -10211,9 +10269,10 @@ msgstr "戻る"
 msgid "Return Home"
 msgstr "ホームに戻る"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/routes/_unauthenticated+/o.$orgUrl.signin.tsx
-msgid "Return to Documenso sign in page here"
-msgstr "Documenso のサインインページへ戻る"
+msgid "Return to {0} sign in page here"
+msgstr ""
 
 #: apps/remix/app/components/general/envelope-editor/envelope-editor.tsx
 msgid "Return to documents"
@@ -10444,6 +10503,10 @@ msgstr ""
 #: apps/remix/app/components/dialogs/webhook-create-dialog.tsx
 msgid "Secret"
 msgstr "シークレット"
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "Secure document"
+msgstr ""
 
 #: apps/remix/app/components/general/envelope-editor/envelope-editor-settings-dialog.tsx
 #: apps/remix/app/routes/_authenticated+/settings+/security._index.tsx
@@ -10695,6 +10758,14 @@ msgstr "セレクター"
 msgid "Send"
 msgstr "送信"
 
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "Send a new code"
+msgstr ""
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "Send a new code in {resendInSeconds}s"
+msgstr ""
+
 #: apps/remix/app/components/dialogs/email-transport-send-test-dialog.tsx
 msgid "Send a test email using this transport to verify the configuration."
 msgstr "このトランスポートを使用してテストメールを送信し、設定を確認します。"
@@ -10827,8 +10898,9 @@ msgstr ""
 msgid "Session revoked"
 msgstr "セッションを取り消しました"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/routes/_authenticated+/settings+/security.sessions.tsx
-msgid "Sessions created by signing in to Documenso embedded on another website."
+msgid "Sessions created by signing in to {0} embedded on another website."
 msgstr ""
 
 #: apps/remix/app/components/dialogs/session-logout-all-dialog.tsx
@@ -10852,9 +10924,10 @@ msgstr "ドキュメントのプロパティと受信者情報を設定します
 msgid "Set up your template properties and recipient information"
 msgstr "テンプレートのプロパティと受信者情報を設定します"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/admin-user-created.tsx
-msgid "Set your password for Documenso"
-msgstr "Documenso 用のパスワードを設定してください"
+msgid "Set your password for {0}"
+msgstr ""
 
 #: apps/remix/app/components/general/app-command-menu.tsx
 #: apps/remix/app/components/general/app-command-menu.tsx
@@ -10989,9 +11062,10 @@ msgstr "文書に署名"
 msgid "Sign Document"
 msgstr "文書に署名"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/routes/_recipient+/_layout.tsx
-msgid "Sign Document - Documenso"
-msgstr "文書に署名 - Documenso"
+msgid "Sign Document - {0}"
+msgstr ""
 
 #: apps/remix/app/components/embed/multisign/multi-sign-document-list.tsx
 msgid "Sign Documents"
@@ -11027,8 +11101,13 @@ msgstr ""
 msgid "Sign in timed out. Please try again."
 msgstr ""
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/routes/embed+/auth+/popup.tsx
-msgid "Sign in to Documenso to continue"
+msgid "Sign in to {0} to continue"
+msgstr ""
+
+#: apps/remix/app/routes/_unauthenticated+/signin.tsx
+msgid "Sign in to send and manage your documents."
 msgstr ""
 
 #: apps/remix/app/components/general/document-signing/document-signing-auth-dialog.tsx
@@ -11465,6 +11544,7 @@ msgid "Something went wrong. Please try again or contact support."
 msgstr "問題が発生しました。もう一度お試しいただくか、サポートまでお問い合わせください。"
 
 #: apps/remix/app/components/dialogs/envelope-rename-dialog.tsx
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
 msgid "Something went wrong. Please try again."
 msgstr "問題が発生しました。もう一度お試しください。"
 
@@ -11480,6 +11560,10 @@ msgstr "証明書をダウンロードできませんでした。後でもう一
 #: apps/remix/app/components/tables/team-members-table.tsx
 msgid "Source"
 msgstr "ソース"
+
+#: apps/remix/app/components/general/platform-footer.tsx
+msgid "Source code"
+msgstr ""
 
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.sso.tsx
 msgid "Space-separated list of domains. Leave empty to allow all domains."
@@ -11752,10 +11836,6 @@ msgctxt "Audit log format"
 msgid "System auto inserted fields"
 msgstr "システムが自動でフィールドを挿入しました"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "System Requirements"
-msgstr "システム要件"
-
 #: apps/remix/app/components/general/app-command-menu.tsx
 msgid "System Theme"
 msgstr "システムテーマ"
@@ -11777,9 +11857,10 @@ msgid "Team"
 msgstr "チーム"
 
 #. placeholder {0}: team.name
+#. placeholder {1}: PLATFORM_NAME()
 #: packages/lib/server-only/team/delete-team.ts
-msgid "Team \"{0}\" has been deleted on Documenso"
-msgstr "Documenso にてチーム「{0}」が削除されました"
+msgid "Team \"{0}\" has been deleted on {1}"
+msgstr ""
 
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.analytics._index.tsx
 msgid "Team activity"
@@ -11833,9 +11914,10 @@ msgstr "チームのメール名"
 msgid "Team email removed"
 msgstr "チームメールが削除されました"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/team-email-removed.tsx
-msgid "Team email removed for {teamName} on Documenso"
-msgstr "Documenso にて {teamName} のチームメールが削除されました"
+msgid "Team email removed for {teamName} on {0}"
+msgstr ""
 
 #: apps/remix/app/routes/_unauthenticated+/team.verify.email.$token.tsx
 msgid "Team email verified!"
@@ -12150,9 +12232,9 @@ msgstr "署名プロセスを完了していただきありがとうございま
 msgid "Thank you for letting us know, we have flagged this sender for review. If you have any concerns please feel free to reach out to our <0>support team</0>."
 msgstr "ご報告ありがとうございます。こちらの送信者を審査対象としてフラグしました。ご不明な点がありましたら、いつでも<0>サポートチーム</0>までお問い合わせください。"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Thank you for using Documenso to perform your electronic document signing. The purpose of this disclosure is to inform you about the process, legality, and your rights regarding the use of electronic signatures on our platform. By opting to use an electronic signature, you are agreeing to the terms and conditions outlined below."
-msgstr "電子文書署名のために Documenso をご利用いただきありがとうございます。本開示文書は、当社プラットフォーム上での電子署名のプロセス、法的有効性、およびお客様の権利について説明することを目的としています。電子署名を選択することで、以下に示す条件に同意したものとみなされます。"
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "That code isn't right or has expired. Try again or send a new one."
+msgstr ""
 
 #: packages/email/template-components/template-forgot-password.tsx
 msgid "That's okay, it happens! Click the button below to reset your password."
@@ -12605,10 +12687,11 @@ msgstr "入力した署名のフォントサイズ"
 msgid "The types of signatures that recipients are allowed to use when signing the document."
 msgstr "受信者がドキュメントに署名する際に使用できる署名タイプです。"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/components/dialogs/webhook-create-dialog.tsx
 #: apps/remix/app/components/dialogs/webhook-edit-dialog.tsx
-msgid "The URL for Documenso to send webhook events to."
-msgstr "Documenso が Webhook イベントを送信する先の URL です。"
+msgid "The URL for {0} to send webhook events to."
+msgstr ""
 
 #: apps/remix/app/routes/_authenticated+/admin+/users.$id.tsx
 msgid "The user you are looking for may have been removed, renamed or may have never existed."
@@ -12821,9 +12904,10 @@ msgstr ""
 msgid "This document has too many recipients. Please remove some recipients or contact support if you need more."
 msgstr "このドキュメントの受信者が多すぎます。受信者を減らすか、さらに必要な場合はサポートまでお問い合わせください。"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/components/general/document/document-certificate-qr-view.tsx
-msgid "This document is available in your Documenso account. You can view more details, recipients, and audit logs there."
-msgstr "このドキュメントは Documenso アカウントで利用できます。詳細、受信者、監査ログはそちらで確認できます。"
+msgid "This document is available in your {0} account. You can view more details, recipients, and audit logs there."
+msgstr ""
 
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/documents.$id._index.tsx
 msgid "This document is currently a draft and has not been sent"
@@ -12858,9 +12942,10 @@ msgstr "この文書は、上記テンプレートをチームメンバーまた
 msgid "This document was created using a direct link."
 msgstr "この文書はダイレクトリンクから作成されました。"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/template-components/template-footer.tsx
-msgid "This document was sent using <0>Documenso</0>."
-msgstr "このドキュメントは <0>Documenso</0> を使用して送信されました。"
+msgid "This document was sent securely using {0}."
+msgstr ""
 
 #: apps/remix/app/components/dialogs/envelope-duplicate-dialog.tsx
 msgid "This document will be duplicated."
@@ -13074,8 +13159,9 @@ msgstr ""
 msgid "This will sign you out of all other devices. You will need to sign in again on those devices to continue using your account."
 msgstr "これにより、他のすべてのデバイスからサインアウトされます。アカウントを引き続き使用するには、それらのデバイスで再度サインインする必要があります。"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/routes/embed+/auth+/popup.tsx
-msgid "This window must be opened from a Documenso embed."
+msgid "This window must be opened from a {0} embed."
 msgstr ""
 
 #: apps/remix/app/components/tables/admin-document-logs-table.tsx
@@ -13196,6 +13282,10 @@ msgstr "アカウントにアクセスするには、受信トレイの確認リ
 msgid "To get started, please set your password by clicking the button below:"
 msgstr "開始するには、以下のボタンをクリックしてパスワードを設定してください。"
 
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "To keep this document private, we'll email a 6-digit code to {maskedEmail}. You'll need it to open the document."
+msgstr ""
+
 #. placeholder {0}: recipient.email
 #: apps/remix/app/components/general/document-signing/document-signing-auth-account.tsx
 msgid "To mark this document as viewed, you need to be logged in as <0>{0}</0>"
@@ -13210,6 +13300,10 @@ msgstr "この文書を閲覧済みにするには、ログインしている必
 #: packages/ui/primitives/template-flow/add-template-fields.tsx
 msgid "To proceed further, please set at least one value for the {0} field."
 msgstr "続行するには、{0} フィールドに少なくとも 1 つの値を設定してください。"
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "To show who signed and when, we record each step of the signing process: when emails are sent and delivered, when the document is opened, verification codes, your consent, and your signature. For each step we record the date and time, your email address, your IP address, the approximate location that IP address suggests (city and country), and your browser and device type. This record is attached to the completed document and kept with it. It is used only to prove the signing process and is not sold or used for marketing. IP geolocation by DB-IP (db-ip.com)."
+msgstr ""
 
 #. placeholder {0}: recipient.email
 #: apps/remix/app/components/general/document-signing/document-signing-auth-account.tsx
@@ -13228,10 +13322,6 @@ msgstr "このフィールドに署名するには、<0>{0}</0> としてログ�
 #: apps/remix/app/components/general/document-signing/document-signing-auth-account.tsx
 msgid "To sign this field, you need to be logged in."
 msgstr "このフィールドに署名するには、ログインする必要があります。"
-
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "To use our electronic signature service, you must have access to:"
-msgstr "当社の電子署名サービスを利用するには、次の環境が必要です。"
 
 #: apps/remix/app/components/embed/embed-authentication-required.tsx
 msgid "To view this document you need to be signed into your account, please sign in to continue."
@@ -13288,6 +13378,10 @@ msgstr "トークンの有効期限が切れています。もう一度お試し
 #: apps/remix/app/routes/embed+/v2+/authoring+/_layout.tsx
 msgid "Token Not Found"
 msgstr "トークンが見つかりません"
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "Too many attempts. Please wait 15 minutes and try again."
+msgstr ""
 
 #: apps/remix/app/utils/toast-error-messages.ts
 msgid "Too many recipients"
@@ -13784,10 +13878,6 @@ msgstr "パスワードを更新しています..."
 msgid "Updating Template"
 msgstr "テンプレートを更新中"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Updating Your Information"
-msgstr "情報の更新"
-
 #: packages/ui/primitives/document-dropzone.tsx
 #: packages/ui/primitives/document-upload-button.tsx
 msgid "Upgrade"
@@ -13933,8 +14023,9 @@ msgstr ""
 msgid "Use a unique window for each rate limit"
 msgstr ""
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/components/dialogs/token-create-dialog.tsx
-msgid "Use API tokens to authenticate with the Documenso API."
+msgid "Use API tokens to authenticate with the {0} API."
 msgstr ""
 
 #: apps/remix/app/components/forms/2fa/disable-authenticator-app-dialog.tsx
@@ -14104,6 +14195,10 @@ msgstr ""
 #: packages/email/templates/confirm-team-email.tsx
 msgid "Verify your team email address"
 msgstr "チームメールアドレスを確認"
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "Version {SIGNING_GATE_DISCLOSURE_VERSION}"
+msgstr ""
 
 #: apps/remix/app/components/forms/editor/editor-field-checkbox-form.tsx
 #: apps/remix/app/components/forms/editor/editor-field-radio-form.tsx
@@ -14343,11 +14438,6 @@ msgstr "他の人の署名待ち"
 msgid "Waiting for Your Turn"
 msgstr "あなたの順番待ち"
 
-#: apps/remix/app/routes/_recipient+/sign.$token+/_index.tsx
-#: apps/remix/app/routes/_recipient+/sign.$token+/_index.tsx
-msgid "Want to send slick signing links like this one? <0>Check out Documenso</0>."
-msgstr "このようなスマートな署名リンクを送りたいですか？<0>Documenso をチェックしてみてください</0>。"
-
 #: apps/remix/app/routes/_profile+/_layout.tsx
 msgid "Want your own public profile?"
 msgstr "自分専用の公開プロフィールが欲しいですか？"
@@ -14404,6 +14494,10 @@ msgstr "現在AI機能を有効にできませんでした。もう一度お試�
 msgid "We couldn't remove this member. Please try again later."
 msgstr "このメンバーを削除できませんでした。しばらくしてからもう一度お試しください。"
 
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "We couldn't send the code. This document may no longer be available to sign."
+msgstr ""
+
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.groups.$id.tsx
 msgid "We couldn't update the group. Please try again."
 msgstr "グループを更新できませんでした。もう一度お試しください。"
@@ -14416,6 +14510,10 @@ msgstr "組織を更新できませんでした。もう一度お試しくださ
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.sso.tsx
 msgid "We couldn't update the provider. Please try again."
 msgstr "プロバイダーを更新できませんでした。もう一度お試しください。"
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "We emailed a 6-digit code to {maskedEmail}. It can take a minute to arrive; check your spam folder if you don't see it."
+msgstr ""
 
 #: apps/remix/app/components/dialogs/admin-organisation-delete-dialog.tsx
 msgid "We encountered an error while attempting to delete this organisation. Please try again later."
@@ -14627,6 +14725,10 @@ msgstr "確認用のメールを送信しました。"
 #: apps/remix/app/components/forms/signup.tsx
 msgid "We need your signature to sign documents"
 msgstr "ドキュメントに署名するには、お客様の署名が必要です。"
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "We send documents and copies to the email address the sender gave us. If it changes, tell the sender so you keep receiving them."
+msgstr ""
 
 #: apps/remix/app/routes/_unauthenticated+/organisation.invite.$token.tsx
 msgid "We were unable to add you to <0>{organisationName}</0> at this time. Please try again later, or contact the organisation administrator."
@@ -14847,35 +14949,26 @@ msgstr "Webhook URL"
 msgid "Webhooks"
 msgstr "Webhook"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Welcome"
-msgstr "ようこそ"
-
-#: apps/remix/app/routes/_unauthenticated+/signin.tsx
-msgid "Welcome back, we are lucky to have you."
-msgstr "おかえりなさい。あなたにまたお会いできて嬉しいです。"
-
 #: apps/remix/app/routes/_authenticated+/dashboard.tsx
 msgid "Welcome back! Here's an overview of your account."
 msgstr "お帰りなさい！アカウントの概要をご確認ください。"
 
+#. placeholder {0}: PLATFORM_NAME()
 #. placeholder {0}: organisation.name
 #: apps/remix/app/components/general/settings-upsell/sso-portal-upsell.tsx
+#: packages/lib/jobs/definitions/emails/send-admin-user-created-email.handler.ts
 msgid "Welcome to {0}"
+msgstr ""
+
+#. placeholder {0}: PLATFORM_NAME()
+#: packages/email/template-components/template-admin-user-created.tsx
+#: packages/email/template-components/template-confirmation-email.tsx
+msgid "Welcome to {0}!"
 msgstr ""
 
 #: apps/remix/app/routes/_unauthenticated+/o.$orgUrl.signin.tsx
 msgid "Welcome to {organisationName}"
 msgstr "{organisationName} へようこそ"
-
-#: packages/lib/jobs/definitions/emails/send-admin-user-created-email.handler.ts
-msgid "Welcome to Documenso"
-msgstr "Documenso へようこそ"
-
-#: packages/email/template-components/template-admin-user-created.tsx
-#: packages/email/template-components/template-confirmation-email.tsx
-msgid "Welcome to Documenso!"
-msgstr "Documenso へようこそ！"
 
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.sso.tsx
 msgid "Well-known URL is required"
@@ -14885,9 +14978,21 @@ msgstr "Well-known URL は必須です"
 msgid "Were you trying to edit this document instead?"
 msgstr "この文書を編集しようとしていましたか？"
 
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "What we record, and why"
+msgstr ""
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "What you are agreeing to"
+msgstr ""
+
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl._index.tsx
 msgid "What you can do with teams:"
 msgstr "チームでできること:"
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "What you need"
+msgstr ""
 
 #: apps/remix/app/components/embed/authoring/configure-document-recipients.tsx
 #: apps/remix/app/components/general/envelope-editor/envelope-editor-recipient-form.tsx
@@ -14900,6 +15005,10 @@ msgstr "有効にすると、定義済みの順序ではなく、署名者が次
 msgid "When enabled, users signing in via SSO for the first time will also receive their own personal organisation."
 msgstr "有効にすると、SSO で初めてサインインするユーザーには、個人用の組織も自動的に作成されます。"
 
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "When everyone has signed, every party is emailed the completed document with a Certificate of Completion, and you can download it from the signing page. We keep the signed document and its record for at least seven years."
+msgstr ""
+
 #: apps/remix/app/components/dialogs/passkey-create-dialog.tsx
 msgid "When you click continue, you will be prompted to add the first available authenticator on your system."
 msgstr "続行をクリックすると、システム上で最初に利用可能な認証手段の追加を求められます。"
@@ -14909,16 +15018,17 @@ msgid "When you sign a document, we can automatically fill in and sign the follo
 msgstr "ドキュメントに署名する際、すでに提供されている情報を使用して、次のフィールドに自動的に入力および署名できます。必要であれば、後から自動署名されたフィールドに手動で署名したり、削除したりすることもできます。"
 
 #: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "When you use our platform to affix your electronic signature to documents, you are consenting to do so under the Electronic Signatures in Global and National Commerce Act (E-Sign Act) and other applicable laws. This action indicates your agreement to use electronic means to sign documents and receive notifications."
-msgstr "当社プラットフォームで文書に電子署名を行うことにより、お客様は Electronic Signatures in Global and National Commerce Act（E-Sign 法）およびその他の適用法の下で電子署名を行うことに同意したものとみなされます。この行為は、文書への署名および通知の受領を電子的手段で行うことに同意したことを意味します。"
+msgid "When you sign through {platformName}, by drawing, typing or uploading your signature, entering your initials, or clicking to complete, you are signing the document. Your electronic signature has the same legal effect as a handwritten signature."
+msgstr ""
 
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.sso.tsx
 msgid "Whether to enable the SSO portal for your organisation"
 msgstr "組織でSSOポータルを有効にするかどうか"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/routes/_profile+/p.$url.tsx
-msgid "While waiting for them to do so you can create your own Documenso account and get started with document signing right away."
-msgstr "相手からの対応を待つ間に、自分の Documenso アカウントを作成して、すぐに文書署名を始めることができます。"
+msgid "While waiting for them to do so you can create your own {0} account and get started with document signing right away."
+msgstr ""
 
 #: apps/remix/app/components/dialogs/organisation-create-dialog.tsx
 msgid "Whitelabeling, unlimited members and more"
@@ -14934,8 +15044,8 @@ msgid "Window"
 msgstr ""
 
 #: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "Withdrawing Consent"
-msgstr "同意の撤回"
+msgid "Withdrawing your agreement"
+msgstr ""
 
 #: apps/remix/app/components/general/organisation-usage-panel.tsx
 msgid "Within limit"
@@ -14976,6 +15086,10 @@ msgstr "フィールドを追加しました"
 #: packages/lib/utils/document-audit-logs.ts
 msgid "You added a recipient"
 msgstr "受信者を追加しました"
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "You agree to receive, review and sign this document, and the notices that come with it, electronically."
+msgstr ""
 
 #: packages/lib/utils/document-audit-logs.ts
 msgid "You approved the document"
@@ -15192,6 +15306,10 @@ msgstr "次のリンクをブラウザにコピー＆ペーストして使用す
 msgid "You can also copy and paste this link into your browser: {resetPasswordLink} (link expires in 24 hours)"
 msgstr "このリンクをブラウザにコピー＆ペーストして利用することもできます: {resetPasswordLink}（リンクの有効期限は24時間です）"
 
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "You can ask for a paper copy at no charge by replying to the email that brought you here. You can also withdraw this agreement at any time before you sign, by declining the document or by telling the sender; the document would then be signed on paper instead."
+msgstr ""
+
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/settings.public-profile.tsx
 msgid "You can choose to enable or disable the profile for public view."
 msgstr "プロフィールを公開するかどうかを選択できます。"
@@ -15217,9 +15335,10 @@ msgstr "ここでメール通知の設定を管理できます。"
 msgid "You can only detect fields in draft envelopes"
 msgstr "ドラフトの封筒でのみフィールドを検出できます"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/confirm-team-email.tsx
-msgid "You can revoke access at any time in your team settings on Documenso <0>here</0>."
-msgstr "Documenso のチーム設定から、いつでもアクセス権を取り消すことができます。<0>こちら</0>。"
+msgid "You can revoke access at any time in your team settings on {0} <0>here</0>."
+msgstr ""
 
 #: apps/remix/app/components/forms/public-profile-form.tsx
 msgid "You can update the profile URL by updating the team URL in the general settings page."
@@ -15296,6 +15415,10 @@ msgstr "文書をCCに追加しました"
 msgid "You completed your task"
 msgstr "タスクを完了しました"
 
+#: packages/lib/utils/document-audit-logs.ts
+msgid "You consented to use electronic records and signatures"
+msgstr ""
+
 #. placeholder {0}: data.envelopeItemTitle
 #: packages/lib/utils/document-audit-logs.ts
 msgid "You created an envelope item with title {0}"
@@ -15353,8 +15476,8 @@ msgid "You don't need to sign it anymore."
 msgstr "今後、このドキュメントに署名する必要はありません。"
 
 #: packages/lib/utils/document-audit-logs.ts
-msgid "You failed to validate a 2FA token for the document"
-msgstr "文書用の2要素認証トークンを検証できませんでした"
+msgid "You entered an incorrect email verification code"
+msgstr ""
 
 #: apps/remix/app/routes/_unauthenticated+/organisation.invite.$token.tsx
 msgid "You have accepted an invitation from <0>{organisationName}</0> to join their organisation."
@@ -15370,12 +15493,14 @@ msgid "You have been invited by <0>{organisationName}</0> to join their organisa
 msgstr ""
 
 #. placeholder {0}: organisation.name
+#. placeholder {1}: PLATFORM_NAME()
 #: packages/lib/server-only/organisation/create-organisation-member-invites.ts
-msgid "You have been invited to join {0} on Documenso"
-msgstr "Documenso で {0} に参加するよう招待されています"
+msgid "You have been invited to join {0} on {1}"
+msgstr ""
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/routes/_unauthenticated+/organisation.invite.$token.tsx
-msgid "You have been invited to join <0>{organisationName}</0> on Documenso."
+msgid "You have been invited to join <0>{organisationName}</0> on {0}."
 msgstr ""
 
 #: packages/email/templates/organisation-invite.tsx
@@ -15511,10 +15636,6 @@ msgstr "このユーザーをチームから正常に削除しました。"
 msgid "You have successfully revoked access."
 msgstr "アクセスを正常に取り消しました。"
 
-#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
-msgid "You have the right to withdraw your consent to use electronic signatures at any time before completing the signing process. To withdraw your consent, please contact the sender of the document. In failing to contact the sender you may reach out to <0>{SUPPORT_EMAIL}</0> for assistance. Be aware that withdrawing consent may delay or halt the completion of the related transaction or service."
-msgstr "署名プロセスを完了する前であれば、電子署名の利用に対する同意をいつでも撤回する権利があります。同意を撤回するには、文書の送信者に連絡してください。送信者に連絡できない場合は、<0>{SUPPORT_EMAIL}</0> までお問い合わせください。同意を撤回すると、関連する取引やサービスの完了が遅延または中止される可能性がある点にご注意ください。"
-
 #: apps/remix/app/components/forms/form-sticky-save-bar.tsx
 msgid "You have unsaved changes"
 msgstr ""
@@ -15533,6 +15654,14 @@ msgstr "チームグループを更新しました。"
 
 #: apps/remix/app/routes/_unauthenticated+/team.verify.email.$token.tsx
 msgid "You have verified your email address for <0>{teamName}</0>."
+msgstr ""
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "You may ask for a paper copy of any document you are asked to sign, or have signed, at no charge. Reply to the email you received or write to <0>{SUPPORT_EMAIL}</0>, and tell us which document you need."
+msgstr ""
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "You may withdraw your agreement to use electronic records at any time before you sign, at no charge, by declining the document on the signing page or by telling the sender (reply to their email, or write to <0>{SUPPORT_EMAIL}</0>). If you withdraw, the document will need to be signed on paper instead, which may delay the transaction. Withdrawing does not undo anything you already signed electronically."
 msgstr ""
 
 #: packages/lib/utils/document-audit-logs.ts
@@ -15563,6 +15692,10 @@ msgstr "フィールドを追加するには、少なくとも1人の受信者�
 #: apps/remix/app/components/dialogs/envelope-distribute-dialog.tsx
 msgid "You need at least one recipient to send a document"
 msgstr "文書を送信するには、少なくとも1人の受信者が必要です"
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "You need internet access, an email account, and a device that can open PDF files. You can download a copy for your records once it is signed. If your email address changes, tell the sender."
+msgstr ""
 
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/settings.tokens.tsx
 msgid "You need to be an admin to manage API tokens."
@@ -15681,12 +15814,12 @@ msgid "You replaced the PDF for envelope item {0}"
 msgstr "封筒アイテム {0} の PDF を置き換えました。"
 
 #: packages/lib/utils/document-audit-logs.ts
-msgid "You requested a 2FA token for the document"
-msgstr "文書用の2要素認証トークンをリクエストしました"
-
-#: packages/lib/utils/document-audit-logs.ts
 msgid "You requested a remote signature"
 msgstr "リモート署名をリクエストしました"
+
+#: packages/lib/utils/document-audit-logs.ts
+msgid "You requested an email verification code"
+msgstr ""
 
 #. placeholder {0}: data.recipientEmail
 #: packages/lib/utils/document-audit-logs.ts
@@ -15751,8 +15884,8 @@ msgid "You updated the document visibility"
 msgstr "文書の公開範囲を更新しました"
 
 #: packages/lib/utils/document-audit-logs.ts
-msgid "You validated a 2FA token for the document"
-msgstr "文書用の2要素認証トークンを検証しました"
+msgid "You verified your email with a one-time code"
+msgstr ""
 
 #: packages/lib/utils/document-audit-logs.ts
 #: packages/lib/utils/document-audit-logs.ts
@@ -15787,6 +15920,12 @@ msgstr "あなたは管理者です。このチーム向けのAI機能をすぐ�
 #: apps/remix/app/components/dialogs/ai-recipient-detection-dialog.tsx
 msgid "You've made too many detection requests. Please wait a minute before trying again."
 msgstr "検出リクエストが多すぎます。1 分ほど待ってから、もう一度お試しください。"
+
+#. placeholder {0}: PLATFORM_NAME()
+#: packages/email/templates/account-disabled.tsx
+#: packages/lib/jobs/definitions/emails/send-account-disabled-email.handler.ts
+msgid "Your {0} account has been disabled"
+msgstr ""
 
 #: apps/remix/app/routes/_unauthenticated+/organisation.sso.confirmation.$token.tsx
 msgid "Your Account"
@@ -15887,6 +16026,23 @@ msgstr "テンプレート「{templateName}」の一括送信が完了しまし�
 msgid "Your certificate preferences have been updated"
 msgstr ""
 
+#: packages/email/templates/signing-gate-code.tsx
+msgid "Your code is {code}"
+msgstr ""
+
+#. placeholder {0}: envelope.title
+#: packages/lib/server-only/signing-gate/send-signing-gate-code.ts
+msgid "Your code to open \"{0}\""
+msgstr ""
+
+#: packages/email/template-components/template-signing-gate-code.tsx
+msgid "Your code to open the document"
+msgstr ""
+
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "Your copy and our records"
+msgstr ""
+
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.billing.tsx
 msgid "Your current {currentProductName} plan is past due. Please update your payment information."
 msgstr "現在の {currentProductName} プランは支払いが滞っています。お支払い情報を更新してください。"
@@ -15911,11 +16067,6 @@ msgstr "現在のプランは支払いが滞っています。"
 #: apps/remix/app/components/dialogs/public-profile-template-manage-dialog.tsx
 msgid "Your direct signing templates"
 msgstr "あなたのダイレクト署名テンプレート"
-
-#: packages/email/templates/account-disabled.tsx
-#: packages/lib/jobs/definitions/emails/send-account-disabled-email.handler.ts
-msgid "Your Documenso account has been disabled"
-msgstr ""
 
 #: apps/remix/app/components/dialogs/ai-features-enable-dialog.tsx
 msgid "Your document content will be sent securely to our AI provider solely for detection and will not be stored or used for training."
@@ -15983,17 +16134,27 @@ msgstr "ドキュメントは、データを保持しない AI サービスを�
 msgid "Your document preferences have been updated"
 msgstr "ドキュメントの設定が更新されました。"
 
+#: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
+msgid "Your electronic signature is binding"
+msgstr ""
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "Your electronic signature is legally binding, the same as signing on paper."
+msgstr ""
+
 #: apps/remix/app/components/general/document-signing/document-signing-complete-dialog.tsx
 msgid "Your Email"
 msgstr "あなたのメールアドレス"
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/routes/_unauthenticated+/verify-email.$token.tsx
-msgid "Your email has already been confirmed. You can now use all features of Documenso."
-msgstr "メールアドレスはすでに確認済みです。Documenso のすべての機能をご利用いただけます。"
+msgid "Your email has already been confirmed. You can now use all features of {0}."
+msgstr ""
 
+#. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/routes/_unauthenticated+/verify-email.$token.tsx
-msgid "Your email has been successfully confirmed! You can now use all features of Documenso."
-msgstr "メールアドレスは正常に確認されました。Documenso のすべての機能を利用できるようになりました。"
+msgid "Your email has been successfully confirmed! You can now use all features of {0}."
+msgstr ""
 
 #. placeholder {0}: teamEmail.team.name
 #. placeholder {1}: teamEmail.team.url

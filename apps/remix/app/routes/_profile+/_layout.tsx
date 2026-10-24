@@ -1,5 +1,6 @@
 import LogoIcon from '@documenso/assets/logo_icon.png';
 import { useOptionalSession } from '@documenso/lib/client-only/providers/session';
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { cn } from '@documenso/ui/lib/utils';
 import { Button } from '@documenso/ui/primitives/button';
 import { msg } from '@lingui/core/macro';
@@ -7,12 +8,10 @@ import { Trans } from '@lingui/react/macro';
 import { ChevronLeft, PlusIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { isRouteErrorResponse, Link, Outlet } from 'react-router';
-
 import { Header as AuthenticatedHeader } from '~/components/general/app-header';
 import { BrandingLogo } from '~/components/general/branding-logo';
 import { GenericErrorLayout } from '~/components/general/generic-error-layout';
 import { appMetaTags } from '~/utils/meta';
-
 import type { Route } from './+types/_layout';
 
 export function meta() {
@@ -54,7 +53,7 @@ export default function PublicProfileLayout() {
 
               <img
                 src={LogoIcon}
-                alt="Documenso Logo"
+                alt={`${PLATFORM_NAME()} Logo`}
                 width={48}
                 height={48}
                 className="h-10 w-auto sm:hidden dark:invert"

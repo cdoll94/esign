@@ -1,5 +1,6 @@
 import { authClient } from '@documenso/auth/client';
 import { useOptionalSession } from '@documenso/lib/client-only/providers/session';
+import { PLATFORM_NAME } from '@documenso/lib/constants/app';
 import { EMAIL_VERIFICATION_STATE } from '@documenso/lib/constants/email';
 import { Button } from '@documenso/ui/primitives/button';
 import { useToast } from '@documenso/ui/primitives/use-toast';
@@ -10,7 +11,6 @@ import { AlertTriangle, CheckCircle2, Loader, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, redirect, useNavigate } from 'react-router';
 import { match } from 'ts-pattern';
-
 import type { Route } from './+types/verify-email.$token';
 
 export const loader = ({ params }: Route.LoaderArgs) => {
@@ -142,7 +142,9 @@ export default function VerifyEmailPage({ loaderData }: Route.ComponentProps) {
             </h2>
 
             <p className="mt-4 text-muted-foreground">
-              <Trans>Your email has been successfully confirmed! You can now use all features of Documenso.</Trans>
+              <Trans>
+                Your email has been successfully confirmed! You can now use all features of {PLATFORM_NAME()}.
+              </Trans>
             </p>
 
             <Button className="mt-4" asChild>
@@ -167,7 +169,7 @@ export default function VerifyEmailPage({ loaderData }: Route.ComponentProps) {
             </h2>
 
             <p className="mt-4 text-muted-foreground">
-              <Trans>Your email has already been confirmed. You can now use all features of Documenso.</Trans>
+              <Trans>Your email has already been confirmed. You can now use all features of {PLATFORM_NAME()}.</Trans>
             </p>
 
             <Button className="mt-4" asChild>

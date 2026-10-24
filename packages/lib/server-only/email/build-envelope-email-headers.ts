@@ -19,8 +19,8 @@ export const buildEnvelopeEmailHeaders = ({
   teamId,
 }: BuildEnvelopeEmailHeadersOptions): Record<string, string> => {
   return {
-    'X-Documenso-Sender-User-Id': String(userId),
-    'X-Documenso-Envelope-Id': envelopeId,
-    'X-Documenso-Team-Id': String(teamId),
+    'X-Esign-Sender-User-Id': String(userId),
+    'X-Esign-Envelope-Id': envelopeId,
+    'X-Esign-Team-Id': String(teamId),
   };
 };
