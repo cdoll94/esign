@@ -107,6 +107,18 @@ ENV NEXT_PRIVATE_TELEMETRY_KEY="$NEXT_PRIVATE_TELEMETRY_KEY"
 ARG NEXT_PRIVATE_TELEMETRY_HOST=""
 ENV NEXT_PRIVATE_TELEMETRY_HOST="$NEXT_PRIVATE_TELEMETRY_HOST"
 
+# Free IP-to-city database (DB-IP Lite, CC BY 4.0) for the approximate location shown next to IP
+# addresses on certificates. Published monthly; fall back to last month early in a month. The app
+# runs without it (IP only) if the download fails.
+RUN mkdir -p /opt/geo && \
+    Y=$(date +%Y) && M=$(date +%m) && MN=${M#0} && \
+    PM=$(printf '%02d' $(( (MN + 10) % 12 + 1 ))) && PY=$([ "$MN" = "1" ] && echo $((Y - 1)) || echo $Y) && \
+    ( wget -qO- "https://download.db-ip.com/free/dbip-city-lite-$Y-$M.mmdb.gz" \
+      || wget -qO- "https://download.db-ip.com/free/dbip-city-lite-$PY-$PM.mmdb.gz" ) \
+      | gunzip > /opt/geo/dbip-city-lite.mmdb || rm -f /opt/geo/dbip-city-lite.mmdb; \
+    ls -la /opt/geo
+ENV NEXT_PRIVATE_IP_LOCATION_DB_PATH=/opt/geo/dbip-city-lite.mmdb
+
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nodejs
