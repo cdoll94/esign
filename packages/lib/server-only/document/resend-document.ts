@@ -30,6 +30,7 @@ import { renderEmailWithI18N } from '../../utils/render-email-with-i18n';
 import { shouldShowNewAccountWarning } from '../../utils/sender-trust';
 import { buildEnvelopeEmailHeaders } from '../email/build-envelope-email-headers';
 import { getEmailContext } from '../email/get-email-context';
+import { getProviderMessageId } from '../email/get-provider-message-id';
 import { getEnvelopeWhereInput } from '../envelope/get-envelope-by-id';
 import { assertOrganisationRatesAndLimits } from '../rate-limit/assert-organisation-rates-and-limits';
 import { updateRecipientNextReminder } from '../recipient/update-recipient-next-reminder';
@@ -288,7 +289,7 @@ export const resendDocument = async ({ id, userId, recipients, teamId, requestMe
 
       // Send email outside any transaction to avoid holding a connection
       // open during network I/O.
-      await emailTransport.sendMail({
+      const sentEmail = await emailTransport.sendMail({
         to: {
           address: email,
           name,
@@ -331,6 +332,7 @@ export const resendDocument = async ({ id, userId, recipients, teamId, requestMe
             recipientRole: recipient.role,
             recipientId: recipient.id,
             isResending: true,
+            providerMessageId: getProviderMessageId(sentEmail),
           },
         }),
       });

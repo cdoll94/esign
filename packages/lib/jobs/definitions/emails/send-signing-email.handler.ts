@@ -17,6 +17,7 @@ import { NEXT_PUBLIC_WEBAPP_URL } from '../../../constants/app';
 import { RECIPIENT_ROLE_TO_EMAIL_TYPE, RECIPIENT_ROLES_DESCRIPTION } from '../../../constants/recipient-roles';
 import { buildEnvelopeEmailHeaders } from '../../../server-only/email/build-envelope-email-headers';
 import { getEmailContext } from '../../../server-only/email/get-email-context';
+import { getProviderMessageId } from '../../../server-only/email/get-provider-message-id';
 import { assertOrganisationRatesAndLimits } from '../../../server-only/rate-limit/assert-organisation-rates-and-limits';
 import { updateRecipientNextReminder } from '../../../server-only/recipient/update-recipient-next-reminder';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../../types/document-audit-logs';
@@ -195,6 +196,8 @@ export const run = async ({ payload, io }: { payload: TSendSigningEmailJobDefini
     newAccountWarningSenderEmail: showNewAccountWarning ? user.email : undefined,
   });
 
+  let providerMessageId: string | undefined;
+
   if (isRecipientEmailValidForSending(recipient)) {
     try {
       await assertOrganisationRatesAndLimits({
@@ -215,7 +218,7 @@ export const run = async ({ payload, io }: { payload: TSendSigningEmailJobDefini
       return;
     }
 
-    await io.runTask('send-signing-email', async () => {
+    providerMessageId = await io.runTask('send-signing-email', async () => {
       const [html, text] = await Promise.all([
         renderEmailWithI18N(template, { lang: emailLanguage, branding }),
         renderEmailWithI18N(template, {
@@ -225,7 +228,7 @@ export const run = async ({ payload, io }: { payload: TSendSigningEmailJobDefini
         }),
       ]);
 
-      await emailTransport.sendMail({
+      const sentEmail = await emailTransport.sendMail({
         to: {
           name: recipient.name,
           address: recipient.email,
@@ -241,6 +244,8 @@ export const run = async ({ payload, io }: { payload: TSendSigningEmailJobDefini
           teamId: envelope.teamId,
         }),
       });
+
+      return getProviderMessageId(sentEmail);
     });
   }
 
@@ -279,6 +284,7 @@ export const run = async ({ payload, io }: { payload: TSendSigningEmailJobDefini
         recipientEmail: recipient.email,
         recipientRole: recipient.role,
         isResending: false,
+        providerMessageId,
       },
     }),
   });

@@ -12,6 +12,7 @@ import { createDocumentAuditLogData } from '../../utils/document-audit-logs';
 import { isRecipientEmailValidForSending } from '../../utils/recipients';
 import { renderEmailWithI18N } from '../../utils/render-email-with-i18n';
 import { getEmailContext } from '../email/get-email-context';
+import { getProviderMessageId } from '../email/get-provider-message-id';
 import { generateSigningGateCode } from './code';
 import { SIGNING_GATE_CODE_EXPIRATION_MINUTES } from './constants';
 import { getSigningGateRecipient } from './get-gate-recipient';
@@ -55,7 +56,7 @@ export const sendSigningGateCode = async ({ recipientToken, requestMetadata }: S
     renderEmailWithI18N(template, { lang: emailLanguage, branding, plainText: true }),
   ]);
 
-  await emailTransport.sendMail({
+  const sentEmail = await emailTransport.sendMail({
     to: {
       address: recipient.email,
       name: recipient.name,
@@ -80,6 +81,7 @@ export const sendSigningGateCode = async ({ recipientToken, requestMetadata }: S
         recipientEmail: recipient.email,
         recipientName: recipient.name,
         recipientId: recipient.id,
+        providerMessageId: getProviderMessageId(sentEmail),
       },
     }),
   });

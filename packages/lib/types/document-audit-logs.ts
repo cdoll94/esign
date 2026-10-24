@@ -252,6 +252,7 @@ export const ZDocumentAuditLogEventEmailSentSchema = z.object({
   data: ZBaseRecipientDataSchema.extend({
     emailType: ZDocumentAuditLogEmailTypeSchema,
     isResending: z.boolean(),
+    providerMessageId: z.string().optional(),
   }),
 });
 
@@ -594,6 +595,7 @@ export const ZDocumentAuditLogEventDocumentRecipientRequested2FAEmailSchema = z.
     recipientEmail: z.string(),
     recipientName: z.string(),
     recipientId: z.number(),
+    providerMessageId: z.string().optional(),
   }),
 });
 
@@ -655,6 +657,7 @@ export const ZDocumentAuditLogEventEmailDeliverySchema = z.object({
     emailId: z.string(),
     subject: z.string().optional(),
     detail: z.string().optional(),
+    providerEventId: z.string().optional(),
   }),
 });
 

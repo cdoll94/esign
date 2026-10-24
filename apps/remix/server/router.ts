@@ -27,6 +27,7 @@ import type { Logger } from 'pino';
 
 import { aiRoute } from './api/ai/route';
 import { downloadRoute } from './api/download/download';
+import { emailEventsRoute } from './api/email-events/route';
 import { filesRoute } from './api/files/files';
 import { signingGateRoute } from './api/signing-gate/route';
 import { type AppContext, appContext } from './context';
@@ -123,6 +124,9 @@ app.use('/api/v2-beta/*', apiV2RateLimitMiddleware);
 
 // Auth server.
 app.route('/api/auth', auth);
+
+// Email provider delivery webhooks (signature-verified, no session).
+app.route('/api/email-events', emailEventsRoute);
 
 // Signing gate: e-sign consent and emailed code before a recipient can open a document.
 app.route('/api/signing-gate', signingGateRoute);

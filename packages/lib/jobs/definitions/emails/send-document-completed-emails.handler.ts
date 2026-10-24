@@ -7,6 +7,7 @@ import { createElement } from 'react';
 import { getI18nInstance } from '../../../client-only/providers/i18n-server';
 import { NEXT_PUBLIC_WEBAPP_URL } from '../../../constants/app';
 import { getEmailContext } from '../../../server-only/email/get-email-context';
+import { getProviderMessageId } from '../../../server-only/email/get-provider-message-id';
 import { assertOrganisationRatesAndLimits } from '../../../server-only/rate-limit/assert-organisation-rates-and-limits';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../../types/document-audit-logs';
 import { extractDerivedDocumentEmailSettings } from '../../../types/document-email';
@@ -138,7 +139,7 @@ export const run = async ({ payload, io }: { payload: TSendDocumentCompletedEmai
 
     const i18n = await getI18nInstance(emailLanguage);
 
-    await emailTransport.sendMail({
+    const sentEmail = await emailTransport.sendMail({
       to: [
         {
           name: owner.name || '',
@@ -166,6 +167,7 @@ export const run = async ({ payload, io }: { payload: TSendDocumentCompletedEmai
           recipientId: owner.id,
           recipientRole: 'OWNER',
           isResending: false,
+          providerMessageId: getProviderMessageId(sentEmail),
         },
       }),
     });
@@ -235,7 +237,7 @@ export const run = async ({ payload, io }: { payload: TSendDocumentCompletedEmai
 
       const i18n = await getI18nInstance(emailLanguage);
 
-      await emailTransport.sendMail({
+      const sentEmail = await emailTransport.sendMail({
         to: [
           {
             name: recipient.name,
@@ -266,6 +268,7 @@ export const run = async ({ payload, io }: { payload: TSendDocumentCompletedEmai
             recipientId: recipient.id,
             recipientRole: recipient.role,
             isResending: false,
+            providerMessageId: getProviderMessageId(sentEmail),
           },
         }),
       });
