@@ -22,6 +22,7 @@ import { getNextPendingRecipient } from '@documenso/lib/server-only/recipient/ge
 import { getRecipientByToken } from '@documenso/lib/server-only/recipient/get-recipient-by-token';
 import { getRecipientSignatures } from '@documenso/lib/server-only/recipient/get-recipient-signatures';
 import { getRecipientsForAssistant } from '@documenso/lib/server-only/recipient/get-recipients-for-assistant';
+import { hasValidSigningGateCookie } from '@documenso/lib/server-only/signing-gate/session-cookie';
 import { getTeamSettings } from '@documenso/lib/server-only/team/get-team-settings';
 import { assertSenderNotDisabled } from '@documenso/lib/server-only/user/assert-user-not-disabled';
 import { getUserByEmail } from '@documenso/lib/server-only/user/get-user-by-email';
@@ -48,11 +49,53 @@ import { DocumentSigningPageViewV2 } from '~/components/general/document-signing
 import { DocumentSigningProvider } from '~/components/general/document-signing/document-signing-provider';
 import { DocumentSigningSenderDisabledPage } from '~/components/general/document-signing/document-signing-sender-disabled-page';
 import { EnvelopeSigningProvider } from '~/components/general/document-signing/envelope-signing-provider';
+import { SigningGatePage } from '~/components/general/document-signing/signing-gate-page';
 import { RecipientBranding } from '~/components/general/recipient-branding';
 import { useCspNonce } from '~/utils/nonce';
 import { superLoaderJson, useSuperLoaderData } from '~/utils/super-json-loader';
 
 import type { Route } from './+types/_index';
+
+const maskEmail = (email: string) => {
+  const [local, domain] = email.split('@');
+
+  if (!local || !domain) {
+    return email;
+  }
+
+  return `${local.slice(0, 2)}${'*'.repeat(Math.max(local.length - 2, 1))}@${domain}`;
+};
+
+// Every recipient consents to e-records and proves control of their inbox before the
+// document is shown, unless they are signed in as that recipient.
+const getSigningGate = ({
+  request,
+  token,
+  sessionEmail,
+  recipient,
+  documentTitle,
+}: {
+  request: Request;
+  token: string;
+  sessionEmail?: string;
+  recipient: { email: string; name: string };
+  documentTitle: string;
+}) => {
+  if (sessionEmail && sessionEmail === recipient.email) {
+    return null;
+  }
+
+  if (hasValidSigningGateCookie(request, token)) {
+    return null;
+  }
+
+  return {
+    token,
+    documentTitle,
+    recipientName: recipient.name || recipient.email,
+    maskedEmail: maskEmail(recipient.email),
+  };
+};
 
 const handleV1Loader = async ({ params, request }: Route.LoaderArgs) => {
   const { requestMetadata } = getOptionalLoaderContext();
@@ -136,6 +179,28 @@ const handleV1Loader = async ({ params, request }: Route.LoaderArgs) => {
       isDocumentAccessValid: false,
       recipientEmail: recipient.email,
       recipientHasAccount,
+    } as const;
+  }
+
+  const isAwaitingRecipient =
+    document.status === DocumentStatus.PENDING &&
+    recipient.signingStatus === SigningStatus.NOT_SIGNED &&
+    !isRecipientExpired(recipient);
+
+  const signingGate = isAwaitingRecipient
+    ? getSigningGate({
+        request,
+        token,
+        sessionEmail: user?.email,
+        recipient,
+        documentTitle: document.title,
+      })
+    : null;
+
+  if (signingGate) {
+    return {
+      isDocumentAccessValid: true,
+      signingGate,
     } as const;
   }
 
@@ -263,6 +328,21 @@ const handleV2Loader = async ({ params, request }: Route.LoaderArgs) => {
 
   if (isExpired) {
     throw redirect(`/sign/${token}/expired`);
+  }
+
+  const signingGate = getSigningGate({
+    request,
+    token,
+    sessionEmail: user?.email,
+    recipient,
+    documentTitle: envelope.title,
+  });
+
+  if (signingGate) {
+    return {
+      isDocumentAccessValid: true,
+      signingGate,
+    } as const;
   }
 
   await viewedDocument({
@@ -430,6 +510,10 @@ const SigningPageV1 = ({ data }: { data: Awaited<ReturnType<typeof handleV1Loade
     return <DocumentSigningAuthPageView email={data.recipientEmail} emailHasAccount={!!data.recipientHasAccount} />;
   }
 
+  if ('signingGate' in data && data.signingGate) {
+    return <SigningGatePage {...data.signingGate} />;
+  }
+
   const {
     document,
     fields,
@@ -527,6 +611,10 @@ const SigningPageV2 = ({ data }: { data: Awaited<ReturnType<typeof handleV2Loade
 
   if (!data.isDocumentAccessValid) {
     return <DocumentSigningAuthPageView email={data.recipientEmail} emailHasAccount={!!data.recipientHasAccount} />;
+  }
+
+  if ('signingGate' in data && data.signingGate) {
+    return <SigningGatePage {...data.signingGate} />;
   }
 
   if ('csc' in data && data.csc?.state === 'blocked') {

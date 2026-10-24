@@ -1,4 +1,16 @@
 export const getIpAddress = (req: Request) => {
+  // The client can send its own x-forwarded-for; when the host's edge proxy sets a header
+  // the client cannot forge (Railway: x-real-ip), trust only that one for audit records.
+  const trustedHeader = typeof process !== 'undefined' ? process.env.NEXT_PRIVATE_TRUSTED_IP_HEADER : undefined;
+
+  if (trustedHeader) {
+    const trustedIp = req.headers.get(trustedHeader);
+
+    if (trustedIp) {
+      return trustedIp.split(',')[0].trim();
+    }
+  }
+
   // Check for forwarded headers first (common in proxy setups)
   const forwarded = req.headers.get('x-forwarded-for');
 

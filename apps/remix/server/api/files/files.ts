@@ -1,7 +1,9 @@
 import { getOptionalNonEmbedSession } from '@documenso/auth/server/lib/session/embed-session-restrictions';
+import { getOptionalSession } from '@documenso/auth/server/lib/utils/get-session';
 import { APP_DOCUMENT_UPLOAD_SIZE_LIMIT } from '@documenso/lib/constants/app';
 import { AppError } from '@documenso/lib/errors/app-error';
 import { verifyEmbeddingPresignToken } from '@documenso/lib/server-only/embedding-presign/verify-embedding-presign-token';
+import { isSigningGateSatisfied } from '@documenso/lib/server-only/signing-gate/is-signing-gate-satisfied';
 import { putNormalizedPdfFileServerSide } from '@documenso/lib/universal/upload/put-file.server';
 import { prisma } from '@documenso/prisma';
 import { sValidator } from '@hono/standard-validator';
@@ -239,6 +241,16 @@ export const filesRoute = new Hono<HonoEnv>()
     async (c) => {
       const { token, envelopeItemId } = c.req.valid('param');
 
+      if (
+        !(await isSigningGateSatisfied({
+          request: c.req.raw,
+          recipientToken: token,
+          sessionEmail: (await getOptionalSession(c)).user?.email,
+        }))
+      ) {
+        return c.json({ error: 'Verification required' }, 401);
+      }
+
       let envelopeWhereQuery: Prisma.EnvelopeItemWhereUniqueInput = {
         id: envelopeItemId,
         envelope: {
@@ -290,6 +302,16 @@ export const filesRoute = new Hono<HonoEnv>()
     sValidator('param', ZGetEnvelopeItemFileTokenDownloadRequestParamsSchema),
     async (c) => {
       const { token, envelopeItemId, version } = c.req.valid('param');
+
+      if (
+        !(await isSigningGateSatisfied({
+          request: c.req.raw,
+          recipientToken: token,
+          sessionEmail: (await getOptionalSession(c)).user?.email,
+        }))
+      ) {
+        return c.json({ error: 'Verification required' }, 401);
+      }
 
       let envelopeWhereQuery: Prisma.EnvelopeItemWhereUniqueInput = {
         id: envelopeItemId,

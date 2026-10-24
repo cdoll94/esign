@@ -20,6 +20,7 @@ import { getSignatureFontFamily } from '../../constants/pdf';
 import { RECIPIENT_ROLE_SIGNING_REASONS, RECIPIENT_ROLES_DESCRIPTION } from '../../constants/recipient-roles';
 import type { TDocumentAuditLogBaseSchema } from '../../types/document-audit-logs';
 import { svgToPng } from '../../utils/images/svg-to-png';
+import { formatIpWithLocation } from '../ip-location/get-ip-location';
 import { ensureFontLibrary } from './helpers';
 
 type ColumnWidths = [number, number, number];
@@ -391,7 +392,7 @@ const renderColumnTwo = (options: RenderColumnOptions) => {
 
   const ipLabelAndText = renderLabelAndText({
     label: i18n._(msg`IP Address`),
-    text: relevantLog?.ipAddress ?? i18n._(msg`Unknown`),
+    text: formatIpWithLocation(relevantLog?.ipAddress) ?? i18n._(msg`Unknown`),
     width,
     y: column.getClientRect().height + 6,
   });

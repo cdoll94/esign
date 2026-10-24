@@ -28,6 +28,7 @@ import type { Logger } from 'pino';
 import { aiRoute } from './api/ai/route';
 import { downloadRoute } from './api/download/download';
 import { filesRoute } from './api/files/files';
+import { signingGateRoute } from './api/signing-gate/route';
 import { type AppContext, appContext } from './context';
 import { csrfMiddleware } from './csrf-middleware';
 import { appMiddleware } from './middleware';
@@ -105,6 +106,7 @@ app.use('/api/v2/*', csrfMiddleware);
 app.use('/api/v2-beta/*', csrfMiddleware);
 app.use('/api/files/*', csrfMiddleware);
 app.use('/api/ai/*', csrfMiddleware);
+app.use('/api/signing-gate/*', csrfMiddleware);
 
 // Embed sessions are signing-only. `/api/files` instead ignores them per route
 // (`getOptionalNonEmbedSession`) so embedded authoring on a host that also ran
@@ -121,6 +123,9 @@ app.use('/api/v2-beta/*', apiV2RateLimitMiddleware);
 
 // Auth server.
 app.route('/api/auth', auth);
+
+// Signing gate: e-sign consent and emailed code before a recipient can open a document.
+app.route('/api/signing-gate', signingGateRoute);
 
 // Files route.
 app.use('/api/files/upload-pdf', fileRateLimitMiddleware);

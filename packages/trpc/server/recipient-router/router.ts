@@ -8,6 +8,7 @@ import { getRecipientById } from '@documenso/lib/server-only/recipient/get-recip
 import { setDocumentRecipients } from '@documenso/lib/server-only/recipient/set-document-recipients';
 import { setTemplateRecipients } from '@documenso/lib/server-only/recipient/set-template-recipients';
 import { updateEnvelopeRecipients } from '@documenso/lib/server-only/recipient/update-envelope-recipients';
+import { isSigningGateSatisfied } from '@documenso/lib/server-only/signing-gate/is-signing-gate-satisfied';
 import { assertSenderNotDisabled } from '@documenso/lib/server-only/user/assert-user-not-disabled';
 import { isTspEnvelope } from '@documenso/lib/types/signature-level';
 import { unsafeBuildEnvelopeIdQuery } from '@documenso/lib/utils/envelope';
@@ -625,6 +626,18 @@ export const recipientRouter = router({
         // Checked here as well as inside `completeDocumentWithToken` so the
         // TSP branch below is covered.
         await assertSenderNotDisabled({ userId: envelope.userId });
+
+        const isGateSatisfied = await isSigningGateSatisfied({
+          request: ctx.req,
+          recipientToken: token,
+          sessionEmail: ctx.user?.email,
+        });
+
+        if (!isGateSatisfied) {
+          throw new AppError(AppErrorCode.UNAUTHORIZED, {
+            message: 'The recipient must verify their email before completing the document',
+          });
+        }
 
         if (isTspEnvelope(envelope)) {
           return await prepareCscRecipientSigning({

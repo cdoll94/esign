@@ -56,6 +56,10 @@ export const ZDocumentAuditLogTypeSchema = z.enum([
   'DOCUMENT_ACCESS_AUTH_2FA_VALIDATED', // When ACCESS AUTH 2FA is successfully validated.
   'DOCUMENT_ACCESS_AUTH_2FA_FAILED', // When ACCESS AUTH 2FA validation fails.
 
+  // Signing gate and email delivery events.
+  'DOCUMENT_RECIPIENT_ESIGN_CONSENTED', // When a recipient consents to electronic records and signatures (ESIGN/UETA).
+  'EMAIL_DELIVERY_EVENT', // When the email provider reports delivery, bounce, open, click or complaint for an email.
+
   // CSC / TSP signing events.
   'DOCUMENT_RECIPIENT_CSC_AUTHENTICATED', // Service-scope OAuth complete; CSC credential persisted.
   'DOCUMENT_RECIPIENT_CSC_AUTHENTICATION_FAILED', // Service-scope OAuth completed but TSP returned a blocking error (empty credential list / invalid cert / refused algorithm).
@@ -618,6 +622,43 @@ export const ZDocumentAuditLogEventDocumentRecipientFailed2FAEmailSchema = z.obj
 });
 
 /**
+ * Event: Recipient consented to do business electronically before opening the document.
+ */
+export const ZDocumentAuditLogEventDocumentRecipientEsignConsentedSchema = z.object({
+  type: z.literal(DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_RECIPIENT_ESIGN_CONSENTED),
+  data: z.object({
+    recipientEmail: z.string(),
+    recipientName: z.string(),
+    recipientId: z.number(),
+    disclosureVersion: z.string(),
+  }),
+});
+
+export const ZEmailDeliveryEventTypeSchema = z.enum([
+  'DELIVERED',
+  'DELAYED',
+  'BOUNCED',
+  'COMPLAINED',
+  'OPENED',
+  'CLICKED',
+]);
+
+/**
+ * Event: The email provider reported what happened to an email sent for this document.
+ */
+export const ZDocumentAuditLogEventEmailDeliverySchema = z.object({
+  type: z.literal(DOCUMENT_AUDIT_LOG_TYPE.EMAIL_DELIVERY_EVENT),
+  data: z.object({
+    event: ZEmailDeliveryEventTypeSchema,
+    recipientEmail: z.string(),
+    recipientId: z.number().optional(),
+    emailId: z.string(),
+    subject: z.string().optional(),
+    detail: z.string().optional(),
+  }),
+});
+
+/**
  * Event: Document sent.
  */
 export const ZDocumentAuditLogEventDocumentSentSchema = z.object({
@@ -859,6 +900,8 @@ export const ZDocumentAuditLogSchema = ZDocumentAuditLogBaseSchema.and(
     ZDocumentAuditLogEventDocumentRecipientRequested2FAEmailSchema,
     ZDocumentAuditLogEventDocumentRecipientValidated2FAEmailSchema,
     ZDocumentAuditLogEventDocumentRecipientFailed2FAEmailSchema,
+    ZDocumentAuditLogEventDocumentRecipientEsignConsentedSchema,
+    ZDocumentAuditLogEventEmailDeliverySchema,
     ZDocumentAuditLogEventDocumentSentSchema,
     ZDocumentAuditLogEventDocumentTitleUpdatedSchema,
     ZDocumentAuditLogEventDocumentExternalIdUpdatedSchema,

@@ -146,3 +146,18 @@ export const fileUploadRateLimit = createRateLimit({
   max: 20,
   window: '1m',
 });
+
+export const signingGateSendCodeRateLimit = createRateLimit({
+  action: 'signing-gate.send-code',
+  max: 5,
+  globalMax: 30,
+  window: '15m',
+});
+
+// Six-digit codes: 10 tries per 15 minutes keeps guessing odds negligible over a code's lifetime.
+export const signingGateVerifyRateLimit = createRateLimit({
+  action: 'signing-gate.verify',
+  max: 10,
+  globalMax: 50,
+  window: '15m',
+});

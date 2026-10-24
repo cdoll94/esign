@@ -1,3 +1,5 @@
+import { getOptionalSession } from '@documenso/auth/server/lib/utils/get-session';
+import { isSigningGateSatisfied } from '@documenso/lib/server-only/signing-gate/is-signing-gate-satisfied';
 import { prisma } from '@documenso/prisma';
 import { sValidator } from '@hono/standard-validator';
 import type { Prisma } from '@prisma/client';
@@ -28,6 +30,16 @@ route.get(
 
     if (!token) {
       return c.json({ error: 'Not found' }, 404);
+    }
+
+    if (
+      !(await isSigningGateSatisfied({
+        request: c.req.raw,
+        recipientToken: token,
+        sessionEmail: (await getOptionalSession(c)).user?.email,
+      }))
+    ) {
+      return c.json({ error: 'Verification required' }, 401);
     }
 
     // Recipient token based query.

@@ -20,6 +20,7 @@ import { RECIPIENT_ROLES_DESCRIPTION } from '../../constants/recipient-roles';
 import type { TDocumentAuditLog } from '../../types/document-audit-logs';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../types/document-audit-logs';
 import { formatDocumentAuditLogAction } from '../../utils/document-audit-logs';
+import { formatIpWithLocation } from '../ip-location/get-ip-location';
 import { ensureFontLibrary } from './helpers';
 
 export type AuditLogRecipient = {
@@ -397,7 +398,7 @@ const renderRow = (options: RenderRowOptions) => {
   // Row 1 Column 2
   const ipAddressLabel = renderVerticalLabelAndText({
     label: i18n._(msg`IP Address`).toUpperCase(),
-    text: auditLog.ipAddress || 'N/A',
+    text: formatIpWithLocation(auditLog.ipAddress) || 'N/A',
     align: 'right',
     x: columnWidth + columnSpacing,
     width: columnWidth,

@@ -1,156 +1,148 @@
-import { SUPPORT_EMAIL } from '@documenso/lib/constants/app';
-import { Button } from '@documenso/ui/primitives/button';
+import { PLATFORM_LEGAL_NAME, PLATFORM_NAME, SUPPORT_EMAIL } from '@documenso/lib/constants/app';
+import { SIGNING_GATE_DISCLOSURE_VERSION } from '@documenso/lib/server-only/signing-gate/constants';
 import { Trans } from '@lingui/react/macro';
-import { Link } from 'react-router';
 
+// Shown to every signer before they open a document. Changing the substance of this text
+// needs a new SIGNING_GATE_DISCLOSURE_VERSION so each consent record names the text agreed to.
 export default function SignatureDisclosure() {
+  const platformName = PLATFORM_NAME();
+  const legalName = PLATFORM_LEGAL_NAME();
+
   return (
     <div>
       <article className="prose dark:prose-invert">
         <h1>
-          <Trans>Electronic Signature Disclosure</Trans>
+          <Trans>Electronic Records and Signature Disclosure</Trans>
         </h1>
 
-        <h2>
-          <Trans>Welcome</Trans>
-        </h2>
         <p>
           <Trans>
-            Thank you for using Documenso to perform your electronic document signing. The purpose of this disclosure is
-            to inform you about the process, legality, and your rights regarding the use of electronic signatures on our
-            platform. By opting to use an electronic signature, you are agreeing to the terms and conditions outlined
-            below.
+            {platformName} is the electronic signature service operated by {legalName}, a Nevada limited liability
+            company. Before you open a document sent to you through {platformName}, we ask you to agree to receive and
+            sign it electronically. This page explains what that means and your rights, as required by the U.S.
+            Electronic Signatures in Global and National Commerce Act (ESIGN Act) and the Uniform Electronic
+            Transactions Act (UETA).
           </Trans>
         </p>
 
         <h2>
-          <Trans>Acceptance and Consent</Trans>
+          <Trans>What you are agreeing to</Trans>
         </h2>
         <p>
           <Trans>
-            When you use our platform to affix your electronic signature to documents, you are consenting to do so under
-            the Electronic Signatures in Global and National Commerce Act (E-Sign Act) and other applicable laws. This
-            action indicates your agreement to use electronic means to sign documents and receive notifications.
+            If you agree, the document, and the notices and copies that relate to it, will be given to you
+            electronically on the signing page and by email instead of on paper. Your agreement covers the document you
+            were invited to and the emails about it (invitations, reminders, verification codes and the completed copy).
+            It does not cover any other document unless you agree again.
           </Trans>
         </p>
 
         <h2>
-          <Trans>Legality of Electronic Signatures</Trans>
+          <Trans>Your electronic signature is binding</Trans>
         </h2>
         <p>
           <Trans>
-            An electronic signature provided by you on our platform, achieved through clicking through to a document and
-            entering your name, or any other electronic signing method we provide, is legally binding. It carries the
-            same weight and enforceability as a manual signature written with ink on paper.
+            When you sign through {platformName}, by drawing, typing or uploading your signature, entering your
+            initials, or clicking to complete, you are signing the document. Your electronic signature has the same
+            legal effect as a handwritten signature.
           </Trans>
         </p>
 
         <h2>
-          <Trans>System Requirements</Trans>
+          <Trans>Getting a paper copy</Trans>
         </h2>
         <p>
-          <Trans>To use our electronic signature service, you must have access to:</Trans>
+          <Trans>
+            You may ask for a paper copy of any document you are asked to sign, or have signed, at no charge. Reply to
+            the email you received or write to <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>, and tell us
+            which document you need.
+          </Trans>
         </p>
+
+        <h2>
+          <Trans>Withdrawing your agreement</Trans>
+        </h2>
+        <p>
+          <Trans>
+            You may withdraw your agreement to use electronic records at any time before you sign, at no charge, by
+            declining the document on the signing page or by telling the sender (reply to their email, or write to{' '}
+            <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>). If you withdraw, the document will need to be
+            signed on paper instead, which may delay the transaction. Withdrawing does not undo anything you already
+            signed electronically.
+          </Trans>
+        </p>
+
+        <h2>
+          <Trans>What you need</Trans>
+        </h2>
         <ul>
           <li>
-            <Trans>A stable internet connection</Trans>
+            <Trans>An internet connection and a current web browser (Chrome, Safari, Edge or Firefox)</Trans>
           </li>
           <li>
-            <Trans>An email account</Trans>
+            <Trans>An email account you can access, to receive verification codes and your completed copy</Trans>
           </li>
           <li>
-            <Trans>A device capable of accessing, opening, and reading documents</Trans>
-          </li>
-          <li>
-            <Trans>A means to print or download documents for your records</Trans>
+            <Trans>A device that can open PDF files, and a way to save or print them if you want a copy</Trans>
           </li>
         </ul>
-
-        <h2>
-          <Trans>Electronic Delivery of Documents</Trans>
-        </h2>
         <p>
           <Trans>
-            All documents related to the electronic signing process will be provided to you electronically through our
-            platform or via email. It is your responsibility to ensure that your email address is current and that you
-            can receive and open our emails.
+            By entering the code we email you and opening the document, you show that you can access electronic records
+            in the form we use. If these requirements change in a way that could stop you accessing or keeping your
+            records, we will tell you and ask for your agreement again.
           </Trans>
         </p>
 
         <h2>
-          <Trans>Consent to Electronic Transactions</Trans>
+          <Trans>Keeping your email address up to date</Trans>
         </h2>
         <p>
           <Trans>
-            By using the electronic signature feature, you are consenting to conduct transactions and receive
-            disclosures electronically. You acknowledge that your electronic signature on documents is binding and that
-            you accept the terms outlined in the documents you are signing.
+            We send documents and copies to the email address the sender gave us. If it changes, tell the sender so you
+            keep receiving them.
           </Trans>
         </p>
 
         <h2>
-          <Trans>Withdrawing Consent</Trans>
+          <Trans>Your copy and our records</Trans>
         </h2>
         <p>
           <Trans>
-            You have the right to withdraw your consent to use electronic signatures at any time before completing the
-            signing process. To withdraw your consent, please contact the sender of the document. In failing to contact
-            the sender you may reach out to <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> for assistance. Be
-            aware that withdrawing consent may delay or halt the completion of the related transaction or service.
+            When everyone has signed, every party is emailed the completed document with a Certificate of Completion,
+            and you can download it from the signing page. We keep the signed document and its record for at least seven
+            years.
           </Trans>
         </p>
 
         <h2>
-          <Trans>Updating Your Information</Trans>
+          <Trans>What we record, and why</Trans>
         </h2>
         <p>
           <Trans>
-            It is crucial to keep your contact information, especially your email address, up to date with us. Please
-            notify us immediately of any changes to ensure that you continue to receive all necessary communications.
+            To show who signed and when, we record each step of the signing process: when emails are sent and delivered,
+            when the document is opened, verification codes, your consent, and your signature. For each step we record
+            the date and time, your email address, your IP address, the approximate location that IP address suggests
+            (city and country), and your browser and device type. This record is attached to the completed document and
+            kept with it. It is used only to prove the signing process and is not sold or used for marketing. IP
+            geolocation by DB-IP (db-ip.com).
           </Trans>
         </p>
 
         <h2>
-          <Trans>Retention of Documents</Trans>
+          <Trans>Questions</Trans>
         </h2>
         <p>
           <Trans>
-            After signing a document electronically, you will be provided the opportunity to view, download, and print
-            the document for your records. It is highly recommended that you retain a copy of all electronically signed
-            documents for your personal records. We will also retain a copy of the signed document for our records
-            however we may not be able to provide you with a copy of the signed document after a certain period of time.
+            Questions about this disclosure or a document? Reply to the email you received, or write to{' '}
+            <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.
           </Trans>
         </p>
 
-        <h2>
-          <Trans>Acknowledgment</Trans>
-        </h2>
-        <p>
-          <Trans>
-            By proceeding to use the electronic signature service provided by Documenso, you affirm that you have read
-            and understood this disclosure. You agree to all terms and conditions related to the use of electronic
-            signatures and electronic transactions as outlined herein.
-          </Trans>
-        </p>
-
-        <h2>
-          <Trans>Contact Information</Trans>
-        </h2>
-        <p>
-          <Trans>
-            For any questions regarding this disclosure, electronic signatures, or any related process, please contact
-            us at: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
-          </Trans>
+        <p className="text-muted-foreground text-sm">
+          <Trans>Version {SIGNING_GATE_DISCLOSURE_VERSION}</Trans>
         </p>
       </article>
-
-      <div className="mt-8">
-        <Button asChild>
-          <Link to="/">
-            <Trans>Back home</Trans>
-          </Link>
-        </Button>
-      </div>
     </div>
   );
 }

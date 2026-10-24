@@ -543,20 +543,41 @@ export const formatDocumentAuditLogAction = (i18n: I18n, auditLog: TDocumentAudi
       };
     })
     .with({ type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_ACCESS_AUTH_2FA_REQUESTED }, () => ({
-      anonymous: msg`Recipient requested a 2FA token for the document`,
-      you: msg`You requested a 2FA token for the document`,
-      user: msg`${user} requested a 2FA token for the document`,
+      anonymous: msg`Recipient requested an email verification code`,
+      you: msg`You requested an email verification code`,
+      user: msg`${user} requested an email verification code`,
     }))
     .with({ type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_ACCESS_AUTH_2FA_VALIDATED }, () => ({
-      anonymous: msg`Recipient validated a 2FA token for the document`,
-      you: msg`You validated a 2FA token for the document`,
-      user: msg`${user} validated a 2FA token for the document`,
+      anonymous: msg`Recipient verified their email with a one-time code`,
+      you: msg`You verified your email with a one-time code`,
+      user: msg`${user} verified their email with a one-time code`,
     }))
     .with({ type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_ACCESS_AUTH_2FA_FAILED }, () => ({
-      anonymous: msg`Recipient failed to validate a 2FA token for the document`,
-      you: msg`You failed to validate a 2FA token for the document`,
-      user: msg`${user} failed to validate a 2FA token for the document`,
+      anonymous: msg`Recipient entered an incorrect email verification code`,
+      you: msg`You entered an incorrect email verification code`,
+      user: msg`${user} entered an incorrect email verification code`,
     }))
+    .with({ type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_RECIPIENT_ESIGN_CONSENTED }, () => ({
+      anonymous: msg`Recipient consented to use electronic records and signatures`,
+      you: msg`You consented to use electronic records and signatures`,
+      user: msg`${user} consented to use electronic records and signatures`,
+    }))
+    .with({ type: DOCUMENT_AUDIT_LOG_TYPE.EMAIL_DELIVERY_EVENT }, ({ data }) => {
+      const description = match(data.event)
+        .with('DELIVERED', () => msg`Email delivered to ${data.recipientEmail}`)
+        .with('DELAYED', () => msg`Email delivery to ${data.recipientEmail} delayed`)
+        .with('BOUNCED', () => msg`Email to ${data.recipientEmail} bounced`)
+        .with('COMPLAINED', () => msg`Email to ${data.recipientEmail} was marked as spam`)
+        .with('OPENED', () => msg`Email opened by ${data.recipientEmail}`)
+        .with('CLICKED', () => msg`Link in email clicked by ${data.recipientEmail}`)
+        .exhaustive();
+
+      return {
+        anonymous: description,
+        you: description,
+        user: description,
+      };
+    })
     .with({ type: DOCUMENT_AUDIT_LOG_TYPE.EMAIL_SENT }, ({ data }) => {
       if (data.isResending) {
         return {

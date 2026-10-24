@@ -72,7 +72,15 @@ export const IS_DOCUMENSO_CLOUD = () => env('NEXT_PUBLIC_IS_DOCUMENSO_CLOUD') ==
 export const API_V2_BETA_URL = '/api/v2-beta';
 export const API_V2_URL = '/api/v2';
 
-export const SUPPORT_EMAIL = env('NEXT_PUBLIC_SUPPORT_EMAIL') ?? 'support@documenso.com';
+export const SUPPORT_EMAIL = env('NEXT_PUBLIC_SUPPORT_EMAIL') ?? 'contracts@sign.tinasu.com';
+
+// The platform's display name is a single setting so it can be renamed without code changes.
+export const PLATFORM_NAME = () => env('NEXT_PUBLIC_PLATFORM_NAME') ?? 'Simple Life Media';
+
+export const PLATFORM_LEGAL_NAME = () => env('NEXT_PUBLIC_PLATFORM_LEGAL_NAME') ?? 'Simple Life Media, LLC';
+
+// AGPL-3.0 section 13: users interacting with the modified program over a network must be offered its source.
+export const SOURCE_CODE_URL = () => env('NEXT_PUBLIC_SOURCE_CODE_URL') ?? 'https://github.com/cdoll94/esign';
 
 export const USE_INTERNAL_URL_BROWSERLESS = () => env('NEXT_PUBLIC_USE_INTERNAL_URL_BROWSERLESS') === 'true';
 
@@ -100,7 +108,8 @@ export const IS_AI_FEATURES_CONFIGURED = (): boolean => {
 export const NEXT_PRIVATE_USE_PLAYWRIGHT_PDF = () => env('NEXT_PRIVATE_USE_PLAYWRIGHT_PDF') === 'true';
 
 export const NEXT_PRIVATE_SIGNING_TIMESTAMP_AUTHORITY = () => env('NEXT_PRIVATE_SIGNING_TIMESTAMP_AUTHORITY');
-export const NEXT_PRIVATE_SIGNING_REASON = () => env('NEXT_PRIVATE_SIGNING_REASON') || 'Signed by Documenso';
+export const NEXT_PRIVATE_SIGNING_REASON = () =>
+  env('NEXT_PRIVATE_SIGNING_REASON') || `Signed electronically via ${PLATFORM_NAME()}`;
 
 export const NEXT_PRIVATE_SIGNING_TRANSPORT = () => env('NEXT_PRIVATE_SIGNING_TRANSPORT') || 'local';
 
