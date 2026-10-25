@@ -3347,6 +3347,7 @@ msgid "Contact sales here"
 msgstr "영업팀에 문의"
 
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
+#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
 msgid "Contact us"
 msgstr "문의하기"
 
@@ -3624,7 +3625,7 @@ msgid "Create an organisation to get started."
 msgstr "시작하려면 조직을 생성하세요."
 
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/settings.tokens.tsx
-msgid "Create and manage API tokens. See our <0>documentation</0> for more information."
+msgid "Create and manage API tokens."
 msgstr ""
 
 #: apps/remix/app/components/dialogs/template-use-dialog.tsx
@@ -3777,8 +3778,8 @@ msgid "Create your account and start using state-of-the-art document signing."
 msgstr "계정을 만들고 최첨단 전자 서명 서비스를 사용해 보세요."
 
 #: apps/remix/app/components/forms/signup.tsx
-msgid "Create your account and start using state-of-the-art document signing. Open and beautiful signing is within your grasp."
-msgstr "계정을 만들고 최첨단 전자 서명 서비스를 시작하세요. 개방적이고 아름다운 서명이 당신의 손 안에 있습니다."
+msgid "Create your account to send and sign documents."
+msgstr ""
 
 #: apps/remix/app/components/dialogs/public-profile-template-manage-dialog.tsx
 #: apps/remix/app/components/general/document/document-page-view-information.tsx
@@ -4468,10 +4469,6 @@ msgstr "직접 링크 서명을 비활성화하면 누구도 해당 링크에 �
 msgid "Disabling the user results in the user not being able to use the account. It also disables all the related contents such as subscription, webhooks, teams, and API keys."
 msgstr "사용자를 비활성화하면 계정을 사용할 수 없게 됩니다. 또한 구독, 웹후크, 팀, API 키 등의 관련 콘텐츠도 모두 비활성화됩니다."
 
-#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
-msgid "Discord"
-msgstr "Discord"
-
 #: apps/remix/app/components/dialogs/organisation-email-create-dialog.tsx
 #: apps/remix/app/components/dialogs/organisation-email-update-dialog.tsx
 #: apps/remix/app/routes/_authenticated+/admin+/email-domains.$id.tsx
@@ -4928,10 +4925,6 @@ msgstr "문서량"
 msgid "Document will be permanently deleted"
 msgstr "문서는 영구적으로 삭제됩니다"
 
-#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
-msgid "Documentation"
-msgstr "문서"
-
 #: apps/remix/app/components/general/app-command-menu.tsx
 #: apps/remix/app/components/general/app-nav-desktop.tsx
 #: apps/remix/app/components/general/app-nav-mobile.tsx
@@ -4939,7 +4932,6 @@ msgstr "문서"
 #: apps/remix/app/components/general/envelope-editor/envelope-editor-upload-page.tsx
 #: apps/remix/app/components/general/organisation-usage-panel.tsx
 #: apps/remix/app/components/general/use-admin-search-categories.ts
-#: apps/remix/app/components/general/user-profile-timur.tsx
 #: apps/remix/app/components/tables/admin-dashboard-users-table.tsx
 #: apps/remix/app/components/tables/admin-organisation-stats-table.tsx
 #: apps/remix/app/components/tables/organisation-insights-table.tsx
@@ -6021,6 +6013,10 @@ msgstr "이벤트"
 msgid "Event Type"
 msgstr "이벤트 유형"
 
+#: apps/remix/app/components/forms/certificate-preferences-form.tsx
+msgid "Every signed document always includes its signing certificate and full audit log. These settings cannot be changed."
+msgstr ""
+
 #: apps/remix/app/components/dialogs/folder-update-dialog.tsx
 #: packages/lib/constants/document-visibility.ts
 #: packages/ui/components/document/document-visibility-select.tsx
@@ -6725,10 +6721,6 @@ msgstr "여기에서 팀에 대한 환경설정과 기본값을 설정할 수 �
 msgid "Here's how it works:"
 msgstr "작동 방식은 다음과 같습니다:"
 
-#: apps/remix/app/components/general/user-profile-timur.tsx
-msgid "Hey I’m Timur"
-msgstr "안녕하세요, 저는 Timur입니다"
-
 #: packages/email/template-components/template-document-reminder.tsx
 msgid "Hi {recipientName},"
 msgstr "{recipientName}님, 안녕하세요."
@@ -7220,10 +7212,6 @@ msgstr "일본어"
 #: packages/email/templates/organisation-invite.tsx
 msgid "Join {organisationName} on {0}"
 msgstr ""
-
-#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
-msgid "Join our community on <0>Discord</0> for community support and discussion."
-msgstr "커뮤니티 지원과 논의를 위해 <0>Discord</0> 커뮤니티에 참여하세요."
 
 #: apps/remix/app/components/tables/organisation-insights-table.tsx
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
@@ -7993,6 +7981,10 @@ msgstr ""
 
 #: apps/remix/app/components/general/organisation-usage-panel.tsx
 msgid "Near limit"
+msgstr ""
+
+#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
+msgid "Need help?"
 msgstr ""
 
 #: apps/remix/app/routes/_recipient+/sign.$token+/complete.tsx
@@ -9068,10 +9060,6 @@ msgstr ""
 msgid "Pick an end date"
 msgstr ""
 
-#: apps/remix/app/components/general/user-profile-timur.tsx
-msgid "Pick any of the following agreements below and start signing to get started"
-msgstr "아래 계약 중 하나를 선택하고 서명을 시작해 보세요."
-
 #: apps/remix/app/components/general/folder/folder-card.tsx
 msgid "Pin"
 msgstr "고정"
@@ -9500,6 +9488,11 @@ msgstr ""
 msgid "Questions"
 msgstr ""
 
+#. placeholder {0}: PLATFORM_NAME()
+#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
+msgid "Questions about {0}? Email <0>{SUPPORT_EMAIL}</0>."
+msgstr ""
+
 #: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
 msgid "Questions about this disclosure or a document? Reply to the email you received, or write to <0>{SUPPORT_EMAIL}</0>."
 msgstr ""
@@ -9547,11 +9540,6 @@ msgstr "읽기 전용"
 #: packages/ui/components/document/envelope-recipient-field-tooltip.tsx
 msgid "Read Only"
 msgstr "읽기 전용"
-
-#. placeholder {0}: PLATFORM_NAME()
-#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
-msgid "Read our documentation to get started with {0}."
-msgstr ""
 
 #: apps/remix/app/components/tables/admin-document-recipient-item-table.tsx
 msgid "Read Status"
@@ -11025,7 +11013,6 @@ msgstr ""
 #: apps/remix/app/components/general/document-signing/document-signing-signature-field.tsx
 #: apps/remix/app/components/general/document/document-page-view-button.tsx
 #: apps/remix/app/components/general/settings-upsell/branding-upsell.tsx
-#: apps/remix/app/components/general/user-profile-timur.tsx
 #: apps/remix/app/components/tables/documents-table-action-button.tsx
 #: apps/remix/app/components/tables/documents-table-action-dropdown.tsx
 #: apps/remix/app/components/tables/inbox-table.tsx
@@ -13253,8 +13240,8 @@ msgid "To assist with this field, you need to be logged in."
 msgstr "이 필드를 지원하려면 로그인해야 합니다."
 
 #: apps/remix/app/components/dialogs/team-member-create-dialog.tsx
-msgid "To be able to add members to a team, you must first add them to the organisation. For more information, please see the <0>documentation</0>."
-msgstr "팀에 구성원을 추가하려면 먼저 조직에 구성원을 추가해야 합니다. 자세한 내용은 <0>문서</0>를 참고하세요."
+msgid "To be able to add members to a team, you must first add them to the organisation."
+msgstr ""
 
 #: apps/remix/app/components/dialogs/team-email-update-dialog.tsx
 msgid "To change the email you must remove and add a new email address."
@@ -14113,10 +14100,6 @@ msgstr "사용자를 찾을 수 없습니다."
 #: apps/remix/app/routes/_authenticated+/admin+/users.$id.tsx
 msgid "User Organisations"
 msgstr "사용자 조직"
-
-#: apps/remix/app/components/forms/signup.tsx
-msgid "User profiles are here!"
-msgstr "사용자 프로필이 추가되었습니다!"
 
 #: apps/remix/app/components/forms/email-transport-form.tsx
 msgid "Username"
@@ -16057,10 +16040,6 @@ msgstr "현재 {currentProductName} 요금제 결제가 연체되었습니다. �
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
 msgid "Your current license does not include these features."
 msgstr "현재 라이선스에는 이 기능들이 포함되어 있지 않습니다."
-
-#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
-msgid "Your current plan includes the following support channels:"
-msgstr "현재 요금제에는 다음 지원 채널이 포함되어 있습니다:"
 
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.billing.tsx
 msgid "Your current plan is inactive."

@@ -1,5 +1,6 @@
 import { getOptionalSession } from '@documenso/auth/server/lib/utils/get-session';
 import { IS_INSTANCE_CSC_MODE } from '@documenso/lib/constants/app';
+import { refuseDisabledSurface } from '@documenso/lib/constants/disabled-surfaces';
 import { captureServerEvent } from '@documenso/lib/server-only/analytics/capture-server-event';
 import { getDocumentAndSenderByToken } from '@documenso/lib/server-only/document/get-document-by-token';
 import { getOrganisationClaimByTeamId } from '@documenso/lib/server-only/organisation/get-organisation-claims';
@@ -26,6 +27,8 @@ import { MultiSignDocumentSigningView } from '../../../../components/embed/multi
 import type { Route } from './+types/_index';
 
 export async function loader({ request }: Route.LoaderArgs) {
+  refuseDisabledSurface();
+
   const { user } = await getOptionalSession(request);
 
   const url = new URL(request.url);

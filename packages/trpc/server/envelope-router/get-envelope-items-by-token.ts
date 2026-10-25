@@ -1,5 +1,6 @@
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { getEnvelopeWhereInput } from '@documenso/lib/server-only/envelope/get-envelope-by-id';
+import { isSigningGateSatisfied } from '@documenso/lib/server-only/signing-gate/is-signing-gate-satisfied';
 import { getOrganisationTemplateWhereInput } from '@documenso/lib/server-only/template/get-organisation-template-by-id';
 import { prisma } from '@documenso/prisma';
 import { EnvelopeType } from '@prisma/client';
@@ -43,6 +44,10 @@ export const getEnvelopeItemsByTokenRoute = maybeAuthenticatedProcedure
       return {
         data,
       };
+    }
+
+    if (!(await isSigningGateSatisfied({ request: ctx.req, recipientToken: access.token }))) {
+      throw new AppError(AppErrorCode.UNAUTHORIZED, { message: 'The recipient must verify their email first' });
     }
 
     const { envelopeItems: data } = await handleGetEnvelopeItemsByToken({

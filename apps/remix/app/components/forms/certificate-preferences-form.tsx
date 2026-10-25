@@ -48,7 +48,15 @@ export const CertificatePreferencesForm = ({ settings, canInherit, onFormSubmit 
   return (
     <Form {...form}>
       <form onSubmit={handleFormSubmit}>
-        <fieldset className="flex h-full flex-col gap-y-6" disabled={form.formState.isSubmitting}>
+        {/* The seal job always attaches both on this instance; the controls stay visible but fixed. */}
+        <p className="mb-6 text-muted-foreground text-sm">
+          <Trans>
+            Every signed document always includes its signing certificate and full audit log. These settings cannot be
+            changed.
+          </Trans>
+        </p>
+
+        <fieldset className="flex h-full flex-col gap-y-6" disabled>
           <FormField
             control={form.control}
             name="includeSigningCertificate"

@@ -1,6 +1,7 @@
 import { getOptionalSession } from '@documenso/auth/server/lib/utils/get-session';
 import { EnvelopeRenderProvider } from '@documenso/lib/client-only/providers/envelope-render-provider';
 import { useOptionalSession } from '@documenso/lib/client-only/providers/session';
+import { refuseDisabledSurface } from '@documenso/lib/constants/disabled-surfaces';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { loadRecipientBrandingByTeamId } from '@documenso/lib/server-only/branding/load-recipient-branding';
 import { getEnvelopeForDirectTemplateSigning } from '@documenso/lib/server-only/envelope/get-envelope-for-direct-template-signing';
@@ -135,6 +136,8 @@ const handleV2Loader = async ({ params, request }: Route.LoaderArgs) => {
 };
 
 export async function loader(loaderArgs: Route.LoaderArgs) {
+  refuseDisabledSurface();
+
   const { token } = loaderArgs.params;
 
   if (!token) {

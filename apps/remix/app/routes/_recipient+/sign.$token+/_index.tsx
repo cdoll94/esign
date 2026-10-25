@@ -197,6 +197,19 @@ const handleV1Loader = async ({ params, request }: Route.LoaderArgs) => {
     } as const;
   }
 
+  // A declined or cancelled document is no longer signable: show its status page, never its contents.
+  if (recipient.signingStatus === SigningStatus.REJECTED || document.status === DocumentStatus.REJECTED) {
+    throw redirect(`/sign/${token}/rejected`);
+  }
+
+  if (
+    document.status !== DocumentStatus.PENDING &&
+    document.status !== DocumentStatus.COMPLETED &&
+    recipient.signingStatus !== SigningStatus.SIGNED
+  ) {
+    throw new Response('Not Found', { status: 404 });
+  }
+
   await viewedDocument({
     token,
     requestMetadata,
@@ -204,10 +217,6 @@ const handleV1Loader = async ({ params, request }: Route.LoaderArgs) => {
   }).catch(() => null);
 
   const { documentMeta } = document;
-
-  if (recipient.signingStatus === SigningStatus.REJECTED) {
-    throw redirect(`/sign/${token}/rejected`);
-  }
 
   if (isRecipientExpired(recipient)) {
     throw redirect(`/sign/${token}/expired`);

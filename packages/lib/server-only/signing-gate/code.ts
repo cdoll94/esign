@@ -1,9 +1,10 @@
+import { timingSafeEqual } from 'node:crypto';
+
 import { hmac } from '@noble/hashes/hmac';
 import { sha256 } from '@noble/hashes/sha256';
 import { generateHOTP } from 'oslo/otp';
 
 import { DOCUMENSO_ENCRYPTION_KEY } from '../../constants/crypto';
-import { SIGNING_GATE_CODE_PERIOD_MS, SIGNING_GATE_CODE_WINDOW } from './constants';
 
 export type SigningGateCodeIdentity = {
   recipientToken: string;
@@ -24,23 +25,16 @@ const getSecret = ({ recipientToken, recipientEmail, requestId }: SigningGateCod
   );
 };
 
-export const generateSigningGateCode = async (identity: SigningGateCodeIdentity) => {
-  const counter = Math.floor(Date.now() / SIGNING_GATE_CODE_PERIOD_MS);
+// The secret is unique per send (requestId), so a fixed HOTP counter gives exactly one code per
+// email; its lifetime is enforced from the send time recorded in the audit trail.
+const CODE_COUNTER = 0;
 
-  return await generateHOTP(getSecret(identity), counter);
+export const generateSigningGateCode = async (identity: SigningGateCodeIdentity) => {
+  return await generateHOTP(getSecret(identity), CODE_COUNTER);
 };
 
 export const validateSigningGateCode = async (identity: SigningGateCodeIdentity, code: string) => {
-  const secret = getSecret(identity);
-  const currentCounter = Math.floor(Date.now() / SIGNING_GATE_CODE_PERIOD_MS);
+  const expected = await generateHOTP(getSecret(identity), CODE_COUNTER);
 
-  for (let offset = 0; offset < SIGNING_GATE_CODE_WINDOW; offset++) {
-    const expected = await generateHOTP(secret, currentCounter - offset);
-
-    if (expected === code) {
-      return true;
-    }
-  }
-
-  return false;
+  return expected.length === code.length && timingSafeEqual(Buffer.from(expected), Buffer.from(code));
 };

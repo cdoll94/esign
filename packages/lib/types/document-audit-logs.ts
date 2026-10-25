@@ -595,6 +595,7 @@ export const ZDocumentAuditLogEventDocumentRecipientRequested2FAEmailSchema = z.
     recipientEmail: z.string(),
     recipientName: z.string(),
     recipientId: z.number(),
+    source: z.string().optional(),
     providerMessageId: z.string().optional(),
     gateRequestId: z.string().optional(),
   }),
@@ -609,6 +610,7 @@ export const ZDocumentAuditLogEventDocumentRecipientValidated2FAEmailSchema = z.
     recipientEmail: z.string(),
     recipientName: z.string(),
     recipientId: z.number(),
+    source: z.string().optional(),
   }),
 });
 
@@ -621,6 +623,7 @@ export const ZDocumentAuditLogEventDocumentRecipientFailed2FAEmailSchema = z.obj
     recipientEmail: z.string(),
     recipientName: z.string(),
     recipientId: z.number(),
+    source: z.string().optional(),
   }),
 });
 
@@ -633,6 +636,7 @@ export const ZDocumentAuditLogEventDocumentRecipientEsignConsentedSchema = z.obj
     recipientEmail: z.string(),
     recipientName: z.string(),
     recipientId: z.number(),
+    source: z.string().optional(),
     disclosureVersion: z.string(),
   }),
 });

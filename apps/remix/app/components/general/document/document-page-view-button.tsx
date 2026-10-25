@@ -73,7 +73,6 @@ export const DocumentPageViewButton = ({ envelope }: DocumentPageViewButtonProps
         envelopeId={envelope.id}
         envelopeStatus={envelope.status}
         envelopeItems={envelope.envelopeItems}
-        token={recipient?.token}
         trigger={
           <Button className="w-full">
             <Download className="mr-2 -ml-1 inline h-4 w-4" />

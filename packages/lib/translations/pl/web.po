@@ -3347,6 +3347,7 @@ msgid "Contact sales here"
 msgstr "Skontaktuj się z działem sprzedaży"
 
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
+#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
 msgid "Contact us"
 msgstr "Skontaktuj się z nami"
 
@@ -3624,8 +3625,8 @@ msgid "Create an organisation to get started."
 msgstr "Utwórz organizację, aby rozpocząć."
 
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/settings.tokens.tsx
-msgid "Create and manage API tokens. See our <0>documentation</0> for more information."
-msgstr "Tworzenie i zarządzanie tokenami API. Sprawdź <0>dokumentację</0>, aby uzyskać więcej informacji."
+msgid "Create and manage API tokens."
+msgstr ""
 
 #: apps/remix/app/components/dialogs/template-use-dialog.tsx
 msgid "Create and send"
@@ -3777,8 +3778,8 @@ msgid "Create your account and start using state-of-the-art document signing."
 msgstr "Utwórz konto i skorzystaj z najnowocześniejszego rozwiązania do podpisywania dokumentów."
 
 #: apps/remix/app/components/forms/signup.tsx
-msgid "Create your account and start using state-of-the-art document signing. Open and beautiful signing is within your grasp."
-msgstr "Utwórz konto i zacznij korzystać z nowoczesnego podpisywania dokumentów. Otwarty i piękny podpis jest w zasięgu ręki."
+msgid "Create your account to send and sign documents."
+msgstr ""
 
 #: apps/remix/app/components/dialogs/public-profile-template-manage-dialog.tsx
 #: apps/remix/app/components/general/document/document-page-view-information.tsx
@@ -4468,10 +4469,6 @@ msgstr "Wyłączenie podpisywania za pomocą bezpośredniego linku zablokuje dos
 msgid "Disabling the user results in the user not being able to use the account. It also disables all the related contents such as subscription, webhooks, teams, and API keys."
 msgstr "Wyłączenie użytkownika spowoduje, że nie będzie on mógł korzystać z konta. Spowoduje to również wyłączenie wszystkich powiązanych danych, takich jak subskrypcje, webhooki, zespoły i klucze API."
 
-#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
-msgid "Discord"
-msgstr "Discord"
-
 #: apps/remix/app/components/dialogs/organisation-email-create-dialog.tsx
 #: apps/remix/app/components/dialogs/organisation-email-update-dialog.tsx
 #: apps/remix/app/routes/_authenticated+/admin+/email-domains.$id.tsx
@@ -4928,10 +4925,6 @@ msgstr "Liczba dokumentów"
 msgid "Document will be permanently deleted"
 msgstr "Dokument zostanie trwale usunięty"
 
-#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
-msgid "Documentation"
-msgstr "Dokumentacja"
-
 #: apps/remix/app/components/general/app-command-menu.tsx
 #: apps/remix/app/components/general/app-nav-desktop.tsx
 #: apps/remix/app/components/general/app-nav-mobile.tsx
@@ -4939,7 +4932,6 @@ msgstr "Dokumentacja"
 #: apps/remix/app/components/general/envelope-editor/envelope-editor-upload-page.tsx
 #: apps/remix/app/components/general/organisation-usage-panel.tsx
 #: apps/remix/app/components/general/use-admin-search-categories.ts
-#: apps/remix/app/components/general/user-profile-timur.tsx
 #: apps/remix/app/components/tables/admin-dashboard-users-table.tsx
 #: apps/remix/app/components/tables/admin-organisation-stats-table.tsx
 #: apps/remix/app/components/tables/organisation-insights-table.tsx
@@ -6021,6 +6013,10 @@ msgstr "Zdarzenie"
 msgid "Event Type"
 msgstr "Rodzaj zdarzenia"
 
+#: apps/remix/app/components/forms/certificate-preferences-form.tsx
+msgid "Every signed document always includes its signing certificate and full audit log. These settings cannot be changed."
+msgstr ""
+
 #: apps/remix/app/components/dialogs/folder-update-dialog.tsx
 #: packages/lib/constants/document-visibility.ts
 #: packages/ui/components/document/document-visibility-select.tsx
@@ -6725,10 +6721,6 @@ msgstr "Tutaj możesz ustawić domyślne ustawienia zespołu."
 msgid "Here's how it works:"
 msgstr "Jak to działa:"
 
-#: apps/remix/app/components/general/user-profile-timur.tsx
-msgid "Hey I’m Timur"
-msgstr "Cześć, jestem Timur"
-
 #: packages/email/template-components/template-document-reminder.tsx
 msgid "Hi {recipientName},"
 msgstr "Cześć, {recipientName},"
@@ -7220,10 +7212,6 @@ msgstr "Japoński"
 #: packages/email/templates/organisation-invite.tsx
 msgid "Join {organisationName} on {0}"
 msgstr ""
-
-#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
-msgid "Join our community on <0>Discord</0> for community support and discussion."
-msgstr "Dołącz do naszej społeczności na <0>Discord</0>, aby uzyskać wsparcie społeczności i wziąć udział w dyskusjach."
 
 #: apps/remix/app/components/tables/organisation-insights-table.tsx
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
@@ -7994,6 +7982,10 @@ msgstr "Nawiguj"
 #: apps/remix/app/components/general/organisation-usage-panel.tsx
 msgid "Near limit"
 msgstr "Blisko limitu"
+
+#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
+msgid "Need help?"
+msgstr ""
 
 #: apps/remix/app/routes/_recipient+/sign.$token+/complete.tsx
 msgid "Need to sign documents?"
@@ -9068,10 +9060,6 @@ msgstr ""
 msgid "Pick an end date"
 msgstr ""
 
-#: apps/remix/app/components/general/user-profile-timur.tsx
-msgid "Pick any of the following agreements below and start signing to get started"
-msgstr "Wybierz umowę i podpisz"
-
 #: apps/remix/app/components/general/folder/folder-card.tsx
 msgid "Pin"
 msgstr "Przypnij"
@@ -9500,6 +9488,11 @@ msgstr ""
 msgid "Questions"
 msgstr ""
 
+#. placeholder {0}: PLATFORM_NAME()
+#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
+msgid "Questions about {0}? Email <0>{SUPPORT_EMAIL}</0>."
+msgstr ""
+
 #: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
 msgid "Questions about this disclosure or a document? Reply to the email you received, or write to <0>{SUPPORT_EMAIL}</0>."
 msgstr ""
@@ -9547,11 +9540,6 @@ msgstr "Tylko do odczytu"
 #: packages/ui/components/document/envelope-recipient-field-tooltip.tsx
 msgid "Read Only"
 msgstr "Tylko do odczytu"
-
-#. placeholder {0}: PLATFORM_NAME()
-#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
-msgid "Read our documentation to get started with {0}."
-msgstr ""
 
 #: apps/remix/app/components/tables/admin-document-recipient-item-table.tsx
 msgid "Read Status"
@@ -11025,7 +11013,6 @@ msgstr ""
 #: apps/remix/app/components/general/document-signing/document-signing-signature-field.tsx
 #: apps/remix/app/components/general/document/document-page-view-button.tsx
 #: apps/remix/app/components/general/settings-upsell/branding-upsell.tsx
-#: apps/remix/app/components/general/user-profile-timur.tsx
 #: apps/remix/app/components/tables/documents-table-action-button.tsx
 #: apps/remix/app/components/tables/documents-table-action-dropdown.tsx
 #: apps/remix/app/components/tables/inbox-table.tsx
@@ -13253,8 +13240,8 @@ msgid "To assist with this field, you need to be logged in."
 msgstr "Aby przygotować pole, musisz być zalogowany."
 
 #: apps/remix/app/components/dialogs/team-member-create-dialog.tsx
-msgid "To be able to add members to a team, you must first add them to the organisation. For more information, please see the <0>documentation</0>."
-msgstr "Aby dodać użytkowników do zespołu, najpierw musisz dodać ich do organizacji. Więcej informacji znajdziesz w <0>dokumentacji</0>."
+msgid "To be able to add members to a team, you must first add them to the organisation."
+msgstr ""
 
 #: apps/remix/app/components/dialogs/team-email-update-dialog.tsx
 msgid "To change the email you must remove and add a new email address."
@@ -14113,10 +14100,6 @@ msgstr "Użytkownik nie został znaleziony."
 #: apps/remix/app/routes/_authenticated+/admin+/users.$id.tsx
 msgid "User Organisations"
 msgstr "Organizacje użytkownika"
-
-#: apps/remix/app/components/forms/signup.tsx
-msgid "User profiles are here!"
-msgstr "Profile użytkowników są tutaj!"
 
 #: apps/remix/app/components/forms/email-transport-form.tsx
 msgid "Username"
@@ -16057,10 +16040,6 @@ msgstr "Twój plan {currentProductName} jest nieopłacony. Zaktualizuj informacj
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
 msgid "Your current license does not include these features."
 msgstr "Twoja licencja nie obejmuje tych funkcji."
-
-#: apps/remix/app/routes/_authenticated+/o.$orgUrl.support.tsx
-msgid "Your current plan includes the following support channels:"
-msgstr "Twój obecny plan obejmuje następujące kanały wsparcia:"
 
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.billing.tsx
 msgid "Your current plan is inactive."

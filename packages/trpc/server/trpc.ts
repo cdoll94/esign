@@ -1,4 +1,5 @@
 import { assertNotEmbedSession } from '@documenso/auth/server/lib/session/embed-session-restrictions';
+import { isDisabledTrpcProcedure } from '@documenso/lib/constants/disabled-surfaces';
 import { AppError, genericErrorCodeToTrpcErrorCodeMap } from '@documenso/lib/errors/app-error';
 import { getApiTokenByToken } from '@documenso/lib/server-only/public-api/get-api-token-by-token';
 import { assertUserNotDisabled } from '@documenso/lib/server-only/user/assert-user-not-disabled';
@@ -77,7 +78,17 @@ const t = initTRPC
 /**
  * Middlewares
  */
+// Features this instance switches off (see constants/disabled-surfaces) refuse here, on tRPC's own
+// resolved procedure path, whatever URL form reached the handler.
+const assertProcedureEnabled = (path: string) => {
+  if (isDisabledTrpcProcedure(path)) {
+    throw new TRPCError({ code: 'NOT_FOUND', message: 'Not found' });
+  }
+};
+
 export const authenticatedMiddleware = t.middleware(async ({ ctx, next, path, meta }) => {
+  assertProcedureEnabled(path);
+
   // Auth-independent log bindings. `auth` is set per-branch below since it
   // depends on which auth path was taken; `ctx.metadata.auth` here is still
   // `null` (the resolved value is set in the `next()` call below).
@@ -197,6 +208,8 @@ export const authenticatedMiddleware = t.middleware(async ({ ctx, next, path, me
 });
 
 export const maybeAuthenticatedMiddleware = t.middleware(async ({ ctx, next, path, meta }) => {
+  assertProcedureEnabled(path);
+
   const baseLogAttributes: TrpcApiLog = {
     path,
     auth: null,
@@ -316,6 +329,8 @@ export const maybeAuthenticatedMiddleware = t.middleware(async ({ ctx, next, pat
 });
 
 export const adminMiddleware = t.middleware(async ({ ctx, next, path }) => {
+  assertProcedureEnabled(path);
+
   if (!ctx.session || !ctx.user) {
     throw new TRPCError({
       code: 'UNAUTHORIZED',
@@ -375,6 +390,8 @@ export const adminMiddleware = t.middleware(async ({ ctx, next, path }) => {
 });
 
 export const procedureMiddleware = t.middleware(async ({ ctx, next, path }) => {
+  assertProcedureEnabled(path);
+
   // Recreate the logger with a sub request ID to differentiate between batched
   // requests, as well as identifying attributes so every subsequent log line
   // (including errors) inherits them.

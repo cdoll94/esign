@@ -16,7 +16,7 @@ import { renderEmailWithI18N } from '../../utils/render-email-with-i18n';
 import { getEmailContext } from '../email/get-email-context';
 import { getProviderMessageId } from '../email/get-provider-message-id';
 import { generateSigningGateCode } from './code';
-import { SIGNING_GATE_CODE_EXPIRATION_MINUTES } from './constants';
+import { SIGNING_GATE_AUDIT_SOURCE, SIGNING_GATE_CODE_EXPIRATION_MINUTES } from './constants';
 import { getSigningGateRecipient } from './get-gate-recipient';
 
 export type SendSigningGateCodeOptions = {
@@ -87,6 +87,7 @@ export const sendSigningGateCode = async ({ recipientToken, requestMetadata }: S
         recipientId: recipient.id,
         providerMessageId: getProviderMessageId(sentEmail),
         gateRequestId: requestId,
+        source: SIGNING_GATE_AUDIT_SOURCE,
       },
     }),
   });

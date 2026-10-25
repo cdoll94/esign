@@ -16,7 +16,12 @@ export type IsSigningGateSatisfiedOptions = {
  */
 export const isSigningGateSatisfied = async ({ request, recipientToken }: IsSigningGateSatisfiedOptions) => {
   if (recipientToken.startsWith('qr_')) {
-    return true;
+    const envelope = await prisma.envelope.findFirst({
+      where: { qrToken: recipientToken },
+      select: { status: true },
+    });
+
+    return envelope?.status === DocumentStatus.COMPLETED;
   }
 
   const recipient = await prisma.recipient.findFirst({

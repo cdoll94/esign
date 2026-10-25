@@ -8,8 +8,8 @@ import type { RequestMetadata } from '../../universal/extract-request-metadata';
 import { createDocumentAuditLogData } from '../../utils/document-audit-logs';
 import { validateSigningGateCode } from './code';
 import {
-  SIGNING_GATE_CODE_PERIOD_MS,
-  SIGNING_GATE_CODE_WINDOW,
+  SIGNING_GATE_AUDIT_SOURCE,
+  SIGNING_GATE_CODE_EXPIRATION_MINUTES,
   SIGNING_GATE_DISCLOSURE_VERSION,
   SIGNING_GATE_MAX_FAILURES_PER_CODE,
   SIGNING_GATE_MAX_FAILURES_PER_DAY,
@@ -30,12 +30,15 @@ export type VerifySigningGateOptions = {
   requestMetadata?: RequestMetadata;
 };
 
-const recipientLogWhere = (envelopeId: string, recipientId: number) => ({
+// Gate entries for this recipient at their current address: attempts made while the recipient had
+// another email (before the sender corrected it) never count against, or unlock, the new address.
+const gateLogWhere = (envelopeId: string, recipientId: number, recipientEmail: string) => ({
   envelopeId,
-  data: {
-    path: ['recipientId'],
-    equals: recipientId,
-  },
+  AND: [
+    { data: { path: ['recipientId'], equals: recipientId } },
+    { data: { path: ['recipientEmail'], equals: recipientEmail } },
+    { data: { path: ['source'], equals: SIGNING_GATE_AUDIT_SOURCE } },
+  ],
 });
 
 /**
@@ -59,13 +62,14 @@ export const verifySigningGate = async ({
     recipientEmail: recipient.email,
     recipientName: recipient.name,
     recipientId: recipient.id,
+    source: SIGNING_GATE_AUDIT_SOURCE,
   };
 
   const auditUser = { name: recipient.name, email: recipient.email };
 
   const failuresToday = await prisma.documentAuditLog.count({
     where: {
-      ...recipientLogWhere(envelope.id, recipient.id),
+      ...gateLogWhere(envelope.id, recipient.id, recipient.email),
       type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_ACCESS_AUTH_2FA_FAILED,
       createdAt: { gte: DateTime.now().minus({ days: 1 }).toJSDate() },
     },
@@ -77,9 +81,9 @@ export const verifySigningGate = async ({
 
   const latestRequest = await prisma.documentAuditLog.findFirst({
     where: {
-      ...recipientLogWhere(envelope.id, recipient.id),
+      ...gateLogWhere(envelope.id, recipient.id, recipient.email),
       type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_ACCESS_AUTH_2FA_REQUESTED,
-      createdAt: { gte: new Date(Date.now() - SIGNING_GATE_CODE_PERIOD_MS * SIGNING_GATE_CODE_WINDOW) },
+      createdAt: { gte: DateTime.now().minus({ minutes: SIGNING_GATE_CODE_EXPIRATION_MINUTES }).toJSDate() },
     },
     orderBy: { createdAt: 'desc' },
     select: { createdAt: true, data: true },
@@ -93,7 +97,7 @@ export const verifySigningGate = async ({
 
   const failuresForThisCode = await prisma.documentAuditLog.count({
     where: {
-      ...recipientLogWhere(envelope.id, recipient.id),
+      ...gateLogWhere(envelope.id, recipient.id, recipient.email),
       type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_ACCESS_AUTH_2FA_FAILED,
       createdAt: { gte: latestRequest.createdAt },
     },

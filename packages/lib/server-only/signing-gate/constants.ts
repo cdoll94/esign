@@ -1,9 +1,7 @@
-export const SIGNING_GATE_CODE_PERIOD_MS = 10 * 60 * 1000;
-
-// Two periods: a code stays valid for at least 10 and at most 20 minutes.
-export const SIGNING_GATE_CODE_WINDOW = 2;
-
 export const SIGNING_GATE_CODE_EXPIRATION_MINUTES = 10;
+
+// Marks the gate's audit entries so they never mix with the built-in email 2FA entries of the same types.
+export const SIGNING_GATE_AUDIT_SOURCE = 'signing-gate';
 
 // Wrong guesses allowed against one emailed code before a new code must be requested.
 export const SIGNING_GATE_MAX_FAILURES_PER_CODE = 5;

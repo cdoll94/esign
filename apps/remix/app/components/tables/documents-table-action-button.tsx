@@ -99,7 +99,7 @@ export const DocumentsTableActionButton = ({ row }: DocumentsTableActionButtonPr
       <EnvelopeDownloadDialog
         envelopeId={row.envelopeId}
         envelopeStatus={row.status}
-        token={recipient?.token}
+        token={isOwner || isCurrentTeamDocument ? undefined : recipient?.token}
         trigger={
           <Button className="w-32">
             <Download className="mr-2 -ml-1 inline h-4 w-4" />
