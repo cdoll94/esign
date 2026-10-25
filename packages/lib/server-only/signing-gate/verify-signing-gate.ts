@@ -1,12 +1,27 @@
 import { prisma } from '@documenso/prisma';
+import { DateTime } from 'luxon';
+import { z } from 'zod';
 
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../types/document-audit-logs';
 import type { RequestMetadata } from '../../universal/extract-request-metadata';
 import { createDocumentAuditLogData } from '../../utils/document-audit-logs';
 import { validateSigningGateCode } from './code';
-import { SIGNING_GATE_DISCLOSURE_VERSION } from './constants';
+import {
+  SIGNING_GATE_CODE_PERIOD_MS,
+  SIGNING_GATE_CODE_WINDOW,
+  SIGNING_GATE_DISCLOSURE_VERSION,
+  SIGNING_GATE_MAX_FAILURES_PER_CODE,
+  SIGNING_GATE_MAX_FAILURES_PER_DAY,
+} from './constants';
 import { getSigningGateRecipient } from './get-gate-recipient';
+
+export const SIGNING_GATE_ERROR = {
+  NO_ACTIVE_CODE: 'SIGNING_GATE_NO_ACTIVE_CODE',
+  CODE_ATTEMPTS_EXCEEDED: 'SIGNING_GATE_CODE_ATTEMPTS_EXCEEDED',
+  LOCKED_FOR_DAY: 'SIGNING_GATE_LOCKED_FOR_DAY',
+  INVALID_CODE: 'SIGNING_GATE_INVALID_CODE',
+} as const;
 
 export type VerifySigningGateOptions = {
   recipientToken: string;
@@ -15,10 +30,17 @@ export type VerifySigningGateOptions = {
   requestMetadata?: RequestMetadata;
 };
 
+const recipientLogWhere = (envelopeId: string, recipientId: number) => ({
+  envelopeId,
+  data: {
+    path: ['recipientId'],
+    equals: recipientId,
+  },
+});
+
 /**
- * Records the signer's consent to electronic records (ESIGN Act / UETA) and
- * checks the emailed code. Consent is recorded once per recipient even if they
- * come back on another device.
+ * Records the signer's consent to electronic records (ESIGN Act / UETA) and checks the code
+ * from the most recent code email. Returns the recipient's email for binding the gate session.
  */
 export const verifySigningGate = async ({
   recipientToken,
@@ -39,46 +61,86 @@ export const verifySigningGate = async ({
     recipientId: recipient.id,
   };
 
-  const isValid = await validateSigningGateCode(recipientToken, code);
+  const auditUser = { name: recipient.name, email: recipient.email };
+
+  const failuresToday = await prisma.documentAuditLog.count({
+    where: {
+      ...recipientLogWhere(envelope.id, recipient.id),
+      type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_ACCESS_AUTH_2FA_FAILED,
+      createdAt: { gte: DateTime.now().minus({ days: 1 }).toJSDate() },
+    },
+  });
+
+  if (failuresToday >= SIGNING_GATE_MAX_FAILURES_PER_DAY) {
+    throw new AppError(SIGNING_GATE_ERROR.LOCKED_FOR_DAY, { message: 'Too many incorrect codes today' });
+  }
+
+  const latestRequest = await prisma.documentAuditLog.findFirst({
+    where: {
+      ...recipientLogWhere(envelope.id, recipient.id),
+      type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_ACCESS_AUTH_2FA_REQUESTED,
+      createdAt: { gte: new Date(Date.now() - SIGNING_GATE_CODE_PERIOD_MS * SIGNING_GATE_CODE_WINDOW) },
+    },
+    orderBy: { createdAt: 'desc' },
+    select: { createdAt: true, data: true },
+  });
+
+  const requestId = z.object({ gateRequestId: z.string() }).safeParse(latestRequest?.data);
+
+  if (!latestRequest || !requestId.success) {
+    throw new AppError(SIGNING_GATE_ERROR.NO_ACTIVE_CODE, { message: 'No active code; request a new one' });
+  }
+
+  const failuresForThisCode = await prisma.documentAuditLog.count({
+    where: {
+      ...recipientLogWhere(envelope.id, recipient.id),
+      type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_ACCESS_AUTH_2FA_FAILED,
+      createdAt: { gte: latestRequest.createdAt },
+    },
+  });
+
+  if (failuresForThisCode >= SIGNING_GATE_MAX_FAILURES_PER_CODE) {
+    throw new AppError(SIGNING_GATE_ERROR.CODE_ATTEMPTS_EXCEEDED, { message: 'Too many attempts; request a new code' });
+  }
+
+  const isValid = await validateSigningGateCode(
+    { recipientToken, recipientEmail: recipient.email, requestId: requestId.data.gateRequestId },
+    code,
+  );
 
   if (!isValid) {
     await prisma.documentAuditLog.create({
       data: createDocumentAuditLogData({
         type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_ACCESS_AUTH_2FA_FAILED,
         envelopeId: envelope.id,
-        user: {
-          name: recipient.name,
-          email: recipient.email,
-        },
+        user: auditUser,
         requestMetadata,
         data: recipientData,
       }),
     });
 
-    throw new AppError(AppErrorCode.INVALID_BODY, { message: 'Invalid code' });
+    throw new AppError(SIGNING_GATE_ERROR.INVALID_CODE, { message: 'Invalid code' });
   }
 
   await prisma.documentAuditLog.create({
     data: createDocumentAuditLogData({
       type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_ACCESS_AUTH_2FA_VALIDATED,
       envelopeId: envelope.id,
-      user: {
-        name: recipient.name,
-        email: recipient.email,
-      },
+      user: auditUser,
       requestMetadata,
       data: recipientData,
     }),
   });
 
+  // One consent record per recipient per disclosure version, so a re-consent to new wording is on record.
   const existingConsent = await prisma.documentAuditLog.findFirst({
     where: {
       envelopeId: envelope.id,
       type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_RECIPIENT_ESIGN_CONSENTED,
-      data: {
-        path: ['recipientId'],
-        equals: recipient.id,
-      },
+      AND: [
+        { data: { path: ['recipientId'], equals: recipient.id } },
+        { data: { path: ['disclosureVersion'], equals: SIGNING_GATE_DISCLOSURE_VERSION } },
+      ],
     },
     select: { id: true },
   });
@@ -88,10 +150,7 @@ export const verifySigningGate = async ({
       data: createDocumentAuditLogData({
         type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_RECIPIENT_ESIGN_CONSENTED,
         envelopeId: envelope.id,
-        user: {
-          name: recipient.name,
-          email: recipient.email,
-        },
+        user: auditUser,
         requestMetadata,
         data: {
           ...recipientData,
@@ -100,4 +159,6 @@ export const verifySigningGate = async ({
       }),
     });
   }
+
+  return { recipientEmail: recipient.email };
 };

@@ -59,8 +59,7 @@ export const OrganisationAccountLinkConfirmationTemplate = ({
                 ) : (
                   <Trans>
                     <span className="font-bold">{organisationName}</span> has requested to link your current{' '}
-                    {PLATFORM_NAME()}
-                    account to their organisation.
+                    {PLATFORM_NAME()} account to their organisation.
                   </Trans>
                 )}
               </Text>

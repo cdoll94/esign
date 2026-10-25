@@ -20,7 +20,7 @@ import { RECIPIENT_ROLES_DESCRIPTION } from '../../constants/recipient-roles';
 import type { TDocumentAuditLog } from '../../types/document-audit-logs';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../types/document-audit-logs';
 import { formatDocumentAuditLogAction } from '../../utils/document-audit-logs';
-import { formatIpWithLocation } from '../ip-location/get-ip-location';
+import { formatIpWithLocation, IP_LOCATION_ATTRIBUTION } from '../ip-location/get-ip-location';
 import { ensureFontLibrary } from './helpers';
 
 export type AuditLogRecipient = {
@@ -622,7 +622,7 @@ export async function renderAuditLogs({
     const footerText = new Konva.Text({
       x: margin,
       y: pageHeight - textXs - 10,
-      text: `${i18n._(msg`Envelope ID`)}: ${envelope.id}`,
+      text: `${i18n._(msg`Envelope ID`)}: ${envelope.id}  ·  ${IP_LOCATION_ATTRIBUTION}`,
       fontFamily: 'Inter',
       fontSize: textXs,
       fill: textMutedForegroundLight,
@@ -667,7 +667,7 @@ export async function renderAuditLogs({
     const overflowFooterText = new Konva.Text({
       x: margin,
       y: pageHeight - textXs - 10,
-      text: `${i18n._(msg`Envelope ID`)}: ${envelope.id}`,
+      text: `${i18n._(msg`Envelope ID`)}: ${envelope.id}  ·  ${IP_LOCATION_ATTRIBUTION}`,
       fontFamily: 'Inter',
       fontSize: textXs,
       fill: textMutedForegroundLight,

@@ -557,10 +557,10 @@ export const formatDocumentAuditLogAction = (i18n: I18n, auditLog: TDocumentAudi
       you: msg`You entered an incorrect email verification code`,
       user: msg`${user} entered an incorrect email verification code`,
     }))
-    .with({ type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_RECIPIENT_ESIGN_CONSENTED }, () => ({
-      anonymous: msg`Recipient consented to use electronic records and signatures`,
-      you: msg`You consented to use electronic records and signatures`,
-      user: msg`${user} consented to use electronic records and signatures`,
+    .with({ type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_RECIPIENT_ESIGN_CONSENTED }, ({ data }) => ({
+      anonymous: msg`Recipient consented to use electronic records and signatures (disclosure version ${data.disclosureVersion})`,
+      you: msg`You consented to use electronic records and signatures (disclosure version ${data.disclosureVersion})`,
+      user: msg`${user} consented to use electronic records and signatures (disclosure version ${data.disclosureVersion})`,
     }))
     .with({ type: DOCUMENT_AUDIT_LOG_TYPE.EMAIL_DELIVERY_EVENT }, ({ data }) => {
       const description = match(data.event)
@@ -568,8 +568,15 @@ export const formatDocumentAuditLogAction = (i18n: I18n, auditLog: TDocumentAudi
         .with('DELAYED', () => msg`Email delivery to ${data.recipientEmail} delayed`)
         .with('BOUNCED', () => msg`Email to ${data.recipientEmail} bounced`)
         .with('COMPLAINED', () => msg`Email to ${data.recipientEmail} was marked as spam`)
-        .with('OPENED', () => msg`Email opened by ${data.recipientEmail}`)
-        .with('CLICKED', () => msg`Link in email clicked by ${data.recipientEmail}`)
+        .with(
+          'OPENED',
+          () => msg`Email provider reported the email to ${data.recipientEmail} was opened (may be automated)`,
+        )
+        .with(
+          'CLICKED',
+          () =>
+            msg`Email provider reported a link in the email to ${data.recipientEmail} was clicked (may be automated)`,
+        )
         .exhaustive();
 
       return {

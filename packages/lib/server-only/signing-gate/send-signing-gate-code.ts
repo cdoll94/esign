@@ -1,3 +1,5 @@
+import { randomBytes } from 'node:crypto';
+
 import { SigningGateCodeEmailTemplate } from '@documenso/email/templates/signing-gate-code';
 import { prisma } from '@documenso/prisma';
 import { msg } from '@lingui/core/macro';
@@ -30,7 +32,9 @@ export const sendSigningGateCode = async ({ recipientToken, requestMetadata }: S
     throw new AppError(AppErrorCode.INVALID_REQUEST, { message: 'Recipient is missing email address' });
   }
 
-  const code = await generateSigningGateCode(recipientToken);
+  const requestId = randomBytes(16).toString('hex');
+
+  const code = await generateSigningGateCode({ recipientToken, recipientEmail: recipient.email, requestId });
 
   const { branding, emailLanguage, senderEmail, replyToEmail, emailTransport } = await getEmailContext({
     emailType: 'RECIPIENT',
@@ -82,6 +86,7 @@ export const sendSigningGateCode = async ({ recipientToken, requestMetadata }: S
         recipientName: recipient.name,
         recipientId: recipient.id,
         providerMessageId: getProviderMessageId(sentEmail),
+        gateRequestId: requestId,
       },
     }),
   });

@@ -6,12 +6,19 @@ import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
 import { DOCUMENSO_ENCRYPTION_KEY } from '../../constants/crypto';
 import { SIGNING_GATE_COOKIE_PREFIX, SIGNING_GATE_SESSION_HOURS } from './constants';
 
-const sign = (recipientToken: string, expiresAt: number) => {
+// Bound to the recipient's current email so changing the recipient's address invalidates earlier sessions.
+const sign = (recipientToken: string, recipientEmail: string, expiresAt: number) => {
   if (!DOCUMENSO_ENCRYPTION_KEY) {
     throw new Error('Missing NEXT_PRIVATE_ENCRYPTION_KEY');
   }
 
-  return bytesToHex(hmac(sha256, DOCUMENSO_ENCRYPTION_KEY, `signing-gate-session|v1|${recipientToken}|${expiresAt}`));
+  return bytesToHex(
+    hmac(
+      sha256,
+      DOCUMENSO_ENCRYPTION_KEY,
+      `signing-gate-session|v2|${recipientToken}|${recipientEmail.toLowerCase()}|${expiresAt}`,
+    ),
+  );
 };
 
 // The cookie name carries a hash of the token, never the token itself.
@@ -32,9 +39,9 @@ const timingSafeEqual = (a: string, b: string) => {
   return diff === 0;
 };
 
-export const buildSigningGateCookieHeader = (recipientToken: string) => {
+export const buildSigningGateCookieHeader = (recipientToken: string, recipientEmail: string) => {
   const expiresAt = Date.now() + SIGNING_GATE_SESSION_HOURS * 60 * 60 * 1000;
-  const value = `${expiresAt}.${sign(recipientToken, expiresAt)}`;
+  const value = `${expiresAt}.${sign(recipientToken, recipientEmail, expiresAt)}`;
   const isSecure = NEXT_PUBLIC_WEBAPP_URL().startsWith('https://');
 
   return [
@@ -49,7 +56,7 @@ export const buildSigningGateCookieHeader = (recipientToken: string) => {
     .join('; ');
 };
 
-export const hasValidSigningGateCookie = (request: Request, recipientToken: string) => {
+export const hasValidSigningGateCookie = (request: Request, recipientToken: string, recipientEmail: string) => {
   const cookieHeader = request.headers.get('cookie') ?? '';
   const name = getCookieName(recipientToken);
 
@@ -70,5 +77,5 @@ export const hasValidSigningGateCookie = (request: Request, recipientToken: stri
     return false;
   }
 
-  return timingSafeEqual(signature, sign(recipientToken, expiresAt));
+  return timingSafeEqual(signature, sign(recipientToken, recipientEmail, expiresAt));
 };

@@ -1,4 +1,4 @@
-import { AppError } from '@documenso/lib/errors/app-error';
+import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { createEnvelopeFields } from '@documenso/lib/server-only/field/create-envelope-fields';
 import { deleteDocumentField } from '@documenso/lib/server-only/field/delete-document-field';
 import { deleteTemplateField } from '@documenso/lib/server-only/field/delete-template-field';
@@ -8,6 +8,7 @@ import { setFieldsForDocument } from '@documenso/lib/server-only/field/set-field
 import { setFieldsForTemplate } from '@documenso/lib/server-only/field/set-fields-for-template';
 import { signFieldWithToken } from '@documenso/lib/server-only/field/sign-field-with-token';
 import { updateEnvelopeFields } from '@documenso/lib/server-only/field/update-envelope-fields';
+import { isSigningGateSatisfied } from '@documenso/lib/server-only/signing-gate/is-signing-gate-satisfied';
 import { EnvelopeType } from '@prisma/client';
 
 import { ZGenericSuccessResponse, ZSuccessResponseSchema } from '../schema';
@@ -623,6 +624,10 @@ export const fieldRouter = router({
         },
       });
 
+      if (!(await isSigningGateSatisfied({ request: ctx.req, recipientToken: token }))) {
+        throw new AppError(AppErrorCode.UNAUTHORIZED, { message: 'The recipient must verify their email first' });
+      }
+
       return await signFieldWithToken({
         token,
         fieldId,
@@ -661,6 +666,10 @@ export const fieldRouter = router({
             fieldId,
           },
         });
+
+        if (!(await isSigningGateSatisfied({ request: ctx.req, recipientToken: token }))) {
+          throw new AppError(AppErrorCode.UNAUTHORIZED, { message: 'The recipient must verify their email first' });
+        }
 
         return await removeSignedFieldWithToken({
           token,

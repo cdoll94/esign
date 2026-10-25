@@ -72,7 +72,7 @@ export const IS_DOCUMENSO_CLOUD = () => env('NEXT_PUBLIC_IS_DOCUMENSO_CLOUD') ==
 export const API_V2_BETA_URL = '/api/v2-beta';
 export const API_V2_URL = '/api/v2';
 
-export const SUPPORT_EMAIL = env('NEXT_PUBLIC_SUPPORT_EMAIL') ?? 'contracts@sign.tinasu.com';
+export const SUPPORT_EMAIL = env('NEXT_PUBLIC_SUPPORT_EMAIL') ?? 'tina@tinasu.com';
 
 // The platform's display name is a single setting so it can be renamed without code changes.
 export const PLATFORM_NAME = () => env('NEXT_PUBLIC_PLATFORM_NAME') ?? 'Simple Life Media';

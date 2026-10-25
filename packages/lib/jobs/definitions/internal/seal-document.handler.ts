@@ -205,8 +205,10 @@ export const run = async ({ payload, io }: { payload: TSealDocumentJobDefinition
 
     const usePlaywrightPdf = NEXT_PRIVATE_USE_PLAYWRIGHT_PDF();
 
-    const needsCertificate = settings.includeSigningCertificate;
-    const needsAuditLog = settings.includeAuditLog;
+    // Every signed PDF carries its Certificate of Completion and full audit log on this instance:
+    // the signer disclosure promises the step-by-step record travels with the document.
+    const needsCertificate = true;
+    const needsAuditLog = true;
 
     const newDocumentData: Array<{ oldDocumentDataId: string; newDocumentDataId: string }> = [];
 

@@ -32,6 +32,17 @@ export const ZResendEmailEventSchema = z.object({
     .passthrough(),
 });
 
+// Use when the provider observed the event, so retried webhook deliveries keep the trail in order.
+const getEventTime = (createdAt?: string) => {
+  const parsed = createdAt ? new Date(createdAt) : null;
+
+  if (!parsed || Number.isNaN(parsed.getTime()) || parsed.getTime() > Date.now()) {
+    return new Date();
+  }
+
+  return parsed;
+};
+
 export type RecordResendEmailEventOptions = {
   providerEventId: string;
   payload: z.infer<typeof ZResendEmailEventSchema>;
@@ -90,28 +101,30 @@ export const recordResendEmailEvent = async ({ providerEventId, payload }: Recor
 
   const detail = mapped.detail ?? payload.data.bounce?.message ?? payload.data.click?.link;
 
+  const auditLog = createDocumentAuditLogData({
+    type: DOCUMENT_AUDIT_LOG_TYPE.EMAIL_DELIVERY_EVENT,
+    envelopeId: sentLog.envelopeId,
+    // A provider report, not an action by the recipient: mail scanners and link previews also
+    // open and click, so the reported IP and browser stay in the event data, not the actor columns.
+    user: null,
+    data: {
+      event: mapped.event,
+      recipientEmail,
+      recipientId: sentData.success ? sentData.data.recipientId : undefined,
+      emailId: payload.data.email_id,
+      subject: payload.data.subject,
+      detail,
+      providerEventId,
+      reportedIpAddress: payload.data.click?.ipAddress,
+      reportedUserAgent: payload.data.click?.userAgent,
+    },
+  });
+
   await prisma.documentAuditLog.create({
-    data: createDocumentAuditLogData({
-      type: DOCUMENT_AUDIT_LOG_TYPE.EMAIL_DELIVERY_EVENT,
-      envelopeId: sentLog.envelopeId,
-      user: {
-        email: recipientEmail,
-        name: sentData.success ? sentData.data.recipientName : undefined,
-      },
-      // A click comes from the recipient's own device, so its IP and browser are evidence too.
-      requestMetadata: payload.data.click
-        ? { ipAddress: payload.data.click.ipAddress, userAgent: payload.data.click.userAgent }
-        : undefined,
-      data: {
-        event: mapped.event,
-        recipientEmail,
-        recipientId: sentData.success ? sentData.data.recipientId : undefined,
-        emailId: payload.data.email_id,
-        subject: payload.data.subject,
-        detail,
-        providerEventId,
-      },
-    }),
+    data: {
+      ...auditLog,
+      createdAt: getEventTime(payload.created_at),
+    },
   });
 
   return { recorded: true } as const;

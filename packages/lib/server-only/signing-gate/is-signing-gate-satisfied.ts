@@ -6,19 +6,15 @@ import { hasValidSigningGateCookie } from './session-cookie';
 export type IsSigningGateSatisfiedOptions = {
   request: Request;
   recipientToken: string;
-  sessionEmail?: string | null;
 };
 
 /**
- * For routes that serve or act on a document by recipient token outside the signing
- * page. Only recipients still due to act need to have passed the gate; completed
- * documents and QR share tokens are unaffected.
+ * For routes that serve or act on a document by recipient token outside the signing page.
+ * Only a recipient who has signed, a CC recipient, or a fully completed document is exempt;
+ * pending, rejected and cancelled documents all need a valid gate session. QR share tokens
+ * (certificate verification links for completed documents) are unaffected.
  */
-export const isSigningGateSatisfied = async ({
-  request,
-  recipientToken,
-  sessionEmail,
-}: IsSigningGateSatisfiedOptions) => {
+export const isSigningGateSatisfied = async ({ request, recipientToken }: IsSigningGateSatisfiedOptions) => {
   if (recipientToken.startsWith('qr_')) {
     return true;
   }
@@ -37,18 +33,14 @@ export const isSigningGateSatisfied = async ({
     return true;
   }
 
-  const isAwaitingRecipient =
-    recipient.envelope.status === DocumentStatus.PENDING &&
-    recipient.signingStatus === SigningStatus.NOT_SIGNED &&
-    recipient.role !== RecipientRole.CC;
+  const isExempt =
+    recipient.envelope.status === DocumentStatus.COMPLETED ||
+    recipient.signingStatus === SigningStatus.SIGNED ||
+    recipient.role === RecipientRole.CC;
 
-  if (!isAwaitingRecipient) {
+  if (isExempt) {
     return true;
   }
 
-  if (sessionEmail && sessionEmail === recipient.email) {
-    return true;
-  }
-
-  return hasValidSigningGateCookie(request, recipientToken);
+  return hasValidSigningGateCookie(request, recipientToken, recipient.email);
 };

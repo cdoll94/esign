@@ -1,6 +1,7 @@
 import { isBase64Image } from '@documenso/lib/constants/signatures';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { validateFieldAuth } from '@documenso/lib/server-only/document/validate-field-auth';
+import { isSigningGateSatisfied } from '@documenso/lib/server-only/signing-gate/is-signing-gate-satisfied';
 import { assertSenderNotDisabled } from '@documenso/lib/server-only/user/assert-user-not-disabled';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '@documenso/lib/types/document-audit-logs';
 import { createDocumentAuditLogData } from '@documenso/lib/utils/document-audit-logs';
@@ -27,6 +28,10 @@ export const signEnvelopeFieldRoute = procedure
         fieldId,
       },
     });
+
+    if (!(await isSigningGateSatisfied({ request: ctx.req, recipientToken: token }))) {
+      throw new AppError(AppErrorCode.UNAUTHORIZED, { message: 'The recipient must verify their email first' });
+    }
 
     const recipient = await prisma.recipient.findFirst({
       where: {

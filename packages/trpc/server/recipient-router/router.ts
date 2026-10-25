@@ -627,11 +627,7 @@ export const recipientRouter = router({
         // TSP branch below is covered.
         await assertSenderNotDisabled({ userId: envelope.userId });
 
-        const isGateSatisfied = await isSigningGateSatisfied({
-          request: ctx.req,
-          recipientToken: token,
-          sessionEmail: ctx.user?.email,
-        });
+        const isGateSatisfied = await isSigningGateSatisfied({ request: ctx.req, recipientToken: token });
 
         if (!isGateSatisfied) {
           throw new AppError(AppErrorCode.UNAUTHORIZED, {
@@ -697,6 +693,12 @@ export const recipientRouter = router({
         documentId,
       },
     });
+
+    if (!(await isSigningGateSatisfied({ request: ctx.req, recipientToken: token }))) {
+      throw new AppError(AppErrorCode.UNAUTHORIZED, {
+        message: 'The recipient must verify their email before declining the document',
+      });
+    }
 
     return await rejectDocumentWithToken({
       token,

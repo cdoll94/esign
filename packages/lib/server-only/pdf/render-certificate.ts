@@ -20,7 +20,7 @@ import { getSignatureFontFamily } from '../../constants/pdf';
 import { RECIPIENT_ROLE_SIGNING_REASONS, RECIPIENT_ROLES_DESCRIPTION } from '../../constants/recipient-roles';
 import type { TDocumentAuditLogBaseSchema } from '../../types/document-audit-logs';
 import { svgToPng } from '../../utils/images/svg-to-png';
-import { formatIpWithLocation } from '../ip-location/get-ip-location';
+import { formatIpWithLocation, IP_LOCATION_ATTRIBUTION } from '../ip-location/get-ip-location';
 import { ensureFontLibrary } from './helpers';
 
 type ColumnWidths = [number, number, number];
@@ -807,7 +807,7 @@ export async function renderCertificate({
     const footerText = new Konva.Text({
       x: margin,
       y: pageHeight - textXs - 10,
-      text: `${i18n._(msg`Envelope ID`)}: ${envelopeId}`,
+      text: `${i18n._(msg`Envelope ID`)}: ${envelopeId}  ·  ${IP_LOCATION_ATTRIBUTION}`,
       fontFamily: 'Inter',
       fontSize: textXs,
       fill: textMutedForegroundLight,
@@ -835,7 +835,7 @@ export async function renderCertificate({
     const overflowFooterText = new Konva.Text({
       x: margin,
       y: pageHeight - textXs - 10,
-      text: `${i18n._(msg`Envelope ID`)}: ${envelopeId}`,
+      text: `${i18n._(msg`Envelope ID`)}: ${envelopeId}  ·  ${IP_LOCATION_ATTRIBUTION}`,
       fontFamily: 'Inter',
       fontSize: textXs,
       fill: textMutedForegroundLight,

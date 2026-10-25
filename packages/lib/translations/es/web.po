@@ -618,8 +618,9 @@ msgstr "{user} envió una copia del documento"
 msgid "{user} completed their task"
 msgstr "{user} completó su tarea"
 
+#. placeholder {0}: data.disclosureVersion
 #: packages/lib/utils/document-audit-logs.ts
-msgid "{user} consented to use electronic records and signatures"
+msgid "{user} consented to use electronic records and signatures (disclosure version {0})"
 msgstr ""
 
 #. placeholder {0}: data.envelopeItemTitle
@@ -810,7 +811,7 @@ msgstr "<0>{organisationName}</0> ha solicitado crear una cuenta en tu nombre."
 
 #. placeholder {0}: PLATFORM_NAME()
 #: packages/email/templates/organisation-account-link-confirmation.tsx
-msgid "<0>{organisationName}</0> has requested to link your current {0}account to their organisation."
+msgid "<0>{organisationName}</0> has requested to link your current {0} account to their organisation."
 msgstr ""
 
 #: apps/remix/app/components/dialogs/admin-recipient-delete-dialog.tsx
@@ -1190,7 +1191,7 @@ msgstr ""
 #. placeholder {0}: PLATFORM_NAME()
 #: apps/remix/app/components/dialogs/webhook-create-dialog.tsx
 #: apps/remix/app/components/dialogs/webhook-edit-dialog.tsx
-msgid "A secret that will be sent to your URL so you can verify that the request has been sent by{0}."
+msgid "A secret that will be sent to your URL so you can verify that the request has been sent by {0}."
 msgstr ""
 
 #: packages/email/templates/team-delete.tsx
@@ -5464,11 +5465,6 @@ msgstr "Se requiere correo electrónico"
 msgid "Email me a code"
 msgstr ""
 
-#. placeholder {0}: data.recipientEmail
-#: packages/lib/utils/document-audit-logs.ts
-msgid "Email opened by {0}"
-msgstr ""
-
 #: packages/ui/primitives/template-flow/add-template-settings.tsx
 msgid "Email Options"
 msgstr "Opciones de correo electrónico"
@@ -5483,6 +5479,16 @@ msgstr "Preferencias de correo electrónico"
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/settings.email.tsx
 msgid "Email preferences updated"
 msgstr "Preferencias de correo electrónico actualizadas"
+
+#. placeholder {0}: data.recipientEmail
+#: packages/lib/utils/document-audit-logs.ts
+msgid "Email provider reported a link in the email to {0} was clicked (may be automated)"
+msgstr ""
+
+#. placeholder {0}: data.recipientEmail
+#: packages/lib/utils/document-audit-logs.ts
+msgid "Email provider reported the email to {0} was opened (may be automated)"
+msgstr ""
 
 #: packages/ui/components/document/document-email-checkboxes.tsx
 msgid "Email recipients when a pending document is deleted"
@@ -6393,6 +6399,10 @@ msgstr "Para cada destinatario, proporciona su correo electrónico (obligatorio)
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
 msgid "For example, if the claim has a new flag \"FLAG_1\" set to true, then this organisation will get that flag added."
 msgstr "Por ejemplo, si la reclamación tiene un nuevo flag \"FLAG_1\" establecido en verdadero, entonces esta organización obtendrá ese flag añadido."
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "For your security, this document is locked for 24 hours after too many incorrect codes. If you need help, reply to the email that brought you here."
+msgstr ""
 
 #: apps/remix/app/components/forms/branding-preferences-form.tsx
 msgid "Foreground"
@@ -7439,11 +7449,6 @@ msgstr "El enlace expira en 1 hora."
 #: packages/email/templates/organisation-account-link-confirmation.tsx
 msgid "Link expires in 30 minutes."
 msgstr "El enlace expira en 30 minutos."
-
-#. placeholder {0}: data.recipientEmail
-#: packages/lib/utils/document-audit-logs.ts
-msgid "Link in email clicked by {0}"
-msgstr ""
 
 #: apps/remix/app/components/forms/password-setup-request-button.tsx
 msgid "Link sent"
@@ -9667,8 +9672,9 @@ msgstr "El destinatario envió una copia del documento"
 msgid "Recipient completed their task"
 msgstr "El destinatario completó su tarea"
 
+#. placeholder {0}: data.disclosureVersion
 #: packages/lib/utils/document-audit-logs.ts
-msgid "Recipient consented to use electronic records and signatures"
+msgid "Recipient consented to use electronic records and signatures (disclosure version {0})"
 msgstr ""
 
 #: apps/remix/app/components/forms/subscription-claim-form.tsx
@@ -10954,11 +10960,6 @@ msgstr "Configuración"
 msgid "Share"
 msgstr "Compartir"
 
-#: apps/remix/app/components/general/document/document-page-view-dropdown.tsx
-#: apps/remix/app/components/tables/documents-table-action-dropdown.tsx
-msgid "Share Signing Card"
-msgstr "Compartir tarjeta de firma"
-
 #: packages/lib/constants/template.ts
 msgid "Share the Link"
 msgstr "Compartir el enlace"
@@ -12233,7 +12234,11 @@ msgid "Thank you for letting us know, we have flagged this sender for review. If
 msgstr "Gracias por informarnos; hemos marcado a este remitente para revisión. Si tienes alguna duda, no dudes en ponerte en contacto con nuestro <0>equipo de soporte</0>."
 
 #: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
-msgid "That code isn't right or has expired. Try again or send a new one."
+msgid "That code has expired. Send a new code and use the newest email."
+msgstr ""
+
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "That code isn't right. Check the latest email and try again, or send a new code."
 msgstr ""
 
 #: packages/email/template-components/template-forgot-password.tsx
@@ -13383,6 +13388,10 @@ msgstr "Token no encontrado"
 msgid "Too many attempts. Please wait 15 minutes and try again."
 msgstr ""
 
+#: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
+msgid "Too many incorrect tries for this code. Send a new code to try again."
+msgstr ""
+
 #: apps/remix/app/utils/toast-error-messages.ts
 msgid "Too many recipients"
 msgstr "Demasiados destinatarios"
@@ -14349,10 +14358,6 @@ msgstr "Ver plantilla de organización"
 msgid "View owner"
 msgstr "Ver propietario"
 
-#: packages/email/template-components/template-document-self-signed.tsx
-msgid "View plans"
-msgstr "Ver planes"
-
 #: apps/remix/app/components/forms/2fa/view-recovery-codes-dialog.tsx
 #: apps/remix/app/components/forms/2fa/view-recovery-codes-dialog.tsx
 msgid "View Recovery Codes"
@@ -15307,7 +15312,7 @@ msgid "You can also copy and paste this link into your browser: {resetPasswordLi
 msgstr "También puedes copiar y pegar este enlace en tu navegador: {resetPasswordLink} (el enlace expira en 24 horas)"
 
 #: apps/remix/app/components/general/document-signing/signing-gate-page.tsx
-msgid "You can ask for a paper copy at no charge by replying to the email that brought you here. You can also withdraw this agreement at any time before you sign, by declining the document or by telling the sender; the document would then be signed on paper instead."
+msgid "You can ask for a paper copy at no charge by replying to the email that brought you here or writing to {SUPPORT_EMAIL}. You can also withdraw this agreement at any time before you sign, by declining the document or by telling the sender; the document would then be signed on paper instead."
 msgstr ""
 
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/settings.public-profile.tsx
@@ -15415,8 +15420,9 @@ msgstr "Has enviado una copia del documento"
 msgid "You completed your task"
 msgstr "Has completado tu tarea"
 
+#. placeholder {0}: data.disclosureVersion
 #: packages/lib/utils/document-audit-logs.ts
-msgid "You consented to use electronic records and signatures"
+msgid "You consented to use electronic records and signatures (disclosure version {0})"
 msgstr ""
 
 #. placeholder {0}: data.envelopeItemTitle

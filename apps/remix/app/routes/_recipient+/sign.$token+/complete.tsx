@@ -8,6 +8,7 @@ import { isRecipientAuthorized } from '@documenso/lib/server-only/document/is-re
 import { getFieldsForToken } from '@documenso/lib/server-only/field/get-fields-for-token';
 import { getRecipientByToken } from '@documenso/lib/server-only/recipient/get-recipient-by-token';
 import { getRecipientSignatures } from '@documenso/lib/server-only/recipient/get-recipient-signatures';
+import { isSigningGateSatisfied } from '@documenso/lib/server-only/signing-gate/is-signing-gate-satisfied';
 import { getUserByEmail } from '@documenso/lib/server-only/user/get-user-by-email';
 import { isDocumentCompleted } from '@documenso/lib/utils/document';
 import { trpc } from '@documenso/trpc/react';
@@ -19,7 +20,7 @@ import { useLingui } from '@lingui/react';
 import { Trans } from '@lingui/react/macro';
 import { DocumentStatus, FieldType, RecipientRole } from '@prisma/client';
 import { CheckCircle2, Clock8, DownloadIcon, Loader2 } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, redirect } from 'react-router';
 import { match } from 'ts-pattern';
 
 import { EnvelopeDownloadDialog } from '~/components/dialogs/envelope-download-dialog';
@@ -59,6 +60,11 @@ export async function loader({ params, request }: Route.LoaderArgs) {
     throw new Response('Not Found', { status: 404 });
   }
 
+  // A recipient who has not yet passed the signing gate goes back to it instead of seeing this page.
+  if (!(await isSigningGateSatisfied({ request, recipientToken: token }))) {
+    throw redirect(`/sign/${token}`);
+  }
+
   const isDocumentAccessValid = await isRecipientAuthorized({
     type: 'ACCESS',
     documentAuthOptions: document.authOptions,
@@ -94,7 +100,21 @@ export async function loader({ params, request }: Route.LoaderArgs) {
     recipientName,
     recipientEmail: recipient.email,
     signatures,
-    document,
+    // Only what the page renders: the loader payload is sent to the browser, and the full document
+    // carries the PDF bytes when files are stored in the database.
+    document: {
+      id: document.id,
+      envelopeId: document.envelopeId,
+      title: document.title,
+      status: document.status,
+      deletedAt: document.deletedAt,
+      envelopeItems: document.envelopeItems.map((item) => ({
+        id: item.id,
+        envelopeId: item.envelopeId,
+        title: item.title,
+        order: item.order,
+      })),
+    },
     recipient,
     returnToHomePath,
     branding,

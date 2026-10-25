@@ -1,4 +1,2 @@
 User-agent: *
-Disallow: /sign/
-Disallow: /d/
-Disallow: /embed/
+Disallow: /

@@ -596,6 +596,7 @@ export const ZDocumentAuditLogEventDocumentRecipientRequested2FAEmailSchema = z.
     recipientName: z.string(),
     recipientId: z.number(),
     providerMessageId: z.string().optional(),
+    gateRequestId: z.string().optional(),
   }),
 });
 
@@ -658,6 +659,8 @@ export const ZDocumentAuditLogEventEmailDeliverySchema = z.object({
     subject: z.string().optional(),
     detail: z.string().optional(),
     providerEventId: z.string().optional(),
+    reportedIpAddress: z.string().optional(),
+    reportedUserAgent: z.string().optional(),
   }),
 });
 

@@ -1,4 +1,4 @@
-import { formatPath } from '@documenso/lib/constants/app';
+import { formatPath, SUPPORT_EMAIL } from '@documenso/lib/constants/app';
 import { Alert, AlertDescription } from '@documenso/ui/primitives/alert';
 import { Button } from '@documenso/ui/primitives/button';
 import { Checkbox } from '@documenso/ui/primitives/checkbox';
@@ -18,7 +18,22 @@ export type SigningGatePageProps = {
 
 type GateStep = 'consent' | 'code';
 
-type GateError = 'send-failed' | 'invalid-code' | 'too-many' | 'unknown' | null;
+type GateError =
+  | 'send-failed'
+  | 'invalid-code'
+  | 'code-expired'
+  | 'code-attempts'
+  | 'locked-for-day'
+  | 'too-many'
+  | 'unknown'
+  | null;
+
+const VERIFY_ERROR_CODES: Record<string, GateError> = {
+  SIGNING_GATE_INVALID_CODE: 'invalid-code',
+  SIGNING_GATE_NO_ACTIVE_CODE: 'code-expired',
+  SIGNING_GATE_CODE_ATTEMPTS_EXCEEDED: 'code-attempts',
+  SIGNING_GATE_LOCKED_FOR_DAY: 'locked-for-day',
+};
 
 const RESEND_DELAY_SECONDS = 30;
 
@@ -90,7 +105,9 @@ export const SigningGatePage = ({ token, documentTitle, recipientName, maskedEma
       }
 
       if (response.status === 400) {
-        setError('invalid-code');
+        const body: { code?: string } = await response.json().catch(() => ({}));
+
+        setError(VERIFY_ERROR_CODES[body.code ?? ''] ?? 'invalid-code');
         setCode('');
         return;
       }
@@ -140,9 +157,9 @@ export const SigningGatePage = ({ token, documentTitle, recipientName, maskedEma
               </li>
               <li>
                 <Trans>
-                  You can ask for a paper copy at no charge by replying to the email that brought you here. You can also
-                  withdraw this agreement at any time before you sign, by declining the document or by telling the
-                  sender; the document would then be signed on paper instead.
+                  You can ask for a paper copy at no charge by replying to the email that brought you here or writing to{' '}
+                  {SUPPORT_EMAIL}. You can also withdraw this agreement at any time before you sign, by declining the
+                  document or by telling the sender; the document would then be signed on paper instead.
                 </Trans>
               </li>
               <li>
@@ -245,7 +262,19 @@ export const SigningGatePage = ({ token, documentTitle, recipientName, maskedEma
         <Alert variant="destructive" className="mt-5">
           <AlertDescription>
             {error === 'invalid-code' && (
-              <Trans>That code isn't right or has expired. Try again or send a new one.</Trans>
+              <Trans>That code isn't right. Check the latest email and try again, or send a new code.</Trans>
+            )}
+            {error === 'code-expired' && (
+              <Trans>That code has expired. Send a new code and use the newest email.</Trans>
+            )}
+            {error === 'code-attempts' && (
+              <Trans>Too many incorrect tries for this code. Send a new code to try again.</Trans>
+            )}
+            {error === 'locked-for-day' && (
+              <Trans>
+                For your security, this document is locked for 24 hours after too many incorrect codes. If you need
+                help, reply to the email that brought you here.
+              </Trans>
             )}
             {error === 'too-many' && <Trans>Too many attempts. Please wait 15 minutes and try again.</Trans>}
             {error === 'send-failed' && (

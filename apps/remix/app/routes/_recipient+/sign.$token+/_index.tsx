@@ -66,26 +66,20 @@ const maskEmail = (email: string) => {
   return `${local.slice(0, 2)}${'*'.repeat(Math.max(local.length - 2, 1))}@${domain}`;
 };
 
-// Every recipient consents to e-records and proves control of their inbox before the
-// document is shown, unless they are signed in as that recipient.
+// Every recipient still due to act consents to e-records and proves control of their inbox
+// before the document is shown, including a sender signing their own document.
 const getSigningGate = ({
   request,
   token,
-  sessionEmail,
   recipient,
   documentTitle,
 }: {
   request: Request;
   token: string;
-  sessionEmail?: string;
   recipient: { email: string; name: string };
   documentTitle: string;
 }) => {
-  if (sessionEmail && sessionEmail === recipient.email) {
-    return null;
-  }
-
-  if (hasValidSigningGateCookie(request, token)) {
+  if (hasValidSigningGateCookie(request, token, recipient.email)) {
     return null;
   }
 
@@ -191,7 +185,6 @@ const handleV1Loader = async ({ params, request }: Route.LoaderArgs) => {
     ? getSigningGate({
         request,
         token,
-        sessionEmail: user?.email,
         recipient,
         documentTitle: document.title,
       })
@@ -333,7 +326,6 @@ const handleV2Loader = async ({ params, request }: Route.LoaderArgs) => {
   const signingGate = getSigningGate({
     request,
     token,
-    sessionEmail: user?.email,
     recipient,
     documentTitle: envelope.title,
   });

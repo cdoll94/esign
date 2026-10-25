@@ -32,6 +32,7 @@ import { filesRoute } from './api/files/files';
 import { signingGateRoute } from './api/signing-gate/route';
 import { type AppContext, appContext } from './context';
 import { csrfMiddleware } from './csrf-middleware';
+import { createDisabledSurfacesMiddleware } from './disabled-surfaces';
 import { appMiddleware } from './middleware';
 import { securityHeadersMiddleware } from './security-headers';
 import { openApiTrpcServerHandler } from './trpc/hono-trpc-open-api';
@@ -77,6 +78,8 @@ app.use(appContext);
  * carries the header.
  */
 app.use(securityHeadersMiddleware);
+
+app.use('*', createDisabledSurfacesMiddleware(basePath));
 
 /**
  * RR7 app middleware.

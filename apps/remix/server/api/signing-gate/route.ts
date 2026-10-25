@@ -6,7 +6,7 @@ import {
 } from '@documenso/lib/server-only/rate-limit/rate-limits';
 import { sendSigningGateCode } from '@documenso/lib/server-only/signing-gate/send-signing-gate-code';
 import { buildSigningGateCookieHeader } from '@documenso/lib/server-only/signing-gate/session-cookie';
-import { verifySigningGate } from '@documenso/lib/server-only/signing-gate/verify-signing-gate';
+import { SIGNING_GATE_ERROR, verifySigningGate } from '@documenso/lib/server-only/signing-gate/verify-signing-gate';
 import { sValidator } from '@hono/standard-validator';
 import { sha256 } from '@noble/hashes/sha256';
 import { bytesToHex } from '@noble/hashes/utils';
@@ -40,6 +40,10 @@ const toErrorResponse = (c: Context<HonoEnv>, error: unknown) => {
         return 404;
       case AppErrorCode.INVALID_BODY:
       case AppErrorCode.INVALID_REQUEST:
+      case SIGNING_GATE_ERROR.INVALID_CODE:
+      case SIGNING_GATE_ERROR.NO_ACTIVE_CODE:
+      case SIGNING_GATE_ERROR.CODE_ATTEMPTS_EXCEEDED:
+      case SIGNING_GATE_ERROR.LOCKED_FOR_DAY:
         return 400;
       default:
         return 500;
@@ -85,9 +89,14 @@ export const signingGateRoute = new Hono<HonoEnv>()
         }),
       );
 
-      await verifySigningGate({ recipientToken: token, code, hasConsented, requestMetadata });
+      const { recipientEmail } = await verifySigningGate({
+        recipientToken: token,
+        code,
+        hasConsented,
+        requestMetadata,
+      });
 
-      c.header('Set-Cookie', buildSigningGateCookieHeader(token));
+      c.header('Set-Cookie', buildSigningGateCookieHeader(token, recipientEmail));
 
       return c.json({ success: true });
     } catch (error) {
